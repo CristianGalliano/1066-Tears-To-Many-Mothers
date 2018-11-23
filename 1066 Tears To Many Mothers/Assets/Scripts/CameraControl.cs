@@ -9,7 +9,6 @@ public class CameraControl : MonoBehaviour
     public Camera Camera2;
     public Camera Camera3;
     int cameraNum = 1;
-    public Canvas CameraCanvas;
 
 
     // Use this for initialization
@@ -18,7 +17,6 @@ public class CameraControl : MonoBehaviour
         Camera1.gameObject.SetActive(true);
         Camera2.gameObject.SetActive(false);
         Camera3.gameObject.SetActive(false);
-        CameraCanvas.worldCamera = Camera1;
 	}
 	
 	// Update is called once per frame
@@ -32,7 +30,6 @@ public class CameraControl : MonoBehaviour
 
         if (cameraNum == 1)
         {
-            CameraCanvas.worldCamera = Camera2;
             Camera1.gameObject.SetActive(false);
             Camera2.gameObject.SetActive(true);
             Camera3.gameObject.SetActive(false);
@@ -40,7 +37,6 @@ public class CameraControl : MonoBehaviour
         }
         else if (cameraNum == 2)
         {
-            CameraCanvas.worldCamera = Camera3;
             Camera1.gameObject.SetActive(false);
             Camera2.gameObject.SetActive(false);
             Camera3.gameObject.SetActive(true);
@@ -48,7 +44,6 @@ public class CameraControl : MonoBehaviour
         }
         else
         {
-            CameraCanvas.worldCamera = Camera1;
             Camera1.gameObject.SetActive(true);
             Camera2.gameObject.SetActive(false);
             Camera3.gameObject.SetActive(false);

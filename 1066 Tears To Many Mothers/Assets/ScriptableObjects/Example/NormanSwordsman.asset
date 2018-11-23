@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2cd7bc2b19f31a439739c88d288986c, type: 3}
+  m_Name: NormanSwordsman
+  m_EditorClassIdentifier: 
+  name: Norman Swordsman
+  traits: Norman, Infantry
+  type: Unit
+  cost: 2
+  zeal: 0
+  might: 2
+  health: 2
+  resources: 0
+  abilities: 'Action: Agile - Move this card to a different wedge.'
+  flavour: Infantry formed the majority of the norman foot soldiers and William relied
+    heavily on their sheer numbers during the battle to support his archers and cavalry.
+  cardNumber: 73
