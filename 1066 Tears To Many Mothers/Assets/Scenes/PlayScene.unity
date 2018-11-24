@@ -1256,7 +1256,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789669aa03afe124cb892559663e4b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropPoints: []
   cardPosition: {x: 0, y: 0, z: 0}
+  originalCardPosition: {x: 0, y: 0, z: 0}
   panel: {fileID: 0}
   nameTraitType: {fileID: 0}
   costZeal: {fileID: 0}
@@ -1447,7 +1449,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789669aa03afe124cb892559663e4b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropPoints: []
   cardPosition: {x: 0, y: 0, z: 0}
+  originalCardPosition: {x: 0, y: 0, z: 0}
   panel: {fileID: 0}
   nameTraitType: {fileID: 0}
   costZeal: {fileID: 0}
@@ -2030,7 +2034,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789669aa03afe124cb892559663e4b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropPoints: []
   cardPosition: {x: 0, y: 0, z: 0}
+  originalCardPosition: {x: 0, y: 0, z: 0}
   panel: {fileID: 0}
   nameTraitType: {fileID: 0}
   costZeal: {fileID: 0}
@@ -2136,7 +2142,7 @@ Transform:
   m_GameObject: {fileID: 665790054}
   m_LocalRotation: {x: 0.42261827, y: -0, z: -0, w: 0.9063079}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 150, y: 4, z: 225.00018}
+  m_LocalScale: {x: 150, y: 4, z: 225.0003}
   m_Children: []
   m_Father: {fileID: 1060000893}
   m_RootOrder: 0
@@ -2206,7 +2212,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789669aa03afe124cb892559663e4b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   cardPosition: {x: 0, y: 0, z: 0}
+  originalCardPosition: {x: 0, y: 0, z: 0}
   panel: {fileID: 649412305}
   nameTraitType: {fileID: 433090286}
   costZeal: {fileID: 1869288711}
@@ -3571,7 +3588,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789669aa03afe124cb892559663e4b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropPoints: []
   cardPosition: {x: 0, y: 0, z: 0}
+  originalCardPosition: {x: 0, y: 0, z: 0}
   panel: {fileID: 649412305}
   nameTraitType: {fileID: 433090286}
   costZeal: {fileID: 1869288711}
@@ -4008,7 +4027,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789669aa03afe124cb892559663e4b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dropPoints:
+  - {fileID: 632830932}
+  - {fileID: 1116853399}
+  - {fileID: 578640390}
+  - {fileID: 1029643109}
+  - {fileID: 519291393}
+  - {fileID: 560021756}
+  - {fileID: 1497939272}
+  - {fileID: 512209166}
+  - {fileID: 268225006}
   cardPosition: {x: 0, y: 0, z: 0}
+  originalCardPosition: {x: 0, y: 0, z: 0}
   panel: {fileID: 649412305}
   nameTraitType: {fileID: 433090286}
   costZeal: {fileID: 1869288711}
@@ -4321,7 +4351,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7fa1b54193a03a146b8ed396f55797cc, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7fa1b54193a03a146b8ed396f55797cc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
