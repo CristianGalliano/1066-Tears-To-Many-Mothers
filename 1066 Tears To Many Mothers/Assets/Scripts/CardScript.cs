@@ -6,11 +6,13 @@ using UnityEngine.EventSystems;
 
 public class CardScript : MonoBehaviour
 {
-    public GameObject[] dropPoints;
+    Vector3[] dropPoints = new Vector3[] { new Vector3(300,0,326), new Vector3(0,0,326), new Vector3(-300,0,326), new Vector3(300,0,663), new Vector3(0,0,663), new Vector3(-300,0,663), new Vector3(300,0,1000), new Vector3(0,0,1000), new Vector3(-300,0,1000)};
     public Vector3 cardPosition;
     public Vector3 originalCardPosition;
+    public Vector3 lastPosition;
     private int clickCount = 0;
     public GameObject panel;
+    public Image sprite;
     public Text nameTraitType;
     public Text costZeal;
     public Text mightHealthResources;
@@ -19,10 +21,12 @@ public class CardScript : MonoBehaviour
     public Text cardNumber;
     public NormanCard card;
     private bool dragging = false;
+    bool placed = false;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
+
         originalCardPosition = transform.position;
         cardPosition = gameObject.transform.localPosition;
         if (panel != null)
@@ -55,55 +59,64 @@ public class CardScript : MonoBehaviour
         }
     }
 
-    //private void OnMouseDown()
-    //{
-    //    clickCount++;
-    //    if (clickCount == 1)
-    //    {
-    //        cardPosition.y = 500;
-    //        cardPosition.z = 100;
-    //        gameObject.transform.localPosition = cardPosition;
-    //        if (panel != null)
-    //        {
-    //            panel.gameObject.SetActive(true);
-    //            nameTraitType.text = card.name + ", " + card.traits + ", " + card.type;
-    //            costZeal.text = "Cost: " + card.cost.ToString() + ", Zeal: " + card.zeal.ToString();
-    //            mightHealthResources.text = "Might: " + card.might.ToString() + ", Health: " + card.health.ToString() + ", Resources: " + card.resources.ToString();
-    //            abilities.text = card.abilities;
-    //            flavour.text = card.flavour;
-    //            cardNumber.text = "Card Number: " + card.cardNumber.ToString();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (panel != null)
-    //        {
-    //            panel.gameObject.SetActive(false);
-    //        }
-    //        cardPosition.y = 200;
-    //        cardPosition.z = 0;
-    //        gameObject.transform.localPosition = cardPosition;
-    //        clickCount = 0;
-    //    }
-    //}
+    private void OnMouseDown()
+    {
+        if (placed)
+        {
+            clickCount++;
+            if (clickCount == 1)
+            {
+                if (panel != null)
+                {
+                    panel.gameObject.SetActive(true);
+                    sprite.sprite = card.image;
+                    nameTraitType.text = card.name + ", " + card.traits + ", " + card.type;
+                    costZeal.text = "Cost: " + card.cost.ToString() + ", Zeal: " + card.zeal.ToString();
+                    mightHealthResources.text = "Might: " + card.might.ToString() + ", Health: " + card.health.ToString() + ", Resources: " + card.resources.ToString();
+                    abilities.text = card.abilities;
+                    flavour.text = card.flavour;
+                    cardNumber.text = "Card Number: " + card.cardNumber.ToString();
+                }
+            }
+            else
+            {
+                if (panel != null)
+                {
+                    panel.gameObject.SetActive(false);
+                }
+                clickCount = 0;
+            }
+        }
+    }
 
     public void OnMouseDrag()
     {
-        dragging = true;
-        float distance = Input.mousePosition.x + Input.mousePosition.y;
-        Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-        Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        transform.position = objPosition;
+        if (!placed)
+        {
+            dragging = true;
+            float distance = 1100 + Input.mousePosition.y;
+            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+            Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            transform.position = objPosition;
+        }
     }
 
     public void OnMouseUp()
     {
         int Count = 0;
-        foreach (GameObject point in dropPoints)
+        foreach (Vector3 point in dropPoints)
         {
-            if (transform.position.x < point.transform.position.x + 100 && transform.position.x > point.transform.position.x - 100 && transform.position.z < point.transform.position.z + 100 && transform.position.z > point.transform.position.z - 100)
+            if (transform.position.x < point.x + 100 && transform.position.x > point.x - 100 && transform.position.z < point.z + 168 && transform.position.z > point.z - 168)
             {
-                transform.position = point.transform.position;
+                if (!placed)
+                {
+                    Vector3 dropPosition = new Vector3(point.x, point.y + 2, point.z);
+                    transform.position = dropPosition;
+                    lastPosition = transform.position;
+                    Vector3 Rotation = new Vector3(-50, 0, 0);
+                    transform.Rotate(Rotation);
+                    placed = true;                    
+                }
             }
             else
             {

@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Norman Card", menuName = "Cards/Norman Card")]
 public class NormanCard : ScriptableObject
 {
+    public Sprite image;
+
     public new string name;
     public string traits;
     public string type;

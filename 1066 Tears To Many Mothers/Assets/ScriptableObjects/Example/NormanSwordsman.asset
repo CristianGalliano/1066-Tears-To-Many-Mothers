@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2cd7bc2b19f31a439739c88d288986c, type: 3}
   m_Name: NormanSwordsman
   m_EditorClassIdentifier: 
+  image: {fileID: 21300000, guid: c43538e7b92d84f479a1b6a7ffe4a9e9, type: 3}
   name: Norman Swordsman
   traits: Norman, Infantry
   type: Unit

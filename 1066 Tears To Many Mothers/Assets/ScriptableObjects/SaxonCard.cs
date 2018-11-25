@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Saxon Card", menuName = "Cards/Saxon Card")]
 public class SaxonCard : ScriptableObject
 {
+    public Sprite image;
+
     public new string name;
     public string traits;
     public string type;
