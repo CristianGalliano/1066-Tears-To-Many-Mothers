@@ -22,6 +22,7 @@ public class CardScript : MonoBehaviour
     public NormanCard card;
     private bool dragging = false;
     bool placed = false;
+    bool tired = false;
 
     // Use this for initialization
     void Start ()
@@ -127,6 +128,28 @@ public class CardScript : MonoBehaviour
         {
             transform.position = originalCardPosition;
             dragging = false;
+        }
+    }
+
+    private void OnMouseOver()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (placed)
+            {
+                if (!tired)
+                {
+                    Vector3 Rotation = new Vector3(0, -90, 0);
+                    transform.Rotate(Rotation);
+                    tired = true;
+                }
+                else if (tired) //stops the card turning 360, this way it goes flipped and back to normal
+                {
+                    Vector3 Rotation = new Vector3(0, 90, 0);
+                    transform.Rotate(Rotation);
+                    tired = false;
+                }
+            }
         }
     }
 
