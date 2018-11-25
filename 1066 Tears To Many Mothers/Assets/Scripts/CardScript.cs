@@ -46,9 +46,9 @@ public class CardScript : MonoBehaviour
     {
         if (clickCount == 0 && dragging == false)
         {
-            cardPosition.y = 300;
-            cardPosition.z = 50;
-            gameObject.transform.localPosition = cardPosition;
+            cardPosition.y = 500;
+            cardPosition.z = 1300;
+            gameObject.transform.position = cardPosition;
         }
     }
 
@@ -96,7 +96,7 @@ public class CardScript : MonoBehaviour
         {
             dragging = true;
             float distance = 1100 + Input.mousePosition.y;
-            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 200, distance);
             Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
             transform.position = objPosition;
         }
@@ -139,13 +139,13 @@ public class CardScript : MonoBehaviour
             {
                 if (!tired)
                 {
-                    Vector3 Rotation = new Vector3(0, -90, 0);
+                    Vector3 Rotation = new Vector3(0, 0, 90);
                     transform.Rotate(Rotation);
                     tired = true;
                 }
                 else if (tired) //stops the card turning 360, this way it goes flipped and back to normal
                 {
-                    Vector3 Rotation = new Vector3(0, 90, 0);
+                    Vector3 Rotation = new Vector3(0, 0, -90);
                     transform.Rotate(Rotation);
                     tired = false;
                 }
