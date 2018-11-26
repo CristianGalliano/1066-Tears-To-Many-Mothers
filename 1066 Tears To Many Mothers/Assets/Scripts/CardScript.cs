@@ -10,6 +10,7 @@ public class CardScript : MonoBehaviour
     public Vector3 cardPosition;
     public Vector3 originalCardPosition;
     public Vector3 lastPosition;
+    public Vector3 boxPos;
     private int clickCount = 0;
     public GameObject panel;
     public Image sprite;
@@ -23,11 +24,13 @@ public class CardScript : MonoBehaviour
     private bool dragging = false;
     bool placed = false;
     bool tired = false;
+    public BoxCollider thisCollider;
+    public Vector3 boxScale;
 
     // Use this for initialization
     void Start ()
     {
-
+        thisCollider = gameObject.GetComponent<BoxCollider>();
         originalCardPosition = transform.position;
         cardPosition = gameObject.transform.localPosition;
         if (panel != null)
@@ -47,9 +50,13 @@ public class CardScript : MonoBehaviour
         originalCardPosition = transform.position;
         if (clickCount == 0 && dragging == false)
         {
+            boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y * 2, thisCollider.size.z);
+            boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y - 150, thisCollider.center.z);
             cardPosition.y = 500;
             cardPosition.z = 1300;
             cardPosition.x = originalCardPosition.x;
+            thisCollider.center = boxPos;
+            thisCollider.size = boxScale;
             gameObject.transform.position = cardPosition;
         }
     }
@@ -58,6 +65,10 @@ public class CardScript : MonoBehaviour
     {
         if (clickCount == 0 && dragging == false)
         {
+            boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);
+            boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);
+            thisCollider.center = boxPos;
+            thisCollider.size = boxScale;
             transform.position = originalCardPosition;
         }
     }
@@ -93,12 +104,12 @@ public class CardScript : MonoBehaviour
     }
 
     public void OnMouseDrag()
-    {
+    {       
         if (!placed)
         {
             dragging = true;
-            float distance = 1100 + Input.mousePosition.y;
-            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 200, distance);
+            float distance = 1100 + (Input.mousePosition.y * 1.8f);
+            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 20, distance);
             Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
             transform.position = objPosition;
         }
@@ -109,7 +120,7 @@ public class CardScript : MonoBehaviour
         int Count = 0;
         foreach (Vector3 point in dropPoints)
         {
-            if (transform.position.x < point.x + 100 && transform.position.x > point.x - 100 && transform.position.z < point.z + 168 && transform.position.z > point.z - 168)
+            if (transform.position.x < point.x + 99 && transform.position.x > point.x - 99 && transform.position.z < point.z + 167 && transform.position.z > point.z - 167)
             {
                 if (!placed)
                 {
@@ -119,6 +130,10 @@ public class CardScript : MonoBehaviour
                     Vector3 Rotation = new Vector3(-50, 0, 0);
                     transform.Rotate(Rotation);
                     placed = true;
+                    boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);
+                    boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);
+                    thisCollider.center = boxPos;
+                    thisCollider.size = boxScale;
                     gameObject.transform.SetParent(null);
                 }
             }
