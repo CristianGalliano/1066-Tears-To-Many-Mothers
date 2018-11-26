@@ -27,6 +27,7 @@ public class CardScript : MonoBehaviour
     public BoxCollider thisCollider;
     public Vector3 boxScale;
 
+    string[] dropPlaceholders = new string[] {"Norman11", "Norman12", "Norman13", "Norman21", "Norman22", "Norman23", "Norman31", "Norman32", "Norman33", };
     // Use this for initialization
     void Start ()
     {
@@ -104,7 +105,7 @@ public class CardScript : MonoBehaviour
     }
 
     public void OnMouseDrag()
-    {       
+    {
         if (!placed)
         {
             dragging = true;
@@ -112,6 +113,17 @@ public class CardScript : MonoBehaviour
             Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 20, distance);
             Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
             transform.position = objPosition;
+        }
+
+        //Glowing placeholders (On)
+        if (!placed && dragging == true)
+        {
+            Behaviour halo;
+            foreach (string obj in dropPlaceholders)
+            {
+                halo = (Behaviour)GameObject.Find(obj).GetComponent("Halo");
+                halo.enabled = true;
+            }
         }
     }
 
@@ -146,6 +158,14 @@ public class CardScript : MonoBehaviour
         {
             transform.position = originalCardPosition;
             dragging = false;
+        }
+
+        //Glowing placeholders (Off)
+        Behaviour halo;
+        foreach (string obj in dropPlaceholders)
+        {
+            halo = (Behaviour)GameObject.Find(obj).GetComponent("Halo");
+            halo.enabled = false;
         }
     }
 

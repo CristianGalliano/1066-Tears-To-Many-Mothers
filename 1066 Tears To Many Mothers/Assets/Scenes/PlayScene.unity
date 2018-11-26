@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43667564, g: 0.48427135, b: 0.5645232, a: 1}
+  m_IndirectSpecularColor: {r: 0.4366757, g: 0.48427194, b: 0.5645252, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -492,6 +492,7 @@ GameObject:
   - component: {fileID: 268225010}
   - component: {fileID: 268225009}
   - component: {fileID: 268225008}
+  - component: {fileID: 268225011}
   m_Layer: 0
   m_Name: Norman13
   m_TagString: Untagged
@@ -530,7 +531,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 268225006}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -566,6 +567,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 268225006}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!122 &268225011
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 268225006}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294959929
+  m_Size: 100
 --- !u!1 &280281612
 GameObject:
   m_ObjectHideFlags: 0
@@ -1261,6 +1273,7 @@ GameObject:
   - component: {fileID: 512209170}
   - component: {fileID: 512209169}
   - component: {fileID: 512209168}
+  - component: {fileID: 512209171}
   m_Layer: 0
   m_Name: Norman12
   m_TagString: Untagged
@@ -1299,7 +1312,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 512209166}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1335,6 +1348,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 512209166}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!122 &512209171
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 512209166}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294959929
+  m_Size: 100
 --- !u!1 &517373261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1458,6 +1482,7 @@ GameObject:
   - component: {fileID: 519291397}
   - component: {fileID: 519291396}
   - component: {fileID: 519291395}
+  - component: {fileID: 519291398}
   m_Layer: 0
   m_Name: Norman22
   m_TagString: Untagged
@@ -1496,7 +1521,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519291393}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1532,6 +1557,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519291393}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!122 &519291398
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 519291393}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294959929
+  m_Size: 100
 --- !u!1 &524441523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,6 +1838,7 @@ GameObject:
   - component: {fileID: 560021760}
   - component: {fileID: 560021759}
   - component: {fileID: 560021758}
+  - component: {fileID: 560021761}
   m_Layer: 0
   m_Name: Norman23
   m_TagString: Untagged
@@ -1840,7 +1877,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 560021756}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1876,6 +1913,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 560021756}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!122 &560021761
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 560021756}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294959929
+  m_Size: 100
 --- !u!1 &578640390
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,6 +1935,7 @@ GameObject:
   - component: {fileID: 578640394}
   - component: {fileID: 578640393}
   - component: {fileID: 578640392}
+  - component: {fileID: 578640395}
   m_Layer: 0
   m_Name: Norman33
   m_TagString: Untagged
@@ -1925,7 +1974,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 578640390}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1961,6 +2010,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 578640390}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!122 &578640395
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 578640390}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294959929
+  m_Size: 100
 --- !u!1 &588586501
 GameObject:
   m_ObjectHideFlags: 0
@@ -2137,6 +2197,7 @@ GameObject:
   - component: {fileID: 632830936}
   - component: {fileID: 632830935}
   - component: {fileID: 632830934}
+  - component: {fileID: 632830937}
   m_Layer: 0
   m_Name: Norman31
   m_TagString: Untagged
@@ -2175,7 +2236,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 632830932}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2211,6 +2272,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 632830932}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!122 &632830937
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 632830932}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294959929
+  m_Size: 100
 --- !u!1 &641359613
 GameObject:
   m_ObjectHideFlags: 0
@@ -3072,6 +3144,7 @@ GameObject:
   - component: {fileID: 1029643113}
   - component: {fileID: 1029643112}
   - component: {fileID: 1029643111}
+  - component: {fileID: 1029643114}
   m_Layer: 0
   m_Name: Norman21
   m_TagString: Untagged
@@ -3110,7 +3183,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1029643109}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3146,6 +3219,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1029643109}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!122 &1029643114
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1029643109}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294959929
+  m_Size: 100
 --- !u!1 &1037394523
 GameObject:
   m_ObjectHideFlags: 0
@@ -3242,6 +3326,7 @@ GameObject:
   - component: {fileID: 1116853402}
   - component: {fileID: 1116853401}
   - component: {fileID: 1116853400}
+  - component: {fileID: 1116853404}
   m_Layer: 0
   m_Name: Norman32
   m_TagString: Untagged
@@ -3267,7 +3352,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1116853399}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3316,6 +3401,17 @@ Transform:
   m_Father: {fileID: 717724292}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!122 &1116853404
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1116853399}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294959929
+  m_Size: 100
 --- !u!1 &1128668597
 GameObject:
   m_ObjectHideFlags: 0
@@ -4308,6 +4404,7 @@ GameObject:
   - component: {fileID: 1497939276}
   - component: {fileID: 1497939275}
   - component: {fileID: 1497939274}
+  - component: {fileID: 1497939277}
   m_Layer: 0
   m_Name: Norman11
   m_TagString: Untagged
@@ -4346,7 +4443,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1497939272}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4382,6 +4479,17 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1497939272}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!122 &1497939277
+Halo:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1497939272}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294959929
+  m_Size: 100
 --- !u!1 &1552648724
 GameObject:
   m_ObjectHideFlags: 0
