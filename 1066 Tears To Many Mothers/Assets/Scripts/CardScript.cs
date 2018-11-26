@@ -26,6 +26,7 @@ public class CardScript : MonoBehaviour
     bool tired = false;
     public BoxCollider thisCollider;
     public Vector3 boxScale;
+    private Vector3 positionOfMouse;
 
     string[] dropPlaceholders = new string[] {"Norman11", "Norman12", "Norman13", "Norman21", "Norman22", "Norman23", "Norman31", "Norman32", "Norman33", };
     // Use this for initialization
@@ -43,7 +44,7 @@ public class CardScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		
+        
 	}
 
     private void OnMouseEnter()
@@ -106,13 +107,15 @@ public class CardScript : MonoBehaviour
 
     public void OnMouseDrag()
     {
+        getPointer();
         if (!placed)
         {
             dragging = true;
-            float distance = 1100 + (Input.mousePosition.y * 1.8f);
-            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y + 20, distance);
+            float distance = 1100;
+            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
             Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
             transform.position = objPosition;
+            thisCollider.enabled = false;
         }
 
         //Glowing placeholders (On)
@@ -130,9 +133,10 @@ public class CardScript : MonoBehaviour
     public void OnMouseUp()
     {
         int Count = 0;
+        thisCollider.enabled = true;
         foreach (Vector3 point in dropPoints)
         {
-            if (transform.position.x < point.x + 99 && transform.position.x > point.x - 99 && transform.position.z < point.z + 167 && transform.position.z > point.z - 167)
+            if (positionOfMouse.x < point.x + 99 && positionOfMouse.x > point.x - 99 && positionOfMouse.z < point.z + 167 && positionOfMouse.z > point.z - 167)
             {
                 if (!placed)
                 {
@@ -188,6 +192,20 @@ public class CardScript : MonoBehaviour
                     tired = false;
                 }
             }
+        }
+    }
+
+    private void getPointer()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+        {
+            positionOfMouse = hit.point; //the endpoint of the raycast corresponds to mouse position relative to terrain
+            Debug.Log(positionOfMouse);
+        }
+        else
+        {
+            Debug.Log("cannot find terrain");
         }
     }
 
