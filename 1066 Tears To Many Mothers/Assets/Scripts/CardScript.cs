@@ -44,10 +44,12 @@ public class CardScript : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        originalCardPosition = transform.position;
         if (clickCount == 0 && dragging == false)
         {
             cardPosition.y = 500;
             cardPosition.z = 1300;
+            cardPosition.x = originalCardPosition.x;
             gameObject.transform.position = cardPosition;
         }
     }
@@ -116,7 +118,8 @@ public class CardScript : MonoBehaviour
                     lastPosition = transform.position;
                     Vector3 Rotation = new Vector3(-50, 0, 0);
                     transform.Rotate(Rotation);
-                    placed = true;                    
+                    placed = true;
+                    gameObject.transform.SetParent(null);
                 }
             }
             else
