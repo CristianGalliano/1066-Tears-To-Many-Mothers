@@ -10,8 +10,6 @@ public class HandScript : MonoBehaviour
 
     private int widthOfHand = 700;
 
-    
-
     // Use this for initialization
     void Start ()
     {
@@ -42,6 +40,7 @@ public class HandScript : MonoBehaviour
         foreach (Transform child in transform)
         {
             float q = ((widthOfHand / transform.childCount) * i) - widthOfHand/2;
+
             Vector3 cardPos = new Vector3(q, transform.position.y, transform.position.z - (i*5));
             child.transform.position = cardPos;
             i++;
