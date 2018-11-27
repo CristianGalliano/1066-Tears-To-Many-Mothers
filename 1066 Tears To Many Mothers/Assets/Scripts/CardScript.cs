@@ -125,13 +125,16 @@ public class CardScript : MonoBehaviour
         }
 
         //Glowing placeholders (On)
-        if (!placed && dragging == true)//conditions , if the card hasnt yet been placed and the player is dragging their card.
+        GameObject obj;//sets a variable for storing gameobject references.
+        Component[] outlines;//sets an array for storing component references.
+        foreach (string name in dropPlaceholders)//goes through each string in the array.
         {
-            Behaviour halo;//gets variable for halos.
-            foreach (string obj in dropPlaceholders)//goes through each string in the array.
+            obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
+            outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
+
+            foreach (Component outline in outlines)
             {
-                halo = (Behaviour)GameObject.Find(obj).GetComponent("Halo");//sets halo to be the halo attached to the specific gameobject.
-                halo.enabled = true;//enables the halo.
+                outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
             }
         }
     }
@@ -170,12 +173,18 @@ public class CardScript : MonoBehaviour
         }
 
 
-        //Glowing placeholders (Off)
-        Behaviour halo;//gets variable for halos.
-        foreach (string obj in dropPlaceholders)//goes through each string in the array.
+        //Glowing placeholders (On)
+        GameObject obj;//sets a variable for storing gameobject references.
+        Component[] outlines;//sets an array for storing component references.
+        foreach (string name in dropPlaceholders)//goes through each string in the array.
         {
-            halo = (Behaviour)GameObject.Find(obj).GetComponent("Halo");//sets halo to be the halo attached to the specific gameobject.
-            halo.enabled = false;//disables the halo.
+            obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
+            outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
+
+            foreach (Component outline in outlines)
+            {
+                outline.GetComponent<MeshRenderer>().enabled = false; //disables all outlines
+            }
         }
     }
 
@@ -209,5 +218,4 @@ public class CardScript : MonoBehaviour
             positionOfMouse = hit.point; //the endpoint of the raycast corresponds to mouse position relative to terrain
         }
     }
-
 }
