@@ -36,6 +36,8 @@ public class CardScript : MonoBehaviour
 
     string[] dropPlaceholders = new string[] {"Norman11", "Norman12", "Norman13", "Norman21", "Norman22", "Norman23", "Norman31", "Norman32", "Norman33", };
 
+    GameObject[] placedCards;
+
     // Use this for initialization
     void Start ()
     {
@@ -131,10 +133,19 @@ public class CardScript : MonoBehaviour
         {
             obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
             outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
+            placedCards = GameObject.FindGameObjectsWithTag("Placed Card"); //fills an array with references to all placed cards
 
             foreach (Component outline in outlines)
             {
                 outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
+
+                foreach (GameObject card in placedCards)
+                {
+                    if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
+                    {
+                        outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
+                    }
+                }
             }
         }
     }
@@ -159,6 +170,7 @@ public class CardScript : MonoBehaviour
                     thisCollider.center = boxPos;//move the collider by boxPos vector.
                     thisCollider.size = boxScale;//scale the collider by boxscale vector.
                     gameObject.transform.SetParent(null);//take this card out of the hand.
+                    gameObject.tag = "Placed Card";
                 }
             }
             else
@@ -173,7 +185,7 @@ public class CardScript : MonoBehaviour
         }
 
 
-        //Glowing placeholders (On)
+        //Glowing placeholders (Off)
         GameObject obj;//sets a variable for storing gameobject references.
         Component[] outlines;//sets an array for storing component references.
         foreach (string name in dropPlaceholders)//goes through each string in the array.
