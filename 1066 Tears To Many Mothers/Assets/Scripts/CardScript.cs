@@ -4,12 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CardScript : MonoBehaviour
+public class CardScript : GameContoller
 {
-    private Vector3[] dropPoints = new Vector3[] { new Vector3(300,0,326), new Vector3(0,0,326), new Vector3(-300,0,326),
-                                           new Vector3(300,0,663), new Vector3(0,0,663), new Vector3(-300,0,663),
-                                           new Vector3(300,0,1000), new Vector3(0,0,1000), new Vector3(-300,0,1000)};//Vector of drop points for the card to clip onto.
-
     private Vector3 cardPosition; //used to store the current card position;=.
     private Vector3 originalCardPosition; //used to store the original card position.
     private Vector3 boxPos; //used to store position of the box collider attached to this gameobject.
@@ -32,9 +28,8 @@ public class CardScript : MonoBehaviour
     private bool placed = false;
     private bool tired = false;
     private BoxCollider thisCollider; //variable for the box collider attached to this gameobject.
-
-
-    string[] dropPlaceholders = new string[] {"Norman11", "Norman12", "Norman13", "Norman21", "Norman22", "Norman23", "Norman31", "Norman32", "Norman33", };
+    
+    string[] dropPlaceholders = new string[] {"Norman11", "Norman12", "Norman13", "Norman21", "Norman22", "Norman23", "Norman31", "Norman32", "Norman33" };
 
     GameObject[] placedCards;
 
@@ -154,7 +149,7 @@ public class CardScript : MonoBehaviour
     {
         int Count = 0;//count to see how many points we have ran through.
         thisCollider.enabled = true;//re enamble the collider.
-        foreach (Vector3 point in dropPoints)//for each vector3 in the array.
+        foreach (Vector3 point in normanDropPoints)//for each vector3 in the array.
         {
             if (positionOfMouse.x < point.x + 99 && positionOfMouse.x > point.x - 99 && positionOfMouse.z < point.z + 167 && positionOfMouse.z > point.z - 167)//check its in the correct parameters.
             {
@@ -178,7 +173,7 @@ public class CardScript : MonoBehaviour
                 Count++;//add to count.
             }
         }
-        if (Count == dropPoints.Length)//if count is equal to the number of vectors in the array.
+        if (Count == saxonDropPoints.Count)//if count is equal to the number of vectors in the array.
         {
             transform.position = originalCardPosition;//send the card back to the hand.
             dragging = false;//set dragging to be false.

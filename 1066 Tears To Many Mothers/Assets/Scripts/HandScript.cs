@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class HandScript : MonoBehaviour
 {
-    private GameObject[] cardsInHand;
-
     public Vector3 handPosition;
 
     private int widthOfHand = 700;
@@ -19,29 +17,24 @@ public class HandScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-     
+    
 	}
-
-    //private void OnMouseEnter()
-    //{
-    //    handPosition.z -= 200;
-    //    gameObject.transform.position = handPosition;
-    //}
-
-    //private void OnMouseExit()
-    //{
-    //    handPosition.z += 200;
-    //    gameObject.transform.position = handPosition;
-    //}
 
     public void adjustCardPos()
     {
+        Vector3 cardPos = new Vector3();
         int i = 1;
         foreach (Transform child in transform)
         {
-            float q = ((widthOfHand / transform.childCount) * i) - widthOfHand/2;
-
-            Vector3 cardPos = new Vector3(q, transform.position.y, transform.position.z - (i*5));
+            float q = ((widthOfHand / transform.childCount) * i) - widthOfHand / 2;
+            if (gameObject.tag == "Norman")
+            {               
+                cardPos = new Vector3(q, transform.position.y, transform.position.z - (i * 5));
+            }
+            else if (gameObject.tag == "Saxon")
+            {
+                cardPos = new Vector3(-q, transform.position.y, transform.position.z + (i * 5));
+            }
             child.transform.position = cardPos;
             i++;
         }

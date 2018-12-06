@@ -309,7 +309,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4710842448169932, guid: 691e3e7c9d2e73d498cc030c2a8e8cea, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1041576798642616, guid: 691e3e7c9d2e73d498cc030c2a8e8cea, type: 2}
       propertyPath: m_Name
@@ -677,7 +677,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4710842448169932, guid: 691e3e7c9d2e73d498cc030c2a8e8cea, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114667903083231550, guid: 691e3e7c9d2e73d498cc030c2a8e8cea,
         type: 2}
@@ -1270,7 +1270,7 @@ Transform:
   m_LocalScale: {x: 150, y: 4, z: 225.00024}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!65 &517373263
 BoxCollider:
@@ -1337,6 +1337,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789669aa03afe124cb892559663e4b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normanDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonResources: 0
+  normanResources: 0
   panel: {fileID: 649412305}
   sprite: {fileID: 1972110212}
   nameTraitType: {fileID: 433090286}
@@ -1376,7 +1398,7 @@ Transform:
   m_LocalScale: {x: 150, y: 4, z: 225.00024}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!65 &524441525
 BoxCollider:
@@ -1443,6 +1465,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789669aa03afe124cb892559663e4b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normanDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonResources: 0
+  normanResources: 0
   panel: {fileID: 649412305}
   sprite: {fileID: 1972110212}
   nameTraitType: {fileID: 433090286}
@@ -1771,7 +1815,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4710842448169932, guid: 691e3e7c9d2e73d498cc030c2a8e8cea, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 1041576798642616, guid: 691e3e7c9d2e73d498cc030c2a8e8cea, type: 2}
       propertyPath: m_Name
@@ -1854,7 +1898,7 @@ Transform:
   m_LocalScale: {x: 150, y: 4, z: 225.00024}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!65 &641359615
 BoxCollider:
@@ -1921,6 +1965,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789669aa03afe124cb892559663e4b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normanDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonResources: 0
+  normanResources: 0
   panel: {fileID: 649412305}
   sprite: {fileID: 1972110212}
   nameTraitType: {fileID: 433090286}
@@ -2031,7 +2097,7 @@ Transform:
   m_LocalScale: {x: 150, y: 4, z: 225.00049}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!65 &665790056
 BoxCollider:
@@ -2098,6 +2164,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789669aa03afe124cb892559663e4b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normanDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonResources: 0
+  normanResources: 0
   panel: {fileID: 649412305}
   sprite: {fileID: 1972110212}
   nameTraitType: {fileID: 433090286}
@@ -2176,26 +2264,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f2cdb9f7aca85499689cf71eca6468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SaxonPositions:
-  - {fileID: 421904363}
-  - {fileID: 1558450977}
-  - {fileID: 2007616392}
-  - {fileID: 1552648724}
-  - {fileID: 537589807}
-  - {fileID: 424051972}
-  - {fileID: 1466310191}
-  - {fileID: 1476400315}
-  - {fileID: 1820106900}
-  NormanPositions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  normanDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonResources: 0
+  normanResources: 0
 --- !u!4 &719131377
 Transform:
   m_ObjectHideFlags: 0
@@ -2311,7 +2401,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4710842448169932, guid: 691e3e7c9d2e73d498cc030c2a8e8cea, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 1041576798642616, guid: 691e3e7c9d2e73d498cc030c2a8e8cea, type: 2}
       propertyPath: m_Name
@@ -2630,6 +2720,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe62f57dcf4943b418686d538ecb5ff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normanDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonResources: 0
+  normanResources: 0
+  x: 0
   card: {fileID: 1041576798642616, guid: 691e3e7c9d2e73d498cc030c2a8e8cea, type: 2}
   hand: {fileID: 1060000892}
 --- !u!4 &861360953 stripped
@@ -2964,8 +3077,8 @@ GameObject:
   - component: {fileID: 1060000894}
   - component: {fileID: 1060000895}
   m_Layer: 0
-  m_Name: Hand
-  m_TagString: Untagged
+  m_Name: normanHand
+  m_TagString: Norman
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2976,13 +3089,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1060000892}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 200, z: 1300}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &1060000894
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3262,6 +3375,7 @@ GameObject:
   - component: {fileID: 1282294500}
   - component: {fileID: 1282294499}
   - component: {fileID: 1282294498}
+  - component: {fileID: 1282294501}
   m_Layer: 0
   m_Name: SaxonDeck
   m_TagString: Untagged
@@ -3275,13 +3389,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1282294496}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 650, y: 30, z: -815}
   m_LocalScale: {x: 150, y: 60, z: 224.99997}
   m_Children: []
   m_Father: {fileID: 858061472}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &1282294498
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3336,6 +3450,42 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1282294496}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1282294501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1282294496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe62f57dcf4943b418686d538ecb5ff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normanDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonResources: 0
+  normanResources: 0
+  x: 180
+  card: {fileID: 1752051750923712, guid: 12581a2a41337624a815d752df8f1a57, type: 2}
+  hand: {fileID: 1752425416}
 --- !u!1 &1347201324
 GameObject:
   m_ObjectHideFlags: 0
@@ -3584,7 +3734,7 @@ Transform:
   m_LocalScale: {x: 150, y: 4, z: 225.00024}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!65 &1402357601
 BoxCollider:
@@ -3651,6 +3801,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789669aa03afe124cb892559663e4b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normanDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonResources: 0
+  normanResources: 0
   panel: {fileID: 649412305}
   sprite: {fileID: 1972110212}
   nameTraitType: {fileID: 433090286}
@@ -4597,6 +4769,60 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4023976544413506, guid: 1cc3b46b6682df442b44caacf0aabcb4,
     type: 2}
   m_PrefabInternal: {fileID: 1953649587}
+--- !u!1 &1752425416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1752425419}
+  - component: {fileID: 1752425418}
+  - component: {fileID: 1752425417}
+  m_Layer: 0
+  m_Name: saxonHand
+  m_TagString: Saxon
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1752425417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1752425416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2cb325351afed40a188ae311c710c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handPosition: {x: 0, y: 0, z: 0}
+--- !u!65 &1752425418
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1752425416}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 1000, y: 2, z: 300}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1752425419
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1752425416}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 200, z: -1300}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1753353017
 GameObject:
   m_ObjectHideFlags: 0
@@ -5541,6 +5767,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789669aa03afe124cb892559663e4b76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normanDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonDropPoints:
+  - {x: 300, y: 0, z: 326}
+  - {x: 0, y: 0, z: 326}
+  - {x: -300, y: 0, z: 326}
+  - {x: 300, y: 0, z: 663}
+  - {x: 0, y: 0, z: 663}
+  - {x: -300, y: 0, z: 663}
+  - {x: 300, y: 0, z: 1000}
+  - {x: 0, y: 0, z: 1000}
+  - {x: -300, y: 0, z: 1000}
+  saxonResources: 0
+  normanResources: 0
   panel: {fileID: 649412305}
   sprite: {fileID: 1972110212}
   nameTraitType: {fileID: 433090286}
@@ -5619,7 +5867,7 @@ Transform:
   m_LocalScale: {x: 100.49875, y: 411.40027, z: 0.56888926}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: -40, y: 0, z: 0}
 --- !u!1001 &2085770824
 Prefab:
@@ -5658,7 +5906,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4710842448169932, guid: 691e3e7c9d2e73d498cc030c2a8e8cea, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1041576798642616, guid: 691e3e7c9d2e73d498cc030c2a8e8cea, type: 2}
       propertyPath: m_Name

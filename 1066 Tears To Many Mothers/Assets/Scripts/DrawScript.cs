@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DrawScript : MonoBehaviour
+public class DrawScript : GameContoller
 {
+    public int x;
     public GameObject card;
     public GameObject hand;
     private Vector3 location = new Vector3(0, 200, 1300);
     private Vector3 scale;
     private Vector3 oPosition;
     private Vector3 mPosition;
-    Quaternion qrotation = Quaternion.Euler(-40, 0, 0);
+    Quaternion qrotation;
     private int cardsRemaining = 76;
     float decreaseHeight;
     private HandScript handScript;
@@ -19,6 +20,8 @@ public class DrawScript : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        Vector3 rotation = new Vector3(-40, x, 0);
+        qrotation = Quaternion.Euler(rotation);
         decreaseHeight = (gameObject.transform.localScale.y) / 76 ;
         oPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         handScript = hand.GetComponent<HandScript>();
@@ -32,7 +35,12 @@ public class DrawScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (cardsRemaining != 0)
+        drawFunc(2);
+    }
+
+    public void drawFunc(int i)
+    {
+        for (int j = 0; j < i; j++)
         {
             scale = new Vector3(transform.localScale.x, transform.localScale.y - decreaseHeight, transform.localScale.z);
             mPosition = new Vector3(oPosition.x, scale.y / 2, oPosition.z);
