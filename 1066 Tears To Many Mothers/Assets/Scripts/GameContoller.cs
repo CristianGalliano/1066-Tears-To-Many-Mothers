@@ -17,18 +17,18 @@ public class GameContoller : MonoBehaviour
 
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         SDS = GameObject.Find("SaxonDeck").GetComponent<DrawScript>();
         NDS = GameObject.Find("NormanDeck").GetComponent<DrawScript>();
         StartCoroutine("startDraw");
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
 
-	}
+    }
 
     private IEnumerator startDraw()
     {
@@ -42,6 +42,17 @@ public class GameContoller : MonoBehaviour
 
     public void EndTurn()
     {
+    }
 
+    public void damageObjective()
+    {
+    }
+
+    public void damageWedge()
+    {
+    }
+
+    public void damageEnemy()
+    {
     }
 }
