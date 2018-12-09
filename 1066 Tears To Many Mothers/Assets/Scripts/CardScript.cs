@@ -29,8 +29,8 @@ public class CardScript : GameContoller
     private bool tired = false;
     private BoxCollider thisCollider; //variable for the box collider attached to this gameobject.
     
-    string[] dropPlaceholders = new string[] {"Norman11", "Norman12", "Norman13", "Norman21", "Norman22", "Norman23", "Norman31", "Norman32", "Norman33" };
-
+    string[] NormanPlaceholders = new string[] {"Norman11", "Norman12", "Norman13", "Norman21", "Norman22", "Norman23", "Norman31", "Norman32", "Norman33" };
+    string[] SaxonPlaceholders = new string[] { "Saxon11", "Saxon12", "Saxon13", "Saxon21", "Saxon22", "Saxon23", "Saxon31", "Saxon32", "Saxon33" };
     GameObject[] placedCards;
 
     // Use this for initialization
@@ -147,7 +147,7 @@ public class CardScript : GameContoller
         {
             dragging = true;//adjust this condition to limit other functions.
             if (gameObject.tag == "Norman")
-            {               
+            {
                 float distance = 1100;//distance.
                 Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);//set mouse position to be equal to the mouse.
                 Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -155,7 +155,7 @@ public class CardScript : GameContoller
                 thisCollider.enabled = false;//disable the collider.
             }
             else if (gameObject.tag == "Saxon")
-            {                
+            {
                 float distance = 1100;//distance.
                 Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);//set mouse position to be equal to the mouse.
                 Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -164,25 +164,51 @@ public class CardScript : GameContoller
             }
         }
 
-
-        //Glowing placeholders (On)
-        GameObject obj;//sets a variable for storing gameobject references.
-        Component[] outlines;//sets an array for storing component references.
-        foreach (string name in dropPlaceholders)//goes through each string in the array.
+        if (gameObject.tag == "Saxon")
         {
-            obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
-            outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
-            placedCards = GameObject.FindGameObjectsWithTag("Placed Card"); //fills an array with references to all placed cards
-
-            foreach (Component outline in outlines)
+            GameObject obj;//sets a variable for storing gameobject references.
+            Component[] outlines;//sets an array for storing component references.
+            foreach (string name in SaxonPlaceholders)//goes through each string in the array.
             {
-                outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
+                obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
+                outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
+                placedCards = GameObject.FindGameObjectsWithTag("Placed Card"); //fills an array with references to all placed cards
 
-                foreach (GameObject card in placedCards)
+                foreach (Component outline in outlines)
                 {
-                    if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
+                    outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
+
+                    foreach (GameObject card in placedCards)
                     {
-                        outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
+                        if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
+                        {
+                            outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
+                        }
+                    }
+                }
+            }
+        }
+        else if (gameObject.tag == "Norman")
+        {
+            //Glowing placeholders (On)
+            GameObject obj;//sets a variable for storing gameobject references.
+            Component[] outlines;//sets an array for storing component references.
+            foreach (string name in NormanPlaceholders)//goes through each string in the array.
+            {
+                obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
+                outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
+                placedCards = GameObject.FindGameObjectsWithTag("Placed Card"); //fills an array with references to all placed cards
+
+                foreach (Component outline in outlines)
+                {
+                    outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
+
+                    foreach (GameObject card in placedCards)
+                    {
+                        if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
+                        {
+                            outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
+                        }
                     }
                 }
             }
@@ -270,7 +296,17 @@ public class CardScript : GameContoller
         //Glowing placeholders (Off)
         GameObject obj;//sets a variable for storing gameobject references.
         Component[] outlines;//sets an array for storing component references.
-        foreach (string name in dropPlaceholders)//goes through each string in the array.
+        foreach (string name in NormanPlaceholders)//goes through each string in the array.
+        {
+            obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
+            outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
+
+            foreach (Component outline in outlines)
+            {
+                outline.GetComponent<MeshRenderer>().enabled = false; //disables all outlines
+            }
+        }
+        foreach (string name in SaxonPlaceholders)//goes through each string in the array.
         {
             obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
             outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
