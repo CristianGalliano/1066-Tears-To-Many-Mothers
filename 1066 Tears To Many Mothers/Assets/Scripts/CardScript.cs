@@ -233,11 +233,11 @@ public class CardScript : GameContoller
         {
             foreach (Vector3 point in saxonDropPoints)//for each vector3 in the array.
             {
-                if (positionOfMouse.x < point.x + 99 && positionOfMouse.x > point.x - 99 && positionOfMouse.z < point.z + 167 && positionOfMouse.z > point.z - 167)//check its in the correct parameters.
+                if (positionOfMouse.x < point.x + 99 && positionOfMouse.x > point.x - 99 && positionOfMouse.z < -point.z + 167 && positionOfMouse.z > -point.z - 167)//check its in the correct parameters.
                 {
                     if (!placed)//checks that the card isnt placed.
                     {
-                        Vector3 dropPosition = new Vector3(point.x, point.y + 2, point.z);//sets the drop position.
+                        Vector3 dropPosition = new Vector3(point.x, point.y + 2, -point.z);//sets the drop position.
                         transform.position = dropPosition;//move the card to the drop position.
                         Vector3 Rotation = new Vector3(-50, 0, 0);//creat a vector to rotate.
                         transform.Rotate(Rotation);//rotate the card.
@@ -310,7 +310,6 @@ public class CardScript : GameContoller
         if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))//reads the mouse position and transfers it to a ray point, outputs that into hit.
         {
             positionOfMouse = hit.point; //the endpoint of the raycast corresponds to mouse position relative to terrain
-            //Debug.Log(positionOfMouse);
         }
     }
 }

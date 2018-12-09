@@ -10,6 +10,7 @@ public class GameContoller : MonoBehaviour
     public List<Vector3> saxonDropPoints = new List<Vector3> { new Vector3(300,0,-326), new Vector3(0,0,-326), new Vector3(-300,0,-326),
                                                                new Vector3(300,0,-663), new Vector3(0,0,-663), new Vector3(-300,0,-663),
                                                                new Vector3(300,0,-1000), new Vector3(0,0,-1000), new Vector3(-300,0,-1000)};
+
     private DrawScript SDS;
     private DrawScript NDS;
     public int saxonResources = 0;
