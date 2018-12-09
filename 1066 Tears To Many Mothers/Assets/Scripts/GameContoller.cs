@@ -11,10 +11,12 @@ public class GameContoller : MonoBehaviour
                                                                new Vector3(300,0,-663), new Vector3(0,0,-663), new Vector3(-300,0,-663),
                                                                new Vector3(300,0,-1000), new Vector3(0,0,-1000), new Vector3(-300,0,-1000)};
 
-    private DrawScript SDS;
-    private DrawScript NDS;
+    public DrawScript SDS;
+    public DrawScript NDS;
     public int saxonResources = 0;
     public int normanResources = 0;
+    public int turn = 0;
+    public int numberOfTurns = 1;
 
 
     // Use this for initialization
@@ -33,16 +35,29 @@ public class GameContoller : MonoBehaviour
 
     private IEnumerator startDraw()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            yield return new WaitForSeconds(0.25f);
-            SDS.drawFunc(1);
-            NDS.drawFunc(1);
-        }
+        yield return new WaitForSeconds(0.25f);
+        SDS.drawFunc(4);
+        NDS.drawFunc(4);
+        NDS.drawFunc(2);
     }
 
     public void EndTurn()
     {
+        numberOfTurns++;
+        turn++;
+        if (turn > 1)
+        {
+            turn = 0;
+        }
+        if (turn == 1)
+        {
+            SDS.drawFunc(2);
+        }
+        else if (turn == 0)
+        {
+            NDS.drawFunc(2);
+        }
+        Debug.Log("turn : " + numberOfTurns);
     }
 
     public void damageObjective()

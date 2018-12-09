@@ -49,7 +49,5 @@ public class CameraControl : MonoBehaviour
             Camera3.gameObject.SetActive(false);
             cameraNum = 1;
         }
-
-        Debug.Log(cameraNum);
     }
 }

@@ -30,29 +30,33 @@ public class DrawScript : GameContoller
 	// Update is called once per frame
 	void Update ()
     {
-		
+
 	}
 
     private void OnMouseDown()
     {
-        drawFunc(2);
     }
 
     public void drawFunc(int i)
     {
-        for (int j = 0; j < i; j++)
+        if (gameObject.transform.localScale.y != 0)
         {
-            scale = new Vector3(transform.localScale.x, transform.localScale.y - decreaseHeight, transform.localScale.z);
-            mPosition = new Vector3(oPosition.x, scale.y / 2, oPosition.z);
-            GameObject Card = Instantiate(card, location, qrotation);
-            Card.transform.parent = hand.transform;
-            transform.localPosition = mPosition;
-            transform.localScale = scale;
-            cardsRemaining--;
-            Debug.Log("number of cards in deck : " + cardsRemaining);
-            handScript.adjustCardPos();
+            for (int j = 0; j < i; j++)
+            {
+                scale = new Vector3(transform.localScale.x, transform.localScale.y - decreaseHeight, transform.localScale.z);
+                mPosition = new Vector3(oPosition.x, scale.y / 2, oPosition.z);
+                GameObject Card = Instantiate(card, location, qrotation);
+                Card.transform.parent = hand.transform;
+                transform.localPosition = mPosition;
+                transform.localScale = scale;
+                cardsRemaining--;
+                //Debug.Log("number of cards in deck : " + cardsRemaining);
+                handScript.adjustCardPos();
+            }
+        }
+        else
+        {
+            Debug.Log("out of cards");
         }
     }
-
-
 }
