@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DrawScript : GameContoller
+public class DrawScript : MonoBehaviour
 {
     public int x;
     public GameObject card;
@@ -32,10 +32,6 @@ public class DrawScript : GameContoller
     {
 
 	}
-
-    private void OnMouseDown()
-    {
-    }
 
     public void drawFunc(int i)
     {

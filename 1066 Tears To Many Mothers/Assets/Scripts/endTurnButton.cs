@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class endTurnButton : GameContoller
+public class endTurnButton : GameController
 {
 	
 	void Start ()

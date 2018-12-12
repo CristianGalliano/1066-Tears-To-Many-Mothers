@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class GameContoller : MonoBehaviour
+public class GameController : MonoBehaviour
 {
     public List<Vector3> normanDropPoints = new List<Vector3> { new Vector3(300,0,326), new Vector3(0,0,326), new Vector3(-300,0,326),
                                                                new Vector3(300,0,663), new Vector3(0,0,663), new Vector3(-300,0,663),
@@ -11,12 +12,12 @@ public class GameContoller : MonoBehaviour
                                                                new Vector3(300,0,-663), new Vector3(0,0,-663), new Vector3(-300,0,-663),
                                                                new Vector3(300,0,-1000), new Vector3(0,0,-1000), new Vector3(-300,0,-1000)};
 
-    public DrawScript SDS;
-    public DrawScript NDS;
+    public DrawScript SDS , NDS;
     public int saxonResources = 0;
     public int normanResources = 0;
     public int turn = 0;
     public int numberOfTurns = 1;
+    public Text SaxonResourcesText, NormanResourcesText;
 
 
     // Use this for initialization
@@ -30,7 +31,8 @@ public class GameContoller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        SaxonResourcesText.text = "Saxon Resources : " + saxonResources;
+        NormanResourcesText.text = "Norman Resources : " + normanResources;
     }
 
     private IEnumerator startDraw()
@@ -51,13 +53,16 @@ public class GameContoller : MonoBehaviour
         }
         if (turn == 1)
         {
+            normanResources = 0;
             SDS.drawFunc(2);
         }
         else if (turn == 0)
         {
+            saxonResources = 0;
             NDS.drawFunc(2);
         }
         Debug.Log("turn : " + numberOfTurns);
+
     }
 
     public void damageObjective()

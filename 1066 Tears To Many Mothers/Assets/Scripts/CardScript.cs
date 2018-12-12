@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CardScript : GameContoller
+public class CardScript : MonoBehaviour
 {
     private Vector3 cardPosition; //used to store the current card position;=.
     private Vector3 originalCardPosition; //used to store the original card position.
@@ -13,15 +13,11 @@ public class CardScript : GameContoller
     private Vector3 positionOfMouse; //used to ustore position of the mouse in terms of vector3.
 
     private int clickCount = 0; //limiter for certain functions.
+    int Count = 0;
 
     public GameObject panel; //references to ui;
     public Image sprite;
-    public Text nameTraitType;
-    public Text costZeal;
-    public Text mightHealthResources;
-    public Text abilities;
-    public Text flavour;
-    public Text cardNumber;
+    public Text nameTraitType, costZeal, mightHealthResources, abilities, flavour, cardNumber;  
     public NormanCard card; //gets the norman card scriptable object attached to this gameobject.
 
     private bool dragging = false; // bools for setting conditions.
@@ -32,6 +28,7 @@ public class CardScript : GameContoller
     string[] NormanPlaceholders = new string[] {"Norman11", "Norman12", "Norman13", "Norman21", "Norman22", "Norman23", "Norman31", "Norman32", "Norman33" };
     string[] SaxonPlaceholders = new string[] { "Saxon11", "Saxon12", "Saxon13", "Saxon21", "Saxon22", "Saxon23", "Saxon31", "Saxon32", "Saxon33" };
     GameObject[] placedCards;
+    private GameController controller;
 
     // Use this for initialization
     void Start ()
@@ -42,107 +39,140 @@ public class CardScript : GameContoller
         {
             panel.gameObject.SetActive(false);
         }
+        controller = GameObject.Find("GameController").GetComponent<GameController>();
 	}
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (placed)
-        {
-            gameObject.layer = 1;
-        }
 	}
 
     private void OnMouseEnter()
     {
-        if (gameObject.tag == "Norman")
-        {
-            originalCardPosition = transform.position;//sets the original card position(this will run after adjustPos function in the hand).
-            if (clickCount == 0 && dragging == false)//conditions to run.
-            {
-                boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y * 2, thisCollider.size.z);//used to modify scale of the box collider.
-                boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y - 150, thisCollider.center.z);//used to modify position of the box collider.
-                cardPosition.y = 500;//set card position axis.this determines where the card moves when hovered over.
-                cardPosition.z = 1300;
-                cardPosition.x = originalCardPosition.x;
-                thisCollider.center = boxPos;//move the collider by boxPos vector.
-                thisCollider.size = boxScale;//scale the collider by boxscale vector.
-                gameObject.transform.position = cardPosition;//move to cardposition.
-            }
-        }
-        else if (gameObject.tag == "Saxon")
-        {
-            originalCardPosition = transform.position;//sets the original card position(this will run after adjustPos function in the hand).
-            if (clickCount == 0 && dragging == false)//conditions to run.
-            {
-                boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y * 2, thisCollider.size.z);//used to modify scale of the box collider.
-                boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y - 150, thisCollider.center.z);//used to modify position of the box collider.
-                cardPosition.y = 500;//set card position axis.this determines where the card moves when hovered over.
-                cardPosition.z = -1300;
-                cardPosition.x = originalCardPosition.x;
-                thisCollider.center = boxPos;//move the collider by boxPos vector.
-                thisCollider.size = boxScale;//scale the collider by boxscale vector.
-                gameObject.transform.position = cardPosition;//move to cardposition.
-            }
-        }
+        hover();
     }
 
     private void OnMouseExit()
     {
         if (clickCount == 0 && dragging == false)//conditions to run.
-        {
-            if (gameObject.tag == "Norman")
-            {
-                boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
-                boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
-                thisCollider.center = boxPos;//move the collider by boxPos vector.
-                thisCollider.size = boxScale;//scale the collider by boxscale vector.
-                transform.position = originalCardPosition;//move to originalcardposition.
-            }
-            else if (gameObject.tag == "Saxon")
-            {
-                boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
-                boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
-                thisCollider.center = boxPos;//move the collider by boxPos vector.
-                thisCollider.size = boxScale;//scale the collider by boxscale vector.
-                transform.position = originalCardPosition;//move to originalcardposition.
-            }
+        {            
+            hoverEnd("Norman");
+            hoverEnd("Saxon");           
         }
     }
 
     private void OnMouseDown()
     {
-        if (placed)//if the card is placed on the field;
-        {
-            clickCount++;//counts the amount of clicks.
-            if (clickCount == 1)//if this is the first click.
-            {
-                if (panel != null)//if panel exists set it to true and set the different ui elements (based off of car parameters).
-                {
-                    panel.gameObject.SetActive(true);
-                    sprite.sprite = card.image;
-                    nameTraitType.text = card.name + ", " + card.traits + ", " + card.type;
-                    costZeal.text = "Cost: " + card.cost.ToString() + ", Zeal: " + card.zeal.ToString();
-                    mightHealthResources.text = "Might: " + card.might.ToString() + ", Health: " + card.health.ToString() + ", Resources: " + card.resources.ToString();
-                    abilities.text = card.abilities;
-                    flavour.text = card.flavour;
-                    cardNumber.text = "Card Number: " + card.cardNumber.ToString();
-                }
-            }
-            else//if this is not the first click.
-            {
-                if (panel != null)//if panel exists set it to false.
-                {
-                    panel.gameObject.SetActive(false);
-                }
-                clickCount = 0;//resets click count to loop this function.
-            }
-        }
+        showCardInformation();
     }
 
     public void OnMouseDrag()
     {
         getPointer();//runs get point function.
+        dragCard();
+        enablePlaceholders();
+    }
+
+    public void OnMouseUp()
+    {        
+        thisCollider.enabled = true;//re enamble the collider.
+        dropCard("Norman", controller.normanDropPoints);
+        dropCard("Saxon", controller.saxonDropPoints);
+        disablePlacholders();
+    }
+
+    private void OnMouseOver()
+    {
+        tireCard();
+    }
+
+    private void getPointer()
+    {
+        RaycastHit hit;//creats a raycasthit.
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))//reads the mouse position and transfers it to a ray point, outputs that into hit.
+        {
+            positionOfMouse = hit.point; //the endpoint of the raycast corresponds to mouse position relative to terrain
+        }
+    }
+
+    private void tireCard()
+    {
+        if (Input.GetMouseButtonDown(1))//on right click.
+        {
+            if (placed)//if the card is placed.
+            {
+                if (!tired)//if the card isnt already tired.
+                {
+                    Vector3 Rotation = new Vector3(0, 0, 90);//vector to rotate.
+                    transform.Rotate(Rotation);//rotate by the vector.
+                    tired = true;//set tired to true.
+                    if (gameObject.tag == "Norman")
+                    {
+                        controller.normanResources++;
+                        //Debug.Log("norman resources: " + controller.normanResources);
+                    }
+                    else if (gameObject.tag == "Saxon")
+                    {
+                        controller.saxonResources++;
+                        //Debug.Log("saxon resources: " + controller.saxonResources);
+                    }
+                }
+                else if (tired) //stops the card turning 360, this way it goes flipped and back to normal
+                {
+                    Vector3 Rotation = new Vector3(0, 0, -90);//vector to rotate.
+                    transform.Rotate(Rotation);//rotate by the vector.
+                    tired = false;//card is no longer tired.
+                }
+            }
+        }
+    }
+
+    void dropCard(string str, List<Vector3> List)
+    {
+        if (gameObject.tag == str)
+        {
+            foreach (Vector3 point in List)//for each vector3 in the array.
+            {
+                if (positionOfMouse.x < point.x + 99 && positionOfMouse.x > point.x - 99 && positionOfMouse.z < point.z + 167 && positionOfMouse.z > point.z - 167)//check its in the correct parameters.
+                {
+                    if (!placed)//checks that the card isnt placed.
+                    {
+                        Vector3 dropPosition = new Vector3(point.x, point.y + 2, point.z);//sets the drop position.
+                        transform.position = dropPosition;//move the card to the drop position.
+                        Vector3 Rotation = new Vector3(-50, 0, 0);//creat a vector to rotate.
+                        transform.Rotate(Rotation);//rotate the card.
+                        placed = true;//the card should now be placed so set placed to true.this will enable / disable certain functions based off conditions.
+                        boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
+                        boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
+                        thisCollider.center = boxPos;//move the collider by boxPos vector.
+                        thisCollider.size = boxScale;//scale the collider by boxscale vector.
+                        gameObject.transform.SetParent(null);//take this card out of the hand.
+                        //gameObject.tag = "Placed Card";
+                    }
+                }
+                else
+                {
+                    Count++;//add to count.
+                }
+            }
+        }
+        if (Count == List.Count)//if count is equal to the number of vectors in the array.
+        {
+            transform.position = originalCardPosition;//send the card back to the hand.
+            dragging = false;//set dragging to be false.
+            boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);
+            boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);
+            thisCollider.center = boxPos;//move the collider by boxPos vector.
+            thisCollider.size = boxScale;//scale the collider by boxscale vector.
+        }
+        if (placed)
+        {
+            gameObject.layer = 1;
+        }
+    }
+
+    void dragCard()
+    {
         if (!placed)//if the card hasnt been placed condition.
         {
             dragging = true;//adjust this condition to limit other functions.
@@ -162,8 +192,11 @@ public class CardScript : GameContoller
                 transform.position = objPosition;//set the position of this gameobject equal to obj position.
                 thisCollider.enabled = false;//disable the collider.
             }
-        }
+        }        
+    }
 
+    void enablePlaceholders()
+    {
         if (gameObject.tag == "Saxon")
         {
             GameObject obj;//sets a variable for storing gameobject references.
@@ -215,84 +248,8 @@ public class CardScript : GameContoller
         }
     }
 
-    public void OnMouseUp()
+    void disablePlacholders()
     {
-        int Count = 0;//count to see how many points we have ran through.
-        thisCollider.enabled = true;//re enamble the collider.
-        if (gameObject.tag == "Norman")
-        {
-            foreach (Vector3 point in normanDropPoints)//for each vector3 in the array.
-            {
-                if (positionOfMouse.x < point.x + 99 && positionOfMouse.x > point.x - 99 && positionOfMouse.z < point.z + 167 && positionOfMouse.z > point.z - 167)//check its in the correct parameters.
-                {
-                    if (!placed)//checks that the card isnt placed.
-                    {
-                        Vector3 dropPosition = new Vector3(point.x, point.y + 2, point.z);//sets the drop position.
-                        transform.position = dropPosition;//move the card to the drop position.
-                        Vector3 Rotation = new Vector3(-50, 0, 0);//creat a vector to rotate.
-                        transform.Rotate(Rotation);//rotate the card.
-                        placed = true;//the card should now be placed so set placed to true.this will enable / disable certain functions based off conditions.
-                        boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
-                        boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
-                        thisCollider.center = boxPos;//move the collider by boxPos vector.
-                        thisCollider.size = boxScale;//scale the collider by boxscale vector.
-                        gameObject.transform.SetParent(null);//take this card out of the hand.
-                        gameObject.tag = "Placed Card";
-                    }
-                }
-                else
-                {
-                    Count++;//add to count.
-                }
-            }
-            if (Count == normanDropPoints.Count)//if count is equal to the number of vectors in the array.
-            {
-                transform.position = originalCardPosition;//send the card back to the hand.
-                dragging = false;//set dragging to be false.
-                boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);
-                boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);
-                thisCollider.center = boxPos;//move the collider by boxPos vector.
-                thisCollider.size = boxScale;//scale the collider by boxscale vector.
-            }
-        }
-        else if (gameObject.tag == "Saxon")
-        {
-            foreach (Vector3 point in saxonDropPoints)//for each vector3 in the array.
-            {
-                if (positionOfMouse.x < point.x + 99 && positionOfMouse.x > point.x - 99 && positionOfMouse.z < -point.z + 167 && positionOfMouse.z > -point.z - 167)//check its in the correct parameters.
-                {
-                    if (!placed)//checks that the card isnt placed.
-                    {
-                        Vector3 dropPosition = new Vector3(point.x, point.y + 2, -point.z);//sets the drop position.
-                        transform.position = dropPosition;//move the card to the drop position.
-                        Vector3 Rotation = new Vector3(-50, 0, 0);//creat a vector to rotate.
-                        transform.Rotate(Rotation);//rotate the card.
-                        placed = true;//the card should now be placed so set placed to true.this will enable / disable certain functions based off conditions.
-                        boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
-                        boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
-                        thisCollider.center = boxPos;//move the collider by boxPos vector.
-                        thisCollider.size = boxScale;//scale the collider by boxscale vector.
-                        gameObject.transform.SetParent(null);//take this card out of the hand.
-                        gameObject.tag = "Placed Card";
-                    }
-                }
-                else
-                {
-                    Count++;//add to count.
-                }
-            }
-            if (Count == saxonDropPoints.Count)//if count is equal to the number of vectors in the array.
-            {
-                transform.position = originalCardPosition;//send the card back to the hand.
-                dragging = false;//set dragging to be false.
-                boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);
-                boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);
-                thisCollider.center = boxPos;//move the collider by boxPos vector.
-                thisCollider.size = boxScale;//scale the collider by boxscale vector.
-            }
-        }
-
-
         //Glowing placeholders (Off)
         GameObject obj;//sets a variable for storing gameobject references.
         Component[] outlines;//sets an array for storing component references.
@@ -318,34 +275,79 @@ public class CardScript : GameContoller
         }
     }
 
-    private void OnMouseOver()
+    void showCardInformation()
     {
-        if (Input.GetMouseButtonDown(1))//on right click.
+        if (placed)//if the card is placed on the field;
         {
-            if (placed)//if the card is placed.
+            clickCount++;//counts the amount of clicks.
+            if (clickCount == 1)//if this is the first click.
             {
-                if (!tired)//if the card isnt already tired.
+                if (panel != null)//if panel exists set it to true and set the different ui elements (based off of car parameters).
                 {
-                    Vector3 Rotation = new Vector3(0, 0, 90);//vector to rotate.
-                    transform.Rotate(Rotation);//rotate by the vector.
-                    tired = true;//set tired to true.
+                    panel.gameObject.SetActive(true);
+                    sprite.sprite = card.image;
+                    nameTraitType.text = card.name + ", " + card.traits + ", " + card.type;
+                    costZeal.text = "Cost: " + card.cost.ToString() + ", Zeal: " + card.zeal.ToString();
+                    mightHealthResources.text = "Might: " + card.might.ToString() + ", Health: " + card.health.ToString() + ", Resources: " + card.resources.ToString();
+                    abilities.text = card.abilities;
+                    flavour.text = card.flavour;
+                    cardNumber.text = "Card Number: " + card.cardNumber.ToString();
                 }
-                else if (tired) //stops the card turning 360, this way it goes flipped and back to normal
+            }
+            else//if this is not the first click.
+            {
+                if (panel != null)//if panel exists set it to false.
                 {
-                    Vector3 Rotation = new Vector3(0, 0, -90);//vector to rotate.
-                    transform.Rotate(Rotation);//rotate by the vector.
-                    tired = false;//card is no longer tired.
+                    panel.gameObject.SetActive(false);
                 }
+                clickCount = 0;//resets click count to loop this function.
             }
         }
     }
 
-    private void getPointer()
+    void hover()
     {
-        RaycastHit hit;//creats a raycasthit.
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))//reads the mouse position and transfers it to a ray point, outputs that into hit.
+        if (gameObject.tag == "Norman")
         {
-            positionOfMouse = hit.point; //the endpoint of the raycast corresponds to mouse position relative to terrain
+            originalCardPosition = transform.position;//sets the original card position(this will run after adjustPos function in the hand).
+            if (clickCount == 0 && dragging == false)//conditions to run.
+            {
+                boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y * 2, thisCollider.size.z);//used to modify scale of the box collider.
+                boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y - 150, thisCollider.center.z);//used to modify position of the box collider.
+                cardPosition.y = 500;//set card position axis.this determines where the card moves when hovered over.
+                cardPosition.z = 1300;
+                cardPosition.x = originalCardPosition.x;
+                thisCollider.center = boxPos;//move the collider by boxPos vector.
+                thisCollider.size = boxScale;//scale the collider by boxscale vector.
+                gameObject.transform.position = cardPosition;//move to cardposition.
+            }
+        }
+        else if (gameObject.tag == "Saxon")
+        {
+            originalCardPosition = transform.position;//sets the original card position(this will run after adjustPos function in the hand).
+            if (clickCount == 0 && dragging == false)//conditions to run.
+            {
+                boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y * 2, thisCollider.size.z);//used to modify scale of the box collider.
+                boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y - 150, thisCollider.center.z);//used to modify position of the box collider.
+                cardPosition.y = 500;//set card position axis.this determines where the card moves when hovered over.
+                cardPosition.z = -1300;
+                cardPosition.x = originalCardPosition.x;
+                thisCollider.center = boxPos;//move the collider by boxPos vector.
+                thisCollider.size = boxScale;//scale the collider by boxscale vector.
+                gameObject.transform.position = cardPosition;//move to cardposition.
+            }
+        }
+    }
+
+    void hoverEnd(string str)
+    {
+        if (gameObject.tag == str)
+        {
+            boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
+            boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
+            thisCollider.center = boxPos;//move the collider by boxPos vector.
+            thisCollider.size = boxScale;//scale the collider by boxscale vector.
+            transform.position = originalCardPosition;//move to originalcardposition.
         }
     }
 }

@@ -1787,6 +1787,8 @@ MonoBehaviour:
   normanResources: 0
   turn: 0
   numberOfTurns: 1
+  SaxonResourcesText: {fileID: 947204277}
+  NormanResourcesText: {fileID: 1203664550}
 --- !u!4 &719131377
 Transform:
   m_ObjectHideFlags: 0
@@ -2131,32 +2133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe62f57dcf4943b418686d538ecb5ff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normanDropPoints:
-  - {x: 300, y: 0, z: 326}
-  - {x: 0, y: 0, z: 326}
-  - {x: -300, y: 0, z: 326}
-  - {x: 300, y: 0, z: 663}
-  - {x: 0, y: 0, z: 663}
-  - {x: -300, y: 0, z: 663}
-  - {x: 300, y: 0, z: 1000}
-  - {x: 0, y: 0, z: 1000}
-  - {x: -300, y: 0, z: 1000}
-  saxonDropPoints:
-  - {x: 300, y: 0, z: -326}
-  - {x: 0, y: 0, z: -326}
-  - {x: -300, y: 0, z: -326}
-  - {x: 300, y: 0, z: -663}
-  - {x: 0, y: 0, z: -663}
-  - {x: -300, y: 0, z: -663}
-  - {x: 300, y: 0, z: -1000}
-  - {x: 0, y: 0, z: -1000}
-  - {x: -300, y: 0, z: -1000}
-  SDS: {fileID: 0}
-  NDS: {fileID: 0}
-  saxonResources: 0
-  normanResources: 0
-  turn: 0
-  numberOfTurns: 1
   x: 0
   card: {fileID: 1041576798642616, guid: 691e3e7c9d2e73d498cc030c2a8e8cea, type: 2}
   hand: {fileID: 1060000892}
@@ -2225,6 +2201,81 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cc3b46b6682df442b44caacf0aabcb4, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &947204275
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 947204276}
+  - component: {fileID: 947204278}
+  - component: {fileID: 947204277}
+  m_Layer: 5
+  m_Name: resourceSaxon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &947204276
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 947204275}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1154377372}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -100}
+  m_SizeDelta: {x: 500, y: 200}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &947204277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 947204275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 5
+    m_MaxSize: 50
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Saxon Resources : 0'
+--- !u!222 &947204278
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 947204275}
+  m_CullTransparentMesh: 0
 --- !u!4 &952269610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4023976544413506, guid: 1cc3b46b6682df442b44caacf0aabcb4,
@@ -2662,6 +2713,8 @@ RectTransform:
   - {fileID: 2133302657}
   - {fileID: 649412306}
   - {fileID: 1344582709}
+  - {fileID: 1203664549}
+  - {fileID: 947204276}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2700,6 +2753,81 @@ Transform:
   m_Father: {fileID: 2026223522}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1203664548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1203664549}
+  - component: {fileID: 1203664551}
+  - component: {fileID: 1203664550}
+  m_Layer: 5
+  m_Name: resourceNorman
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1203664549
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1203664548}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1154377372}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -300, y: -100}
+  m_SizeDelta: {x: 600, y: 200}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1203664550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1203664548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 50
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 5
+    m_MaxSize: 50
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Norman Resources : 0'
+--- !u!222 &1203664551
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1203664548}
+  m_CullTransparentMesh: 0
 --- !u!1 &1277851737
 GameObject:
   m_ObjectHideFlags: 0
@@ -2882,32 +3010,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe62f57dcf4943b418686d538ecb5ff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normanDropPoints:
-  - {x: 300, y: 0, z: 326}
-  - {x: 0, y: 0, z: 326}
-  - {x: -300, y: 0, z: 326}
-  - {x: 300, y: 0, z: 663}
-  - {x: 0, y: 0, z: 663}
-  - {x: -300, y: 0, z: 663}
-  - {x: 300, y: 0, z: 1000}
-  - {x: 0, y: 0, z: 1000}
-  - {x: -300, y: 0, z: 1000}
-  saxonDropPoints:
-  - {x: 300, y: 0, z: -326}
-  - {x: 0, y: 0, z: -326}
-  - {x: -300, y: 0, z: -326}
-  - {x: 300, y: 0, z: -663}
-  - {x: 0, y: 0, z: -663}
-  - {x: -300, y: 0, z: -663}
-  - {x: 300, y: 0, z: -1000}
-  - {x: 0, y: 0, z: -1000}
-  - {x: -300, y: 0, z: -1000}
-  SDS: {fileID: 0}
-  NDS: {fileID: 0}
-  saxonResources: 0
-  normanResources: 0
-  turn: 0
-  numberOfTurns: 1
   x: 180
   card: {fileID: 1752051750923712, guid: 12581a2a41337624a815d752df8f1a57, type: 2}
   hand: {fileID: 1752425416}
