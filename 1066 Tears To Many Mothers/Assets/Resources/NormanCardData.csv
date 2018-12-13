@@ -1,0 +1,12 @@
+ID,Name,Type,Might,Zeal,Health,Cost,Abilities
+0,Harold,Leader,3,3,11,0,Player loses when this card dies.
+1,Bodygaurds,Soldier,2,2,5,3,Damage taken by the leader is transferred to this card instead
+2,Archer,Ranged,1,3,3,2,Can attack any enemy non-leader card
+3,Batallion Commander,Soldier,5,2,6,6,All ally soldiers gain 2 Might
+4,Master Marksman,Ranged,2,5,4,5,All ally ranged gain 2 Zeal
+5,Field Medic,Soldier,1,1,6,3,Heal any card for 1 health
+6,Alvor,Soldier,10,1,6,6,"Choose a card, increase their might or zeal by 3"
+7,Allduin,Ranged,5,5,10,7,Deal 1 damage to all enemy cards
+8,Dragonborn,Soldier,100,100,100,0,Just be a beast and win the game instantly
+9,Jarl Balgruf,Soldier,6,7,9,5,Shoot an arrow into the enemy leader's knee
+10,Whiterun Guard,Soldier,3,2,4,7,"Block any ""Arrow to the knee"" abilities targetted at your Leader"

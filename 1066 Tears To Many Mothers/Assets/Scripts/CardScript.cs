@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class CardScript : MonoBehaviour
 {
+
     private Vector3 cardPosition; //used to store the current card position;=.
     private Vector3 originalCardPosition; //used to store the original card position.
     private Vector3 boxPos; //used to store position of the box collider attached to this gameobject.
@@ -15,11 +16,6 @@ public class CardScript : MonoBehaviour
     private int clickCount = 0; //limiter for certain functions.
     int Count = 0;
 
-    public GameObject panel; //references to ui;
-    public Image sprite;
-    public Text nameTraitType, costZeal, mightHealthResources, abilities, flavour, cardNumber;  
-    public NormanCard card; //gets the norman card scriptable object attached to this gameobject.
-
     private bool dragging = false; // bools for setting conditions.
     private bool placed = false;
     private bool tired = false;
@@ -27,20 +23,25 @@ public class CardScript : MonoBehaviour
     
     string[] NormanPlaceholders = new string[] {"Norman11", "Norman12", "Norman13", "Norman21", "Norman22", "Norman23", "Norman31", "Norman32", "Norman33" };
     string[] SaxonPlaceholders = new string[] { "Saxon11", "Saxon12", "Saxon13", "Saxon21", "Saxon22", "Saxon23", "Saxon31", "Saxon32", "Saxon33" };
-    GameObject[] placedCards;
+    private GameObject[] placedCards;
     private GameController controller;
+    private DeckManager deck;
+    private CardDisplayScript UI;
+    private NormanCard card;
 
     // Use this for initialization
     void Start ()
     {
+        //Initialising Script References
+        controller = GameObject.Find("GameController").GetComponent<GameController>();
+        deck = GameObject.Find("DeckManager").GetComponent<DeckManager>();
+        UI = GameObject.Find("UIController").GetComponent<CardDisplayScript>();
+
         thisCollider = gameObject.GetComponent<BoxCollider>(); //set thisCollider to reference the collider attached to this gameObject.
         cardPosition = gameObject.transform.localPosition; //set card position.
-        if (panel != null) //if there is a panel gameobject set it to false.
-        {
-            panel.gameObject.SetActive(false);
-        }
-        controller = GameObject.Find("GameController").GetComponent<GameController>();
-	}
+
+        card = deck.DrawRandomNormanCard();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -205,7 +206,7 @@ public class CardScript : MonoBehaviour
             {
                 obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
                 outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
-                placedCards = GameObject.FindGameObjectsWithTag("Placed Card"); //fills an array with references to all placed cards
+                placedCards = GameObject.FindGameObjectsWithTag("Saxon"); //fills an array with references to all placed cards
 
                 foreach (Component outline in outlines)
                 {
@@ -230,7 +231,7 @@ public class CardScript : MonoBehaviour
             {
                 obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
                 outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
-                placedCards = GameObject.FindGameObjectsWithTag("Placed Card"); //fills an array with references to all placed cards
+                placedCards = GameObject.FindGameObjectsWithTag("Norman"); //fills an array with references to all placed cards
 
                 foreach (Component outline in outlines)
                 {
@@ -282,25 +283,13 @@ public class CardScript : MonoBehaviour
             clickCount++;//counts the amount of clicks.
             if (clickCount == 1)//if this is the first click.
             {
-                if (panel != null)//if panel exists set it to true and set the different ui elements (based off of car parameters).
-                {
-                    panel.gameObject.SetActive(true);
-                    sprite.sprite = card.image;
-                    nameTraitType.text = card.name + ", " + card.traits + ", " + card.type;
-                    costZeal.text = "Cost: " + card.cost.ToString() + ", Zeal: " + card.zeal.ToString();
-                    mightHealthResources.text = "Might: " + card.might.ToString() + ", Health: " + card.health.ToString() + ", Resources: " + card.resources.ToString();
-                    abilities.text = card.abilities;
-                    flavour.text = card.flavour;
-                    cardNumber.text = "Card Number: " + card.cardNumber.ToString();
-                }
+                UI.panel.gameObject.SetActive(true);
+                UI.SetDisplay(card);
             }
             else//if this is not the first click.
             {
-                if (panel != null)//if panel exists set it to false.
-                {
-                    panel.gameObject.SetActive(false);
-                }
-                clickCount = 0;//resets click count to loop this function.
+                 UI.panel.gameObject.SetActive(false);
+                 clickCount = 0;//resets click count to loop this function.
             }
         }
     }

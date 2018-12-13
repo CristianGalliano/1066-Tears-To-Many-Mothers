@@ -19,7 +19,6 @@ public class GameController : MonoBehaviour
     public int numberOfTurns = 1;
     public Text SaxonResourcesText, NormanResourcesText;
 
-
     // Use this for initialization
     void Start()
     {
