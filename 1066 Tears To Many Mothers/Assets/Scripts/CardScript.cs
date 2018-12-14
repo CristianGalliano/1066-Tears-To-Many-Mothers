@@ -27,8 +27,7 @@ public class CardScript : MonoBehaviour
     private GameController controller;
     private DeckManager deck;
     private CardDisplayScript UI;
-    private NormanCard card;
-
+    private NormanCard normanCard, saxonCard;
     // Use this for initialization
     void Start ()
     {
@@ -40,7 +39,15 @@ public class CardScript : MonoBehaviour
         thisCollider = gameObject.GetComponent<BoxCollider>(); //set thisCollider to reference the collider attached to this gameObject.
         cardPosition = gameObject.transform.localPosition; //set card position.
 
-        card = deck.DrawRandomNormanCard();
+        if(gameObject.tag == "Norman")
+        {
+            normanCard = deck.DrawRandomNormanCard();
+        }
+
+        if(gameObject.tag == "Saxon")
+        {
+            saxonCard = deck.DrawRandomSaxonCard();
+        }
     }
 	
 	// Update is called once per frame
@@ -278,13 +285,22 @@ public class CardScript : MonoBehaviour
 
     void showCardInformation()
     {
+
         if (placed)//if the card is placed on the field;
         {
             clickCount++;//counts the amount of clicks.
             if (clickCount == 1)//if this is the first click.
             {
                 UI.panel.gameObject.SetActive(true);
-                UI.SetDisplay(card);
+
+                if (gameObject.tag == "Norman")
+                {
+                    UI.SetDisplay(normanCard);
+                }
+                else if (gameObject.tag == "Saxon")
+                {
+                    UI.SetDisplay(saxonCard);
+                }
             }
             else//if this is not the first click.
             {

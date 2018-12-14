@@ -26,11 +26,11 @@ public class CardDisplayScript : MonoBehaviour {
 
         Name.text = card.name;
         Type.text = card.type;
-        Cost.text = card.cost.ToString();
-        Might.text = card.might.ToString();
-        Zeal.text = card.zeal.ToString();
-        Health.text = card.health.ToString();
+        Cost.text = "Cost: " + card.cost.ToString();
+        Might.text = "Might: " + card.might.ToString();
+        Zeal.text = "Zeal: " + card.zeal.ToString();
+        Health.text = "Health: " + card.health.ToString();
         Abilities.text = card.abilities;
-        CardNumber.text = card.cardNumber.ToString();
+        CardNumber.text = "Card Number: " + card.cardNumber.ToString();
     }
 }
