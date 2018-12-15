@@ -28,6 +28,9 @@ public class CardScript : MonoBehaviour
     private DeckManager deck;
     private CardDisplayScript UI;
     private NormanCard normanCard, saxonCard;
+
+    public TextMesh CostMesh, ZealMesh, MightMesh, HealthMesh;
+
     // Use this for initialization
     void Start ()
     {
@@ -38,7 +41,6 @@ public class CardScript : MonoBehaviour
 
         thisCollider = gameObject.GetComponent<BoxCollider>(); //set thisCollider to reference the collider attached to this gameObject.
         cardPosition = gameObject.transform.localPosition; //set card position.
-       
 
         if (gameObject.tag == "Norman")
         {
@@ -49,6 +51,10 @@ public class CardScript : MonoBehaviour
         {
             saxonCard = deck.DrawRandomSaxonCard();
         }
+
+
+
+        UpdateStats();
     }
 	
 	// Update is called once per frame
@@ -119,7 +125,7 @@ public class CardScript : MonoBehaviour
             if (placed)//if the card is placed.
             {
                 if (!tired)//if the card isnt already tired.
-                {                    
+                {
                     if (gameObject.tag == "Norman" && controller.turn == 0)
                     {
                         Vector3 Rotation = new Vector3(0, 0, 90);//vector to rotate.
@@ -137,12 +143,6 @@ public class CardScript : MonoBehaviour
                         //Debug.Log("saxon resources: " + controller.saxonResources);
                     }
                 }
-                //else if (tired) //stops the card turning 360, this way it goes flipped and back to normal
-                //{
-                //    Vector3 Rotation = new Vector3(0, 0, -90);//vector to rotate.
-                //    transform.Rotate(Rotation);//rotate by the vector.
-                //    tired = false;//card is no longer tired.
-                //}
             }
         }
     }
@@ -154,7 +154,7 @@ public class CardScript : MonoBehaviour
         {
             foreach (int point in controller.xPositions)//for each vector3 in the array.
             {
-                if (positionOfMouse.x < point + 99 && positionOfMouse.x > point- 99)//check its in the correct parameters.
+                if (positionOfMouse.x < point + 147 && positionOfMouse.x > point - 147)//check its in the correct parameters.
                 {
                     int index = controller.xPositions.IndexOf(point);
                     Debug.Log(index);
@@ -232,20 +232,18 @@ public class CardScript : MonoBehaviour
                 foreach (string name in SaxonPlaceholders)//goes through each string in the array.
                 {
                     obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
-                    outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
-                                                                            //placedCards = GameObject.FindGameObjectsWithTag("Saxon"); //fills an array with references to all placed cards
+                    outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array                                                       
 
                     foreach (Component outline in outlines)
                     {
-                        outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
-
-                        //foreach (GameObject card in placedCards)
-                        //{
-                        //    if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
-                        //    {
-                        //        outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
-                        //    }
-                        //}
+                        if (positionOfMouse.x < outline.transform.position.x + 147 && positionOfMouse.x > outline.transform.position.x - 147)//check its in the correct parameters.
+                        {
+                            outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
+                        }
+                        else
+                        {
+                            outline.GetComponent<MeshRenderer>().enabled = false; //enables all outlines
+                        }
                     }
                 }
             }
@@ -258,19 +256,17 @@ public class CardScript : MonoBehaviour
                 {
                     obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
                     outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
-                                                                            //placedCards = GameObject.FindGameObjectsWithTag("Norman"); //fills an array with references to all placed cards
 
                     foreach (Component outline in outlines)
                     {
-                        outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
-
-                        //foreach (GameObject card in placedCards)
-                        //{
-                        //    if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
-                        //    {
-                        //        outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
-                        //    }
-                        //}
+                        if (positionOfMouse.x < outline.transform.position.x + 147 && positionOfMouse.x > outline.transform.position.x - 147)//check its in the correct parameters.
+                        {
+                            outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
+                        }
+                        else
+                        {
+                            outline.GetComponent<MeshRenderer>().enabled = false; //enables all outlines
+                        }
                     }
                 }
             }
@@ -386,5 +382,24 @@ public class CardScript : MonoBehaviour
             transform.Rotate(Rotation);//rotate by the vector.
             tired = false;//card is no longer tired.
         }
+    }
+
+    void UpdateStats()
+    {
+        if(gameObject.tag == "Norman")
+        {
+            CostMesh.text = normanCard.cost.ToString();
+            ZealMesh.text = normanCard.zeal.ToString();
+            MightMesh.text = normanCard.might.ToString();
+            HealthMesh.text = normanCard.health.ToString();
+        }
+        else if(gameObject.tag == "Saxon")
+        {
+            CostMesh.text = saxonCard.cost.ToString();
+            ZealMesh.text = saxonCard.zeal.ToString();
+            MightMesh.text = saxonCard.might.ToString();
+            HealthMesh.text = saxonCard.health.ToString();
+        }
+
     }
 }

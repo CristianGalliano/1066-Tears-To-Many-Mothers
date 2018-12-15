@@ -1,21 +1,21 @@
-ID,Name,Type,Might,Zeal,Health,Cost,Abilities
-0,a,Leader,3,3,11,0,Player loses when this card dies.
-1,b,Soldier,2,2,5,3,Damage taken by the leader is transferred to this card instead
-2,c,Ranged,1,3,3,2,Can attack any enemy non-leader card
-3,d,Soldier,5,2,6,6,All ally soldiers gain 2 Might
-4,e,Ranged,2,5,4,5,All ally ranged gain 2 Zeal
-5,f,Soldier,1,1,6,3,Heal any card for 1 health
-6,g,Leader,3,3,11,0,Player loses when this card dies.
-7,h,Soldier,2,2,5,3,Damage taken by the leader is transferred to this card instead
-8,i,Ranged,1,3,3,2,Can attack any enemy non-leader card
-9,j,Soldier,5,2,6,6,All ally soldiers gain 2 Might
-10,k,Ranged,2,5,4,5,All ally ranged gain 2 Zeal
-11,l,Soldier,1,1,6,3,Heal any card for 1 health
-12,m,Leader,3,3,11,0,Player loses when this card dies.
-13,n,Soldier,2,2,5,3,Damage taken by the leader is transferred to this card instead
-14,o,Ranged,1,3,3,2,Can attack any enemy non-leader card
-15,p,Soldier,5,2,6,6,All ally soldiers gain 2 Might
-16,q,Ranged,2,5,4,5,All ally ranged gain 2 Zeal
-17,r,Soldier,1,1,6,3,Heal any card for 1 health
-18,s,Leader,3,3,11,0,Player loses when this card dies.
-19,t,Soldier,2,2,5,3,Damage taken by the leader is transferred to this card instead
+ID,Name,Type,Might,Zeal,Health,Cost,Abilities,Flavour
+0,a,Leader,3,3,11,0,Player loses when this card dies.,Sample Flavour
+1,b,Soldier,2,2,5,3,Damage taken by the leader is transferred to this card instead,Sample Flavour
+2,c,Ranged,1,3,3,2,Can attack any enemy non-leader card,Sample Flavour
+3,d,Soldier,5,2,6,6,All ally soldiers gain 2 Might,Sample Flavour
+4,e,Ranged,2,5,4,5,All ally ranged gain 2 Zeal,Sample Flavour
+5,f,Soldier,1,1,6,3,Heal any card for 1 health,Sample Flavour
+6,g,Leader,3,3,11,0,Player loses when this card dies.,Sample Flavour
+7,h,Soldier,2,2,5,3,Damage taken by the leader is transferred to this card instead,Sample Flavour
+8,i,Ranged,1,3,3,2,Can attack any enemy non-leader card,Sample Flavour
+9,j,Soldier,5,2,6,6,All ally soldiers gain 2 Might,Sample Flavour
+10,k,Ranged,2,5,4,5,All ally ranged gain 2 Zeal,Sample Flavour
+11,l,Soldier,1,1,6,3,Heal any card for 1 health,Sample Flavour
+12,m,Leader,3,3,11,0,Player loses when this card dies.,Sample Flavour
+13,n,Soldier,2,2,5,3,Damage taken by the leader is transferred to this card instead,Sample Flavour
+14,o,Ranged,1,3,3,2,Can attack any enemy non-leader card,Sample Flavour
+15,p,Soldier,5,2,6,6,All ally soldiers gain 2 Might,Sample Flavour
+16,q,Ranged,2,5,4,5,All ally ranged gain 2 Zeal,Sample Flavour
+17,r,Soldier,1,1,6,3,Heal any card for 1 health,Sample Flavour
+18,s,Leader,3,3,11,0,Player loses when this card dies.,Sample Flavour
+19,t,Soldier,2,2,5,3,Damage taken by the leader is transferred to this card instead,Sample Flavour

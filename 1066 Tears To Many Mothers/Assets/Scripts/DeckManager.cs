@@ -33,6 +33,7 @@ public class DeckManager : MonoBehaviour
             NormanDeck[idNum].health = int.Parse(cardDataText[5]);
             NormanDeck[idNum].cost = int.Parse(cardDataText[6]);
             NormanDeck[idNum].abilities = cardDataText[7];
+            NormanDeck[idNum].flavour = cardDataText[8];
         }
 
         for(int i = 0; i < NormanDeck.Count; i++)
@@ -57,6 +58,7 @@ public class DeckManager : MonoBehaviour
             SaxonDeck[idNum].health = int.Parse(cardDataText[5]);
             SaxonDeck[idNum].cost = int.Parse(cardDataText[6]);
             SaxonDeck[idNum].abilities = cardDataText[7];
+            SaxonDeck[idNum].flavour = cardDataText[8];
         }
 
 
