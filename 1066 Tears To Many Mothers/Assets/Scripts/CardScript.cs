@@ -21,8 +21,8 @@ public class CardScript : MonoBehaviour
     private bool tired = false;
     private BoxCollider thisCollider; //variable for the box collider attached to this gameobject.
     
-    string[] NormanPlaceholders = new string[] {"Norman11", "Norman12", "Norman13", "Norman21", "Norman22", "Norman23", "Norman31", "Norman32", "Norman33" };
-    string[] SaxonPlaceholders = new string[] { "Saxon11", "Saxon12", "Saxon13", "Saxon21", "Saxon22", "Saxon23", "Saxon31", "Saxon32", "Saxon33" };
+    string[] NormanPlaceholders = new string[] {"Norman1", "Norman2", "Norman3"};
+    string[] SaxonPlaceholders = new string[] { "Saxon1", "Saxon2", "Saxon3"};
     private GameObject[] placedCards;
     private GameController controller;
     private DeckManager deck;
@@ -39,7 +39,9 @@ public class CardScript : MonoBehaviour
         thisCollider = gameObject.GetComponent<BoxCollider>(); //set thisCollider to reference the collider attached to this gameObject.
         cardPosition = gameObject.transform.localPosition; //set card position.
 
-        if(gameObject.tag == "Norman")
+        originalCardPosition = transform.position;//sets the original card position(this will run after adjustPos function in the hand).
+
+        if (gameObject.tag == "Norman")
         {
             normanCard = deck.DrawRandomNormanCard();
         }
@@ -137,6 +139,7 @@ public class CardScript : MonoBehaviour
 
     void dropCard(string str, List<int> List, List<int> count)
     {
+        Debug.Log(originalCardPosition);
         if (gameObject.tag == str)
         {
             foreach (int point in controller.xPositions)//for each vector3 in the array.
@@ -145,7 +148,7 @@ public class CardScript : MonoBehaviour
                 {
                     int index = controller.xPositions.IndexOf(point);
                     Debug.Log(index);
-                    if (!placed )//checks that the card isnt placed.
+                    if (!placed && count[index] < 3)//checks that the card isnt placed.
                     {
                         Vector3 dropPosition = new Vector3(point, 2, List[count[index]]);//sets the drop position.
                         transform.position = dropPosition;//move the card to the drop position.
@@ -165,16 +168,18 @@ public class CardScript : MonoBehaviour
                     Count++;//add to count.
                 }
             }
+
+            if (!placed)//if the card hasnt been placed, return position
+            {
+                transform.position = originalCardPosition;//send the card back to the hand.
+                dragging = false;//set dragging to be false.
+                boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);
+                boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);
+                thisCollider.center = boxPos;//move the collider by boxPos vector.
+                thisCollider.size = boxScale;//scale the collider by boxscale vector.
+            }
         }
-        if (Count == List.Count)//if count is equal to the number of vectors in the array.
-        {
-            transform.position = originalCardPosition;//send the card back to the hand.
-            dragging = false;//set dragging to be false.
-            boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);
-            boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);
-            thisCollider.center = boxPos;//move the collider by boxPos vector.
-            thisCollider.size = boxScale;//scale the collider by boxscale vector.
-        }
+       
         if (placed)
         {
             gameObject.layer = 1;
@@ -188,6 +193,7 @@ public class CardScript : MonoBehaviour
             dragging = true;//adjust this condition to limit other functions.
             if (gameObject.tag == "Norman")
             {
+
                 float distance = 1100;//distance.
                 Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);//set mouse position to be equal to the mouse.
                 Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition);
@@ -215,19 +221,19 @@ public class CardScript : MonoBehaviour
             {
                 obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
                 outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
-                placedCards = GameObject.FindGameObjectsWithTag("Saxon"); //fills an array with references to all placed cards
+                //placedCards = GameObject.FindGameObjectsWithTag("Saxon"); //fills an array with references to all placed cards
 
                 foreach (Component outline in outlines)
                 {
                     outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
 
-                    foreach (GameObject card in placedCards)
-                    {
-                        if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
-                        {
-                            outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
-                        }
-                    }
+                    //foreach (GameObject card in placedCards)
+                    //{
+                    //    if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
+                    //    {
+                    //        outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
+                    //    }
+                    //}
                 }
             }
         }
@@ -240,19 +246,19 @@ public class CardScript : MonoBehaviour
             {
                 obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
                 outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
-                placedCards = GameObject.FindGameObjectsWithTag("Norman"); //fills an array with references to all placed cards
+                //placedCards = GameObject.FindGameObjectsWithTag("Norman"); //fills an array with references to all placed cards
 
                 foreach (Component outline in outlines)
                 {
                     outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
 
-                    foreach (GameObject card in placedCards)
-                    {
-                        if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
-                        {
-                            outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
-                        }
-                    }
+                    //foreach (GameObject card in placedCards)
+                    //{
+                    //    if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
+                    //    {
+                    //        outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
+                    //    }
+                    //}
                 }
             }
         }
@@ -316,7 +322,6 @@ public class CardScript : MonoBehaviour
     {
         if (gameObject.tag == "Norman")
         {
-            originalCardPosition = transform.position;//sets the original card position(this will run after adjustPos function in the hand).
             if (clickCount == 0 && dragging == false)//conditions to run.
             {
                 boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y * 2, thisCollider.size.z);//used to modify scale of the box collider.
@@ -331,7 +336,7 @@ public class CardScript : MonoBehaviour
         }
         else if (gameObject.tag == "Saxon")
         {
-            originalCardPosition = transform.position;//sets the original card position(this will run after adjustPos function in the hand).
+
             if (clickCount == 0 && dragging == false)//conditions to run.
             {
                 boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y * 2, thisCollider.size.z);//used to modify scale of the box collider.
