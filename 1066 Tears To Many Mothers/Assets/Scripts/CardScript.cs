@@ -38,8 +38,7 @@ public class CardScript : MonoBehaviour
 
         thisCollider = gameObject.GetComponent<BoxCollider>(); //set thisCollider to reference the collider attached to this gameObject.
         cardPosition = gameObject.transform.localPosition; //set card position.
-
-        originalCardPosition = transform.position;//sets the original card position(this will run after adjustPos function in the hand).
+       
 
         if (gameObject.tag == "Norman")
         {
@@ -55,7 +54,15 @@ public class CardScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-	}
+        if (controller.turn == 0 && gameObject.tag == "Saxon")
+        {         
+            readyCard();
+        }
+        if (controller.turn == 1 && gameObject.tag == "Norman")
+        {            
+            readyCard();
+        }
+    }
 
     private void OnMouseEnter()
     {
@@ -112,27 +119,30 @@ public class CardScript : MonoBehaviour
             if (placed)//if the card is placed.
             {
                 if (!tired)//if the card isnt already tired.
-                {
-                    Vector3 Rotation = new Vector3(0, 0, 90);//vector to rotate.
-                    transform.Rotate(Rotation);//rotate by the vector.
-                    tired = true;//set tired to true.
-                    if (gameObject.tag == "Norman")
+                {                    
+                    if (gameObject.tag == "Norman" && controller.turn == 0)
                     {
+                        Vector3 Rotation = new Vector3(0, 0, 90);//vector to rotate.
+                        transform.Rotate(Rotation);//rotate by the vector.
+                        tired = true;//set tired to true.
                         controller.normanResources++;
                         //Debug.Log("norman resources: " + controller.normanResources);
                     }
-                    else if (gameObject.tag == "Saxon")
+                    else if (gameObject.tag == "Saxon" && controller.turn == 1)
                     {
+                        Vector3 Rotation = new Vector3(0, 0, 90);//vector to rotate.
+                        transform.Rotate(Rotation);//rotate by the vector.
+                        tired = true;//set tired to true.
                         controller.saxonResources++;
                         //Debug.Log("saxon resources: " + controller.saxonResources);
                     }
                 }
-                else if (tired) //stops the card turning 360, this way it goes flipped and back to normal
-                {
-                    Vector3 Rotation = new Vector3(0, 0, -90);//vector to rotate.
-                    transform.Rotate(Rotation);//rotate by the vector.
-                    tired = false;//card is no longer tired.
-                }
+                //else if (tired) //stops the card turning 360, this way it goes flipped and back to normal
+                //{
+                //    Vector3 Rotation = new Vector3(0, 0, -90);//vector to rotate.
+                //    transform.Rotate(Rotation);//rotate by the vector.
+                //    tired = false;//card is no longer tired.
+                //}
             }
         }
     }
@@ -213,52 +223,55 @@ public class CardScript : MonoBehaviour
 
     void enablePlaceholders()
     {
-        if (gameObject.tag == "Saxon")
+        if (!placed)
         {
-            GameObject obj;//sets a variable for storing gameobject references.
-            Component[] outlines;//sets an array for storing component references.
-            foreach (string name in SaxonPlaceholders)//goes through each string in the array.
+            if (gameObject.tag == "Saxon")
             {
-                obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
-                outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
-                //placedCards = GameObject.FindGameObjectsWithTag("Saxon"); //fills an array with references to all placed cards
-
-                foreach (Component outline in outlines)
+                GameObject obj;//sets a variable for storing gameobject references.
+                Component[] outlines;//sets an array for storing component references.
+                foreach (string name in SaxonPlaceholders)//goes through each string in the array.
                 {
-                    outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
+                    obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
+                    outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
+                                                                            //placedCards = GameObject.FindGameObjectsWithTag("Saxon"); //fills an array with references to all placed cards
 
-                    //foreach (GameObject card in placedCards)
-                    //{
-                    //    if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
-                    //    {
-                    //        outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
-                    //    }
-                    //}
+                    foreach (Component outline in outlines)
+                    {
+                        outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
+
+                        //foreach (GameObject card in placedCards)
+                        //{
+                        //    if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
+                        //    {
+                        //        outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
+                        //    }
+                        //}
+                    }
                 }
             }
-        }
-        else if (gameObject.tag == "Norman")
-        {
-            //Glowing placeholders (On)
-            GameObject obj;//sets a variable for storing gameobject references.
-            Component[] outlines;//sets an array for storing component references.
-            foreach (string name in NormanPlaceholders)//goes through each string in the array.
+            else if (gameObject.tag == "Norman")
             {
-                obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
-                outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
-                //placedCards = GameObject.FindGameObjectsWithTag("Norman"); //fills an array with references to all placed cards
-
-                foreach (Component outline in outlines)
+                //Glowing placeholders (On)
+                GameObject obj;//sets a variable for storing gameobject references.
+                Component[] outlines;//sets an array for storing component references.
+                foreach (string name in NormanPlaceholders)//goes through each string in the array.
                 {
-                    outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
+                    obj = GameObject.Find(name);//sets variable to the game object controlling the outline .
+                    outlines = obj.GetComponentsInChildren<MeshRenderer>(); //adds each "outline" to an array
+                                                                            //placedCards = GameObject.FindGameObjectsWithTag("Norman"); //fills an array with references to all placed cards
 
-                    //foreach (GameObject card in placedCards)
-                    //{
-                    //    if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
-                    //    {
-                    //        outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
-                    //    }
-                    //}
+                    foreach (Component outline in outlines)
+                    {
+                        outline.GetComponent<MeshRenderer>().enabled = true; //enables all outlines
+
+                        //foreach (GameObject card in placedCards)
+                        //{
+                        //    if (Vector3.Distance(outline.transform.position, card.transform.position) < 10)
+                        //    {
+                        //        outline.GetComponent<MeshRenderer>().enabled = false; //disables taken outlines
+                        //    }
+                        //}
+                    }
                 }
             }
         }
@@ -324,6 +337,7 @@ public class CardScript : MonoBehaviour
         {
             if (clickCount == 0 && dragging == false)//conditions to run.
             {
+                originalCardPosition = transform.position;//sets the original card position(this will run after adjustPos function in the hand).
                 boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y * 2, thisCollider.size.z);//used to modify scale of the box collider.
                 boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y - 150, thisCollider.center.z);//used to modify position of the box collider.
                 cardPosition.y = 500;//set card position axis.this determines where the card moves when hovered over.
@@ -339,6 +353,7 @@ public class CardScript : MonoBehaviour
 
             if (clickCount == 0 && dragging == false)//conditions to run.
             {
+                originalCardPosition = transform.position;//sets the original card position(this will run after adjustPos function in the hand).
                 boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y * 2, thisCollider.size.z);//used to modify scale of the box collider.
                 boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y - 150, thisCollider.center.z);//used to modify position of the box collider.
                 cardPosition.y = 500;//set card position axis.this determines where the card moves when hovered over.
@@ -360,6 +375,16 @@ public class CardScript : MonoBehaviour
             thisCollider.center = boxPos;//move the collider by boxPos vector.
             thisCollider.size = boxScale;//scale the collider by boxscale vector.
             transform.position = originalCardPosition;//move to originalcardposition.
+        }
+    }
+
+    void readyCard()
+    {
+        if (tired) //stops the card turning 360, this way it goes flipped and back to normal
+        {
+            Vector3 Rotation = new Vector3(0, 0, -90);//vector to rotate.
+            transform.Rotate(Rotation);//rotate by the vector.
+            tired = false;//card is no longer tired.
         }
     }
 }
