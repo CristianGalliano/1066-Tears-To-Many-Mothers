@@ -84,8 +84,8 @@ public class CardScript : MonoBehaviour
     public void OnMouseUp()
     {        
         thisCollider.enabled = true;//re enamble the collider.
-        dropCard("Norman", controller.normanDropPoints);
-        dropCard("Saxon", controller.saxonDropPoints);
+        dropCard("Norman", controller.normanDropPointsZ, controller.normanLane);
+        dropCard("Saxon", controller.saxonDropPointsZ, controller.saxonlane);
         disablePlacholders();
     }
 
@@ -135,17 +135,19 @@ public class CardScript : MonoBehaviour
         }
     }
 
-    void dropCard(string str, List<Vector3> List)
+    void dropCard(string str, List<int> List, List<int> count)
     {
         if (gameObject.tag == str)
         {
-            foreach (Vector3 point in List)//for each vector3 in the array.
+            foreach (int point in controller.xPositions)//for each vector3 in the array.
             {
-                if (positionOfMouse.x < point.x + 99 && positionOfMouse.x > point.x - 99 && positionOfMouse.z < point.z + 167 && positionOfMouse.z > point.z - 167)//check its in the correct parameters.
+                if (positionOfMouse.x < point + 99 && positionOfMouse.x > point- 99)//check its in the correct parameters.
                 {
-                    if (!placed)//checks that the card isnt placed.
+                    int index = controller.xPositions.IndexOf(point);
+                    Debug.Log(index);
+                    if (!placed )//checks that the card isnt placed.
                     {
-                        Vector3 dropPosition = new Vector3(point.x, point.y + 2, point.z);//sets the drop position.
+                        Vector3 dropPosition = new Vector3(point, 2, List[count[index]]);//sets the drop position.
                         transform.position = dropPosition;//move the card to the drop position.
                         Vector3 Rotation = new Vector3(-50, 0, 0);//creat a vector to rotate.
                         transform.Rotate(Rotation);//rotate the card.
@@ -155,7 +157,7 @@ public class CardScript : MonoBehaviour
                         thisCollider.center = boxPos;//move the collider by boxPos vector.
                         thisCollider.size = boxScale;//scale the collider by boxscale vector.
                         gameObject.transform.SetParent(null);//take this card out of the hand.
-                        //gameObject.tag = "Placed Card";
+                        count[index]++;
                     }
                 }
                 else

@@ -8,10 +8,8 @@ public class DeckManager : MonoBehaviour
     public Dictionary<int, NormanCard> SaxonDeck = new Dictionary<int, NormanCard>();
     string[] cardDataRows;
     string[] cardDataText;
+    int rnd, idNum, temp;
 
-    int idNum;
-    int rnd;
-    int rnd2;
     public List<int> usedNormanCards;
     public List<int> usedSaxonCards;
     public List<string> testList;
@@ -26,7 +24,7 @@ public class DeckManager : MonoBehaviour
         {
             cardDataText = cardDataRows[i].Split(',');
             idNum = int.Parse(cardDataText[0]);
-            NormanDeck.Add(idNum, new NormanCard());
+            NormanDeck.Add(idNum, ScriptableObject.CreateInstance<NormanCard>());
             NormanDeck[idNum].cardNumber = int.Parse(cardDataText[0]);
             NormanDeck[idNum].name = cardDataText[1];
             NormanDeck[idNum].type = cardDataText[2];
@@ -50,7 +48,7 @@ public class DeckManager : MonoBehaviour
         {
             cardDataText = cardDataRows[i].Split(',');
             idNum = int.Parse(cardDataText[0]);
-            SaxonDeck.Add(idNum, new NormanCard());
+            SaxonDeck.Add(idNum, ScriptableObject.CreateInstance<NormanCard>());
             SaxonDeck[idNum].cardNumber = int.Parse(cardDataText[0]);
             SaxonDeck[idNum].name = cardDataText[1];
             SaxonDeck[idNum].type = cardDataText[2];
@@ -77,19 +75,11 @@ public class DeckManager : MonoBehaviour
 	}
 
     public NormanCard DrawRandomNormanCard()
-    {
-        rnd = Random.Range(0, NormanDeck.Count);
-
-        if(usedNormanCards[rnd] != 999)
-        {
-            usedNormanCards[rnd] = 999;
-        }
-        else
-        {
-            DrawRandomNormanCard();
-        }
-
-        return NormanDeck[rnd];
+    {       
+        rnd = Random.Range(0, usedNormanCards.Count);
+        temp = usedNormanCards[rnd];
+        usedNormanCards.RemoveAt(rnd);
+        return NormanDeck[temp];
     }
 
     public NormanCard DrawNormanCard(int index)
@@ -99,23 +89,14 @@ public class DeckManager : MonoBehaviour
 
     public NormanCard DrawRandomSaxonCard()
     {
-        rnd2 = Random.Range(0, SaxonDeck.Count);
-
-        if (usedSaxonCards[rnd2] != 999)
-        {
-            usedSaxonCards[rnd2] = 999;
-        }
-        else
-        {
-            DrawRandomSaxonCard();
-        }
-
-        return SaxonDeck[rnd2];
+        rnd = Random.Range(0, usedSaxonCards.Count);
+        temp = usedSaxonCards[rnd];
+        usedSaxonCards.RemoveAt(rnd);
+        return SaxonDeck[temp];
     }
 
     public NormanCard DrawSaxonCard(int index)
     {
         return SaxonDeck[index];
     }
-
 }

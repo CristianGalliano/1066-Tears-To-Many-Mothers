@@ -5,13 +5,11 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public List<Vector3> normanDropPoints = new List<Vector3> { new Vector3(300,0,326), new Vector3(0,0,326), new Vector3(-300,0,326),
-                                                               new Vector3(300,0,663), new Vector3(0,0,663), new Vector3(-300,0,663),
-                                                               new Vector3(300,0,1000), new Vector3(0,0,1000), new Vector3(-300,0,1000)};
-    public List<Vector3> saxonDropPoints = new List<Vector3> { new Vector3(300,0,-326), new Vector3(0,0,-326), new Vector3(-300,0,-326),
-                                                               new Vector3(300,0,-663), new Vector3(0,0,-663), new Vector3(-300,0,-663),
-                                                               new Vector3(300,0,-1000), new Vector3(0,0,-1000), new Vector3(-300,0,-1000)};
-
+    public List<int> normanDropPointsZ = new List<int> { 326, 663, 1000};
+    public List<int> saxonDropPointsZ = new List<int> { -326, -663, -1000};
+    public List<int> xPositions = new List<int> { 300, 0, -300 };
+    public List<int> normanLane = new List<int> { 0, 0, 0 };
+    public List<int> saxonlane = new List<int> { 0, 0, 0 };
     public DrawScript SDS , NDS;
     public int saxonResources = 0;
     public int normanResources = 0;
@@ -38,8 +36,7 @@ public class GameController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.25f);
         SDS.drawFunc(4);
-        NDS.drawFunc(4);
-        NDS.drawFunc(2);
+        NDS.drawFunc(6);
     }
 
     public void EndTurn()
@@ -53,11 +50,13 @@ public class GameController : MonoBehaviour
         if (turn == 1)
         {
             normanResources = 0;
+            //set normans to ready
             SDS.drawFunc(2);
         }
         else if (turn == 0)
         {
             saxonResources = 0;
+            //set saxons to ready
             NDS.drawFunc(2);
         }
         Debug.Log("turn : " + numberOfTurns);

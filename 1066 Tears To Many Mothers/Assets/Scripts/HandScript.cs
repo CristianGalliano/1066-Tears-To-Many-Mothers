@@ -6,7 +6,7 @@ public class HandScript : MonoBehaviour
 {
     public Vector3 handPosition;
 
-    private int widthOfHand = 700;
+    private int widthOfHand = 750;
 
     // Use this for initialization
     void Start ()
@@ -16,7 +16,7 @@ public class HandScript : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update ()
-    {    
+    {
 	}
 
     public void adjustCardPos()
@@ -25,14 +25,14 @@ public class HandScript : MonoBehaviour
         int i = 1;
         foreach (Transform child in transform)
         {
-            float q = ((widthOfHand / transform.childCount) * i) - widthOfHand / 2;
+            float q = ((widthOfHand / transform.childCount)*i) - widthOfHand / 2;
             if (gameObject.tag == "Norman")
             {               
-                cardPos = new Vector3(q, transform.position.y, transform.position.z - (i * 5));
+                cardPos = new Vector3(q, transform.position.y, transform.position.z - (i * 3));
             }
             else if (gameObject.tag == "Saxon")
             {
-                cardPos = new Vector3(-q, transform.position.y, transform.position.z + (i * 5));
+                cardPos = new Vector3(-q, transform.position.y, transform.position.z + (i * 3));
             }
             child.transform.position = cardPos;
             i++;
