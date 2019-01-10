@@ -5,12 +5,19 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Norman Objective Card", menuName = "Cards/Norman Objective Card")]
 public class NormanObjectiveCard : ScriptableObject
 {
-    public new string name;
+    public int cardNumber;
+    public string idChar;
 
-    public int battleAttribute;
+    public new string name;
+    public string title;
+    public string type;
+
+    public int zeal;
+    public int might;
     public int health;
 
-    public char letter;
+    public string ability;
 
-    public string abilities;
+    public string quote;
+    public string solo;
 }

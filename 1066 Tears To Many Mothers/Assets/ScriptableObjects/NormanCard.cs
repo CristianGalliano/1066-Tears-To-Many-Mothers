@@ -7,8 +7,10 @@ public class NormanCard : ScriptableObject
 {
     public Sprite image;
 
+    public int cardNumber;
+
     public new string name;
-    public string traits;
+    public string title;
     public string type;
 
     public int cost;
@@ -17,8 +19,14 @@ public class NormanCard : ScriptableObject
     public int health;
     public int resources;
 
-    public string abilities;
-    public string flavour;
+    public string action;
+    public string constant;
+    public string response;
+    public string onPlay;
 
-    public int cardNumber;
+    public string quote;
+
+    public string solo;
+
+
 }

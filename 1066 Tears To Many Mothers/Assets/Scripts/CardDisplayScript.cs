@@ -7,7 +7,7 @@ public class CardDisplayScript : MonoBehaviour {
 
     public GameObject panel;
     public Image sprite;
-    public Text Name, Type, Abilities, Flavour;
+    public Text Name, Title, Type, Action, Constant, Response, OnPlay, Quote, Solo;
     // Use this for initialization
     void Start ()
     {
@@ -26,7 +26,15 @@ public class CardDisplayScript : MonoBehaviour {
 
         Name.text = card.name;
         Type.text = card.type;
-        Abilities.text = card.abilities;
-        Flavour.text = card.flavour;
+        Title.text = card.title;
+
+        Action.text = card.action;
+        Constant.text = card.constant;
+        Response.text = card.response;
+        OnPlay.text = card.onPlay;
+
+        Quote.text = card.quote;
+        Solo.text = card.solo;
+
     }
 }
