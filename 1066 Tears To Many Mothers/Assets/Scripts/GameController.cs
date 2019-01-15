@@ -39,6 +39,11 @@ public class GameController : MonoBehaviour
         NDS.drawFunc(6);
     }
 
+    private IEnumerator drawLeaders()
+    {
+        yield return new WaitForSeconds(0.25f);
+    }
+
     public void EndTurn()
     {
         numberOfTurns++;

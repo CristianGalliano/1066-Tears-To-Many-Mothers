@@ -17,7 +17,7 @@ public class DeckManager : MonoBehaviour
 
     public List<int> usedNormanCards;
     public List<int> usedSaxonCards;
-    public List<string> testList;
+    public List<int> testList;
 
     // Use this for initialization
     void Start()
@@ -29,10 +29,10 @@ public class DeckManager : MonoBehaviour
         for (int i = 1; i < cardDataRows.Length; i++)
         {
             cardDataText = cardDataRows[i].Split(',');
-            idNum = int.Parse(cardDataText[0]) - 1;
+            idNum = int.Parse(cardDataText[0]);
             NormanDeck.Add(idNum, ScriptableObject.CreateInstance<NormanCard>());
 
-            NormanDeck[idNum].cardNumber = idNum;
+            NormanDeck[idNum].cardNumber = idNum + 1;
             NormanDeck[idNum].name = cardDataText[1];
             NormanDeck[idNum].title = cardDataText[2];
             NormanDeck[idNum].type = cardDataText[3];
@@ -54,9 +54,9 @@ public class DeckManager : MonoBehaviour
 
 
 
-        for (int i = 0; i < NormanDeck.Count; i++)
+        for (int i = 1; i < NormanDeck.Count; i++)
         {
-            testList.Add(NormanDeck[i].name);
+            testList.Add(NormanDeck[i].cardNumber);
             usedNormanCards.Add(i);
         }
 
@@ -69,7 +69,7 @@ public class DeckManager : MonoBehaviour
         for (int i = 1; i < cardDataRows.Length; i++)
         {
             cardDataText = cardDataRows[i].Split(',');
-            idNum = int.Parse(cardDataText[0]) - 1;
+            idNum = int.Parse(cardDataText[0]);
             SaxonDeck.Add(idNum, ScriptableObject.CreateInstance<NormanCard>());
 
 
@@ -93,9 +93,9 @@ public class DeckManager : MonoBehaviour
             SaxonDeck[idNum].solo = cardDataText[14];
         }
 
-        for (int i = 85; i < SaxonDeck.Count + 84; i++)
+        for (int i = 86; i < SaxonDeck.Count + 85; i++)
         {
-            testList.Add(SaxonDeck[i].name);
+            testList.Add(SaxonDeck[i].cardNumber);
             usedSaxonCards.Add(i);
         }
 

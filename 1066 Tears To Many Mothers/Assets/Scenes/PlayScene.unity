@@ -1413,7 +1413,7 @@ MonoBehaviour:
   cardDataText: []
   usedNormanCards: 
   usedSaxonCards: 
-  testList: []
+  testList: 
 --- !u!1 &771492452
 GameObject:
   m_ObjectHideFlags: 0
@@ -3226,7 +3226,7 @@ MonoBehaviour:
   cardDataText: []
   usedNormanCards: 
   usedSaxonCards: 
-  testList: []
+  testList: 
 --- !u!4 &1474338901
 Transform:
   m_ObjectHideFlags: 0

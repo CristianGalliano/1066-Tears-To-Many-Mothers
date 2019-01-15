@@ -52,8 +52,6 @@ public class CardScript : MonoBehaviour
             saxonCard = deck.DrawRandomSaxonCard();
         }
 
-
-
         UpdateStats();
     }
 	

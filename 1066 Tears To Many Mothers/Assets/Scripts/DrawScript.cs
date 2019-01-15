@@ -55,4 +55,9 @@ public class DrawScript : MonoBehaviour
             Debug.Log("out of cards");
         }
     }
+
+    public void drawLeader()
+    {
+        
+    }
 }
