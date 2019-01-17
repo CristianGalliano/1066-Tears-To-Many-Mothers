@@ -29,6 +29,8 @@ public class CardScript : MonoBehaviour
     private CardDisplayScript UI;
     private NormanCard normanCard, saxonCard;
 
+    private MeshRenderer cardMesh;
+
     public TextMesh CostMesh, ZealMesh, MightMesh, HealthMesh;
 
     // Use this for initialization
@@ -39,20 +41,37 @@ public class CardScript : MonoBehaviour
         deck = GameObject.Find("DeckManager").GetComponent<DeckManager>();
         UI = GameObject.Find("UIController").GetComponent<CardDisplayScript>();
 
+        cardMesh = gameObject.GetComponent<MeshRenderer>();
+
         thisCollider = gameObject.GetComponent<BoxCollider>(); //set thisCollider to reference the collider attached to this gameObject.
         cardPosition = gameObject.transform.localPosition; //set card position.
 
-        if (gameObject.tag == "Norman")
+        if (gameObject.tag == "Norman" && deck.NormanLeaderDrawn == true)
         {
             normanCard = deck.DrawRandomNormanCard();
         }
 
-        if(gameObject.tag == "Saxon")
+        if (gameObject.tag == "Saxon" && deck.SaxonLeaderDrawn == true)
         {
             saxonCard = deck.DrawRandomSaxonCard();
         }
 
+        if (gameObject.tag == "Norman" && deck.NormanLeaderDrawn == false)
+        {
+            normanCard = deck.DrawNormanCard(1);
+            deck.NormanLeaderDrawn = true;
+            Debug.Log("Leader Drawn : " + normanCard.name);
+        }
+
+        if (gameObject.tag == "Saxon" && deck.SaxonLeaderDrawn == false)
+        {
+            saxonCard = deck.DrawSaxonCard(85);
+            deck.SaxonLeaderDrawn = true;
+            Debug.Log("Leader Drawn : " + saxonCard.name);
+        }
+
         UpdateStats();
+        AssignImage();
     }
 	
 	// Update is called once per frame
@@ -399,5 +418,18 @@ public class CardScript : MonoBehaviour
             HealthMesh.text = saxonCard.health.ToString();
         }
 
+    }
+
+    void AssignImage()
+    {
+        if(tag == "Norman")
+        {
+            cardMesh.material = Resources.Load<Material>("CardImages/Materials/" + ((normanCard.cardNumber)-1));
+        }
+        else if(tag == "Saxon")
+        {
+            cardMesh.material = Resources.Load<Material>("CardImages/Materials/" + saxonCard.cardNumber);
+        }
+        
     }
 }

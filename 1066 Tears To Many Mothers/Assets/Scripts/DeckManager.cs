@@ -19,6 +19,8 @@ public class DeckManager : MonoBehaviour
     public List<int> usedSaxonCards;
     public List<int> testList;
 
+    public bool NormanLeaderDrawn, SaxonLeaderDrawn = false;
+
     // Use this for initialization
     void Start()
     {

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CardDisplayScript : MonoBehaviour {
 
     public GameObject panel;
-    public Image sprite;
+    public Image image;
     public Text Name, Title, Type, Action, Constant, Response, OnPlay, Quote, Solo;
     // Use this for initialization
     void Start ()
@@ -36,5 +36,6 @@ public class CardDisplayScript : MonoBehaviour {
         Quote.text = card.quote;
         Solo.text = card.solo;
 
+        image.sprite = Resources.Load<Sprite>("CardImages/Sprites" + card.cardNumber);
     }
 }
