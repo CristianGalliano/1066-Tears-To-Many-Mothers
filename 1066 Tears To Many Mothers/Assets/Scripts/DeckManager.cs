@@ -34,7 +34,7 @@ public class DeckManager : MonoBehaviour
             idNum = int.Parse(cardDataText[0]);
             NormanDeck.Add(idNum, ScriptableObject.CreateInstance<NormanCard>());
 
-            NormanDeck[idNum].cardNumber = idNum + 1;
+            NormanDeck[idNum].cardNumber = idNum;
             NormanDeck[idNum].name = cardDataText[1];
             NormanDeck[idNum].title = cardDataText[2];
             NormanDeck[idNum].type = cardDataText[3];

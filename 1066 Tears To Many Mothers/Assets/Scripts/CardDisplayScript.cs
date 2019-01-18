@@ -36,19 +36,6 @@ public class CardDisplayScript : MonoBehaviour {
         Quote.text = card.quote;
         Solo.text = card.solo;
 
-        int num;
-
-        if(card.cardNumber > 84)
-        {
-             num = card.cardNumber;
-        }
-        else
-        {
-             num = card.cardNumber - 1;
-        }
-        
-
-
-        image.sprite = Resources.Load<Sprite>("CardImages/" + num);
+        image.sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
     }
 }
