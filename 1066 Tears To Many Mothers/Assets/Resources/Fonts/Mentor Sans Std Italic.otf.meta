@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: a77f2942a3b90614f8e2f5091ae2ea07
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Mentor Sans Std
+  fontNames:
+  - Mentor Sans Std
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 80f765309ea1ab643904b91eeb215b01, type: 3}
+  - {fileID: 12800000, guid: 39634a7b340b425419a63f7af9bf1179, type: 3}
+  - {fileID: 12800000, guid: 3ec499ef8edfd364c92fad7d212eb8dc, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
