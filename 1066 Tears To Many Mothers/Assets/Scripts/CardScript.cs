@@ -424,7 +424,7 @@ public class CardScript : MonoBehaviour
     {
         if(tag == "Norman")
         {
-            cardMesh.material = Resources.Load<Material>("CardImages/Materials/" + ((normanCard.cardNumber)-1));
+            cardMesh.material = Resources.Load<Material>("CardImages/Materials/" + normanCard.cardNumber);
         }
         else if(tag == "Saxon")
         {
