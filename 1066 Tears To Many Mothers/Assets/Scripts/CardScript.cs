@@ -406,16 +406,86 @@ public class CardScript : MonoBehaviour
         if(gameObject.tag == "Norman")
         {
             CostMesh.text = normanCard.cost.ToString();
-            ZealMesh.text = normanCard.zeal.ToString();
-            MightMesh.text = normanCard.might.ToString();
-            HealthMesh.text = normanCard.health.ToString();
+
+            if (normanCard.type == "Leader" || normanCard.type == "Character" || normanCard.type == "Unit")
+            {
+                ZealMesh.text = normanCard.zeal.ToString();
+                MightMesh.text = normanCard.might.ToString();
+                HealthMesh.text = normanCard.health.ToString();
+            }
+            else
+            {
+                if (normanCard.zeal == 0)
+                {
+                    ZealMesh.text = "";
+                   
+                }
+                else
+                {
+                    ZealMesh.text = normanCard.zeal.ToString();
+                }
+
+                if (normanCard.might == 0)
+                {
+                    MightMesh.text = "";
+                    
+                }
+                else
+                {
+                    MightMesh.text = normanCard.might.ToString();
+                }
+
+                if (normanCard.health == 0)
+                {
+                    HealthMesh.text = "";
+                }
+                else
+                {
+                    HealthMesh.text = normanCard.health.ToString(); ;
+                }
+            }
         }
         else if(gameObject.tag == "Saxon")
         {
             CostMesh.text = saxonCard.cost.ToString();
-            ZealMesh.text = saxonCard.zeal.ToString();
-            MightMesh.text = saxonCard.might.ToString();
-            HealthMesh.text = saxonCard.health.ToString();
+
+            if (saxonCard.type == "Leader" || saxonCard.type == "Character" || saxonCard.type == "Unit")
+            {
+                ZealMesh.text = saxonCard.zeal.ToString();
+                MightMesh.text = saxonCard.might.ToString();
+                HealthMesh.text = saxonCard.health.ToString();
+            }
+            else
+            {
+                if (saxonCard.zeal == 0)
+                {
+                    ZealMesh.text = "";
+
+                }
+                else
+                {
+                    ZealMesh.text = saxonCard.zeal.ToString();
+                }
+
+                if (saxonCard.might == 0)
+                {
+                    MightMesh.text = "";
+
+                }
+                else
+                {
+                    MightMesh.text = saxonCard.might.ToString();
+                }
+
+                if (saxonCard.health == 0)
+                {
+                    HealthMesh.text = "";
+                }
+                else
+                {
+                    HealthMesh.text = saxonCard.health.ToString(); ;
+                }
+            }
         }
 
     }
