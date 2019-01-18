@@ -35,7 +35,3 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-
-# Images
-*.jpg
-*.png
