@@ -35,7 +35,7 @@ public class MenuScript : MonoBehaviour
 
     public void start()//runs when the start button is clicked.
     {
-        SceneManager.LoadScene("PlayScene");//load scene by calling the scenes name.
+        SceneManager.LoadScene("SelectionScene");//load scene by calling the scenes name.
     }
 
     public void exit()//runs when exit button is clicked.
