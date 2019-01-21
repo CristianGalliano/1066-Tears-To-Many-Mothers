@@ -76,7 +76,8 @@ public class GameController : MonoBehaviour
     {
     }
 
-    public void damageEnemy()
+    public void damageEnemy(NormanCard attacker, NormanCard target)
     {
+
     }
 }

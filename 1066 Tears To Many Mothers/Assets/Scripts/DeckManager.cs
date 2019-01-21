@@ -56,7 +56,7 @@ public class DeckManager : MonoBehaviour
 
 
 
-        for (int i = 1; i < NormanDeck.Count; i++)
+        for (int i = 2; i < NormanDeck.Count; i++)
         {
             testList.Add(NormanDeck[i].cardNumber);
             usedNormanCards.Add(i);
