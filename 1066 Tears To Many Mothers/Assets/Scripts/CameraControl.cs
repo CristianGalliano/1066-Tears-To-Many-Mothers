@@ -14,9 +14,18 @@ public class CameraControl : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        Camera1.gameObject.SetActive(true);
-        Camera2.gameObject.SetActive(false);
-        Camera3.gameObject.SetActive(false);
+        if (PlayerPrefs.GetInt("side") == 1)
+        {
+            Camera1.gameObject.SetActive(true);
+            Camera2.gameObject.SetActive(false);
+            Camera3.gameObject.SetActive(false);
+        }
+        else if (PlayerPrefs.GetInt("side") == 0)
+        {
+            Camera1.gameObject.SetActive(false);
+            Camera2.gameObject.SetActive(true);
+            Camera3.gameObject.SetActive(false);
+        }
 	}
 	
 	// Update is called once per frame

@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
     {
         SDS = GameObject.Find("SaxonDeck").GetComponent<DrawScript>();
         NDS = GameObject.Find("NormanDeck").GetComponent<DrawScript>();
+
         StartCoroutine("startDraw");
     }
 
@@ -65,7 +66,6 @@ public class GameController : MonoBehaviour
             NDS.drawFunc(2);
         }
         Debug.Log("turn : " + numberOfTurns);
-
     }
 
     public void damageObjective()
