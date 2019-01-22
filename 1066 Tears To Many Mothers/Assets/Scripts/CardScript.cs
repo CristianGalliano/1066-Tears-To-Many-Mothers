@@ -20,9 +20,9 @@ public class CardScript : MonoBehaviour
     private bool placed = false;
     private bool tired = false;
     private BoxCollider thisCollider; //variable for the box collider attached to this gameobject.
-    
-    string[] NormanPlaceholders = new string[] {"Norman1", "Norman2", "Norman3"};
-    string[] SaxonPlaceholders = new string[] { "Saxon1", "Saxon2", "Saxon3"};
+
+    string[] NormanPlaceholders = new string[] { "Norman1", "Norman2", "Norman3" };
+    string[] SaxonPlaceholders = new string[] { "Saxon1", "Saxon2", "Saxon3" };
     private GameObject[] placedCards;
     private GameController controller;
     private DeckManager deck;
@@ -33,8 +33,11 @@ public class CardScript : MonoBehaviour
 
     public TextMesh CostMesh, ZealMesh, MightMesh, HealthMesh;
 
+    bool saved = false;
+    float time;
+
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         //Initialising Script References
         controller = GameObject.Find("GameController").GetComponent<GameController>();
@@ -73,16 +76,16 @@ public class CardScript : MonoBehaviour
         UpdateStats();
         AssignImage();
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update()
     {
         if (controller.turn == 0 && gameObject.tag == "Saxon")
-        {         
+        {
             readyCard();
         }
         if (controller.turn == 1 && gameObject.tag == "Norman")
-        {            
+        {
             readyCard();
         }
     }
@@ -95,15 +98,18 @@ public class CardScript : MonoBehaviour
     private void OnMouseExit()
     {
         if (clickCount == 0 && dragging == false)//conditions to run.
-        {            
+        {
             hoverEnd("Norman");
-            hoverEnd("Saxon");           
+            hoverEnd("Saxon");
         }
     }
 
     private void OnMouseDown()
     {
-        showCardInformation();
+        if(placed)
+        {
+            EnableInfoButton();
+        }
     }
 
     public void OnMouseDrag()
@@ -113,8 +119,14 @@ public class CardScript : MonoBehaviour
         enablePlaceholders();
     }
 
+    public IEnumerator DelayCardInfo()
+    {
+        yield return new WaitForSeconds(3.0f);
+        showCardInformation();
+    }
+
     public void OnMouseUp()
-    {        
+    {
         thisCollider.enabled = true;//re enamble the collider.
         dropCard("Norman", controller.normanDropPointsZ, controller.normanLane);
         dropCard("Saxon", controller.saxonDropPointsZ, controller.saxonlane);
@@ -123,6 +135,7 @@ public class CardScript : MonoBehaviour
 
     private void OnMouseOver()
     {
+        
         tireCard();
     }
 
@@ -206,7 +219,7 @@ public class CardScript : MonoBehaviour
                 thisCollider.size = boxScale;//scale the collider by boxscale vector.
             }
         }
-       
+
         if (placed)
         {
             gameObject.layer = 1;
@@ -235,7 +248,7 @@ public class CardScript : MonoBehaviour
                 transform.position = objPosition;//set the position of this gameobject equal to obj position.
                 thisCollider.enabled = false;//disable the collider.
             }
-        }        
+        }
     }
 
     void enablePlaceholders()
@@ -338,8 +351,8 @@ public class CardScript : MonoBehaviour
             }
             else//if this is not the first click.
             {
-                 UI.panel.gameObject.SetActive(false);
-                 clickCount = 0;//resets click count to loop this function.
+                UI.panel.gameObject.SetActive(false);
+                clickCount = 0;//resets click count to loop this function.
             }
         }
     }
@@ -403,7 +416,7 @@ public class CardScript : MonoBehaviour
 
     void UpdateStats()
     {
-        if(gameObject.tag == "Norman")
+        if (gameObject.tag == "Norman")
         {
             CostMesh.text = normanCard.cost.ToString();
 
@@ -418,7 +431,7 @@ public class CardScript : MonoBehaviour
                 if (normanCard.zeal == 0)
                 {
                     ZealMesh.text = "";
-                   
+
                 }
                 else
                 {
@@ -428,7 +441,7 @@ public class CardScript : MonoBehaviour
                 if (normanCard.might == 0)
                 {
                     MightMesh.text = "";
-                    
+
                 }
                 else
                 {
@@ -445,7 +458,7 @@ public class CardScript : MonoBehaviour
                 }
             }
         }
-        else if(gameObject.tag == "Saxon")
+        else if (gameObject.tag == "Saxon")
         {
             CostMesh.text = saxonCard.cost.ToString();
 
@@ -492,14 +505,30 @@ public class CardScript : MonoBehaviour
 
     void AssignImage()
     {
-        if(tag == "Norman")
+        if (tag == "Norman")
         {
             cardMesh.material = Resources.Load<Material>("CardImages/Materials/" + normanCard.cardNumber);
         }
-        else if(tag == "Saxon")
+        else if (tag == "Saxon")
         {
             cardMesh.material = Resources.Load<Material>("CardImages/Materials/" + saxonCard.cardNumber);
         }
-        
+
     }
+
+    void EnableInfoButton()
+    {
+
+        UI.InfoButton.gameObject.SetActive(true);
+
+        if (tag == "Norman")
+        {
+            UI.passedCard = normanCard;
+        }
+        else if (tag == "Saxon")
+        {
+            UI.passedCard = saxonCard;
+        }
+    }
+
 }
