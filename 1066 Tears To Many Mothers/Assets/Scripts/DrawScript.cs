@@ -35,12 +35,12 @@ public class DrawScript : MonoBehaviour
 
     public void drawFunc(int i)
     {
-        if (gameObject.transform.localScale.y != 0)
+        if (gameObject.transform.localScale.z >= 0)
         {
             for (int j = 0; j < i; j++)
             {
-                scale = new Vector3(transform.localScale.x, transform.localScale.y - decreaseHeight, transform.localScale.z);
-                mPosition = new Vector3(oPosition.x, scale.y / 2, oPosition.z);
+                scale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z - decreaseHeight);
+                mPosition = new Vector3(oPosition.x, (scale.z/33) / 2, oPosition.z);
                 GameObject Card = Instantiate(card, location, qrotation);
                 Card.transform.parent = hand.transform;
                 transform.localPosition = mPosition;
