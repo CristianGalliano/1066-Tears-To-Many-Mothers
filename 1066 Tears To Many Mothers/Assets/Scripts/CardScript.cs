@@ -223,6 +223,7 @@ public class CardScript : MonoBehaviour
         if (placed)
         {
             gameObject.layer = 1;
+            FindPosition();
         }
     }
 
@@ -528,6 +529,33 @@ public class CardScript : MonoBehaviour
         else if (tag == "Saxon")
         {
             UI.passedCard = saxonCard;
+        }
+    }
+
+   void FindPosition()
+    {
+        int ZPos = (int)gameObject.transform.position.z;
+
+        switch(ZPos)
+        {
+            case 1000:
+                normanCard.PositionZ = 1;
+                break;
+            case 663:
+                normanCard.PositionZ = 2;
+                break;
+            case 326:
+                normanCard.PositionZ = 3;
+                break;
+            case -326:
+                normanCard.PositionZ = 4;
+                break;
+            case -663:
+                normanCard.PositionZ = 5;
+                break;
+            case -1000:
+                normanCard.PositionZ = 3;
+                break;
         }
     }
 

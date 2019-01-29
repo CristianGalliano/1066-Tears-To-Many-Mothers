@@ -28,5 +28,7 @@ public class NormanCard : ScriptableObject
 
     public string solo;
 
+    public int PositionZ;
+
 
 }

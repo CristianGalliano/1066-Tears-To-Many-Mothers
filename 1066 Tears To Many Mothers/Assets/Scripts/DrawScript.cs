@@ -45,7 +45,7 @@ public class DrawScript : MonoBehaviour
                 Card.transform.parent = hand.transform;
                 transform.localPosition = mPosition;
                 transform.localScale = scale;
-                cardsRemaining--;
+                cardsRemaining--;                
                 //Debug.Log("number of cards in deck : " + cardsRemaining);
                 handScript.adjustCardPos();
             }
