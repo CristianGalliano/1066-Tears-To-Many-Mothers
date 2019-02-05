@@ -88,16 +88,15 @@ public class CardDisplayScript : MonoBehaviour {
 
             image.sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
         }
-        else if (panelActive == true)
+    }
+
+    public void HideDisplay()
+    {
+
+        if(panelActive == true)
         {
             panelActive = false;
             panel.gameObject.SetActive(false);
         }
-    }
-
-    public void ShowInfo()
-    {
-
-        SetDisplay(passedCard);
     }
 }

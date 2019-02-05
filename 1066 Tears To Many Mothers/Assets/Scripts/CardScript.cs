@@ -19,6 +19,7 @@ public class CardScript : MonoBehaviour
     private bool dragging = false; // bools for setting conditions.
     private bool placed = false;
     private bool tired = false;
+    private bool buttonPressed, timeRead = false;
     private BoxCollider thisCollider; //variable for the box collider attached to this gameobject.
 
     string[] NormanPlaceholders = new string[] { "Norman1", "Norman2", "Norman3" };
@@ -28,13 +29,14 @@ public class CardScript : MonoBehaviour
     private DeckManager deck;
     private CardDisplayScript UI;
     private NormanCard normanCard, saxonCard;
+    private CardFucntionScript functScript;
 
     private MeshRenderer cardMesh;
 
     public TextMesh CostMesh, ZealMesh, MightMesh, HealthMesh;
 
     bool saved = false;
-    float time;
+    public float time;
 
     // Use this for initialization
     void Start()
@@ -72,7 +74,7 @@ public class CardScript : MonoBehaviour
             deck.SaxonLeaderDrawn = true;
             Debug.Log("Leader Drawn : " + saxonCard.name);
         }
-
+        functScript = controller.GetComponent<CardFucntionScript>();
         UpdateStats();
         AssignImage();
     }
@@ -88,6 +90,8 @@ public class CardScript : MonoBehaviour
         {
             readyCard();
         }
+
+        ShowUI();
     }
 
     private void OnMouseEnter()
@@ -110,6 +114,19 @@ public class CardScript : MonoBehaviour
         {
             EnableInfoButton();
         }
+        if (functScript.targeting && placed)
+        {
+            if (gameObject.tag == "Norman")
+            {
+                functScript.target = normanCard;
+            }
+            else if (gameObject.tag == "Saxon")
+            {
+                functScript.target = normanCard;
+            }
+        }
+
+        buttonPressed = true;
     }
 
     public void OnMouseDrag()
@@ -119,14 +136,10 @@ public class CardScript : MonoBehaviour
         enablePlaceholders();
     }
 
-    public IEnumerator DelayCardInfo()
-    {
-        yield return new WaitForSeconds(3.0f);
-        showCardInformation();
-    }
-
     public void OnMouseUp()
     {
+        buttonPressed = false;
+
         thisCollider.enabled = true;//re enamble the collider.
         dropCard("Norman", controller.normanDropPointsZ, controller.normanLane);
         dropCard("Saxon", controller.saxonDropPointsZ, controller.saxonlane);
@@ -331,32 +344,6 @@ public class CardScript : MonoBehaviour
         }
     }
 
-    void showCardInformation()
-    {
-
-        if (placed)//if the card is placed on the field;
-        {
-            clickCount++;//counts the amount of clicks.
-            if (clickCount == 1)//if this is the first click.
-            {
-                UI.panel.gameObject.SetActive(true);
-
-                if (gameObject.tag == "Norman")
-                {
-                    UI.SetDisplay(normanCard);
-                }
-                else if (gameObject.tag == "Saxon")
-                {
-                    UI.SetDisplay(saxonCard);
-                }
-            }
-            else//if this is not the first click.
-            {
-                UI.panel.gameObject.SetActive(false);
-                clickCount = 0;//resets click count to loop this function.
-            }
-        }
-    }
 
     void hover()
     {
@@ -548,14 +535,42 @@ public class CardScript : MonoBehaviour
                 normanCard.PositionZ = 3;
                 break;
             case -326:
-                normanCard.PositionZ = 4;
+                saxonCard.PositionZ = 4;
                 break;
             case -663:
-                normanCard.PositionZ = 5;
+                saxonCard.PositionZ = 5;
                 break;
             case -1000:
-                normanCard.PositionZ = 3;
+                saxonCard.PositionZ = 3;
                 break;
+        }
+    }
+
+    void ShowUI()
+    {
+        if(buttonPressed && !timeRead && placed)
+        {
+            time = Time.time + 0.5f;
+            timeRead = true;
+        }
+
+        if(buttonPressed && Time.time > time && timeRead && placed)
+        {
+            Debug.Log(normanCard.name);
+            if(gameObject.tag == "Norman")
+            { 
+                UI.SetDisplay(normanCard);
+            }
+            else if (gameObject.tag == "Saxon")
+            {
+                UI.SetDisplay(saxonCard);
+            }
+
+        }
+        else if(!buttonPressed)
+        {
+            UI.HideDisplay();
+            timeRead = false;
         }
     }
 

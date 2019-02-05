@@ -7,23 +7,31 @@ public class CardFucntionScript : MonoBehaviour
     private DeckManager Deck;
     private GameController Game;
     private HandScript HandN, HandS;
-	// Use this for initialization
-	void Start ()
+    private Vector3 positionOfMouse;
+    public bool targeting = false;
+    public NormanCard target;
+    // Use this for initialization
+    void Start ()
     {
         Deck = GameObject.Find("DeckManager").GetComponent<DeckManager>();
         Game = GameObject.Find("GameController").GetComponent<GameController>();
         HandN = GameObject.Find("normanHand").GetComponent<HandScript>();
         HandS = GameObject.Find("saxonHand").GetComponent<HandScript>();
-
     }
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update ()
+    {
+    }
+
+    public void UseAbility()
+    {
+
+    }
 
     void Damage(NormanCard Attacker, NormanCard Target, int Amount, int Range)
     {
+        Target = target;
         if(InRange(Attacker,Target, Range))
         {
             Target.health -= Amount;
@@ -32,6 +40,7 @@ public class CardFucntionScript : MonoBehaviour
 
     void Destroy(NormanCard Attacker, NormanCard Target, int Range)
     {
+        Target = target;
         if (InRange(Attacker, Target, Range))
         {
             Target.health = 0;
@@ -40,6 +49,7 @@ public class CardFucntionScript : MonoBehaviour
 
     void Heal(NormanCard Target, int value)
     {
+        Target = target;
         Target.health += value;
     }
 
