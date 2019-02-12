@@ -75,7 +75,6 @@ public class CardScript : MonoBehaviour
             Debug.Log("Leader Drawn : " + saxonCard.name);
         }
         functScript = controller.GetComponent<CardFucntionScript>();
-        UpdateStats();
         AssignImage();
     }
 
@@ -91,6 +90,7 @@ public class CardScript : MonoBehaviour
             readyCard();
         }
 
+        UpdateStats();
         ShowUI();
     }
 
@@ -112,7 +112,7 @@ public class CardScript : MonoBehaviour
     {
         if(placed)
         {
-            EnableInfoButton();
+            EnableButton();
         }
         if (functScript.targeting && placed)
         {
@@ -122,7 +122,7 @@ public class CardScript : MonoBehaviour
             }
             else if (gameObject.tag == "Saxon")
             {
-                functScript.target = normanCard;
+                functScript.target = saxonCard;
             }
         }
         else if (!functScript.targeting && placed)
@@ -133,7 +133,7 @@ public class CardScript : MonoBehaviour
             }
             else if (gameObject.tag == "Saxon")
             {
-                functScript.attacker = normanCard;
+                functScript.attacker = saxonCard;
             }
         }
 
@@ -160,7 +160,6 @@ public class CardScript : MonoBehaviour
 
     private void OnMouseOver()
     {
-        
         tireCard();
     }
 
@@ -204,7 +203,6 @@ public class CardScript : MonoBehaviour
 
     void dropCard(string str, List<int> List, List<int> count)
     {
-        Debug.Log(originalCardPosition);
         if (gameObject.tag == str)
         {
             foreach (int point in controller.xPositions)//for each vector3 in the array.
@@ -212,7 +210,6 @@ public class CardScript : MonoBehaviour
                 if (positionOfMouse.x < point + 147 && positionOfMouse.x > point - 147)//check its in the correct parameters.
                 {
                     int index = controller.xPositions.IndexOf(point);
-                    Debug.Log(index);
                     if (!placed && count[index] < 3)//checks that the card isnt placed.
                     {
                         Vector3 dropPosition = new Vector3(point, 2, List[count[index]]);//sets the drop position.
@@ -516,7 +513,7 @@ public class CardScript : MonoBehaviour
 
     }
 
-    void EnableInfoButton()
+    void EnableButton()
     {
 
         UI.InfoButton.gameObject.SetActive(true);
@@ -553,7 +550,7 @@ public class CardScript : MonoBehaviour
                 saxonCard.PositionZ = 5;
                 break;
             case -1000:
-                saxonCard.PositionZ = 3;
+                saxonCard.PositionZ = 6;
                 break;
         }
     }

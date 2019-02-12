@@ -22,11 +22,26 @@ public class CardFucntionScript : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        if(attacker != null && target != null)
+        {
+            Debug.Log(attacker.name);
+            Debug.Log(target.name);
+            UseAbility();
+        }
+
     }
 
-    public void UseAbility()
+    public void EnterTargeting()
     {
-        Debug.Log(attacker.name);
+        targeting = true;
+    }
+
+    void UseAbility()
+    {
+        targeting = false;
+        Damage(attacker, target, 3, 3);
+        attacker = null;
+        target = null;
     }
 
     void Damage(NormanCard Attacker, NormanCard Target, int Amount, int Range)
@@ -103,7 +118,7 @@ public class CardFucntionScript : MonoBehaviour
         }
         else if (gameObject.tag == "Saxon")
         {
-            foreach (GameObject child in HandN.transform)
+            foreach (GameObject child in HandS.transform)
             {
                 i++;
             }
@@ -125,7 +140,7 @@ public class CardFucntionScript : MonoBehaviour
 
     bool InRange(NormanCard attacker, NormanCard target, int Range)
     {
-        if (highest(attacker, target).PositionZ - lowest(attacker,target).PositionZ < Range)
+        if (highest(attacker, target).PositionZ - lowest(attacker,target).PositionZ <= Range)
         {
             return true;
         }

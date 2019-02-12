@@ -1868,6 +1868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targeting: 0
+  attacker: {fileID: 0}
   target: {fileID: 0}
 --- !u!1001 &729423522
 PrefabInstance:
@@ -2382,7 +2383,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 719131379}
-        m_MethodName: UseAbility
+        m_MethodName: EnterTargeting
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3246,7 +3247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: be9c96a3cf5d80e469d4ebcde62a9714, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: be9c96a3cf5d80e469d4ebcde62a9714, type: 3}
       propertyPath: m_LocalPosition.z
