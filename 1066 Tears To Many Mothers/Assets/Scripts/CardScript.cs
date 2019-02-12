@@ -125,6 +125,17 @@ public class CardScript : MonoBehaviour
                 functScript.target = normanCard;
             }
         }
+        else if (!functScript.targeting && placed)
+        {
+            if (gameObject.tag == "Norman")
+            {
+                functScript.attacker = normanCard;
+            }
+            else if (gameObject.tag == "Saxon")
+            {
+                functScript.attacker = normanCard;
+            }
+        }
 
         buttonPressed = true;
     }
@@ -559,12 +570,10 @@ public class CardScript : MonoBehaviour
         {
             if (gameObject.tag == "Norman")
             {
-                Debug.Log("ShowUI " + normanCard.name);
                 UI.SetDisplay(normanCard);
             }
             else if (gameObject.tag == "Saxon")
             {
-                Debug.Log("ShowUI Saxon" + saxonCard.name);
                 UI.SetDisplay(saxonCard);
             }
 

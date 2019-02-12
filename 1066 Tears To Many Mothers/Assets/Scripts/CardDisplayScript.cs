@@ -30,7 +30,6 @@ public class CardDisplayScript : MonoBehaviour {
     {
         panel.gameObject.SetActive(true);
         panelActive = true;
-        Debug.Log(panelActive);
 
         Name.text = card.name;
         Type.text = card.type;
@@ -96,6 +95,5 @@ public class CardDisplayScript : MonoBehaviour {
             panelActive = false;
             panel.gameObject.SetActive(false);
         }
-        Debug.Log(panelActive);
     }
 }

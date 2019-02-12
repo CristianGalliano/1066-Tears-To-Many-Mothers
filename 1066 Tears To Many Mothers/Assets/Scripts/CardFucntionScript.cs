@@ -9,7 +9,7 @@ public class CardFucntionScript : MonoBehaviour
     private HandScript HandN, HandS;
     private Vector3 positionOfMouse;
     public bool targeting = false;
-    public NormanCard target;
+    public NormanCard attacker, target;
     // Use this for initialization
     void Start ()
     {
@@ -26,7 +26,7 @@ public class CardFucntionScript : MonoBehaviour
 
     public void UseAbility()
     {
-        
+        Debug.Log(attacker.name);
     }
 
     void Damage(NormanCard Attacker, NormanCard Target, int Amount, int Range)
