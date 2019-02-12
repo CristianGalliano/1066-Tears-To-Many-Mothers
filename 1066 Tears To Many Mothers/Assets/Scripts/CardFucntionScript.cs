@@ -26,7 +26,7 @@ public class CardFucntionScript : MonoBehaviour
 
     public void UseAbility()
     {
-
+        
     }
 
     void Damage(NormanCard Attacker, NormanCard Target, int Amount, int Range)

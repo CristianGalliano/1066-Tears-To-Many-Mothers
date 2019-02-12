@@ -139,6 +139,7 @@ public class CardScript : MonoBehaviour
     public void OnMouseUp()
     {
         buttonPressed = false;
+        UI.HideDisplay();
 
         thisCollider.enabled = true;//re enamble the collider.
         dropCard("Norman", controller.normanDropPointsZ, controller.normanLane);
@@ -556,20 +557,20 @@ public class CardScript : MonoBehaviour
 
         if(buttonPressed && Time.time > time && timeRead && placed)
         {
-            Debug.Log(normanCard.name);
-            if(gameObject.tag == "Norman")
-            { 
+            if (gameObject.tag == "Norman")
+            {
+                Debug.Log("ShowUI " + normanCard.name);
                 UI.SetDisplay(normanCard);
             }
             else if (gameObject.tag == "Saxon")
             {
+                Debug.Log("ShowUI Saxon" + saxonCard.name);
                 UI.SetDisplay(saxonCard);
             }
 
         }
         else if(!buttonPressed)
         {
-            UI.HideDisplay();
             timeRead = false;
         }
     }

@@ -28,66 +28,64 @@ public class CardDisplayScript : MonoBehaviour {
 
     public void SetDisplay(NormanCard card)
     {
-        if (panelActive == false)
+        panel.gameObject.SetActive(true);
+        panelActive = true;
+        Debug.Log(panelActive);
+
+        Name.text = card.name;
+        Type.text = card.type;
+        Title.text = card.title;
+
+        Action.text = card.action;
+        Constant.text = card.constant;
+        Response.text = card.response;
+        OnPlay.text = card.onPlay;
+
+        Quote.text = card.quote;
+        Solo.text = card.solo;
+
+        CostText.text = card.cost.ToString();
+
+        if (card.type == "Leader" || card.type == "Character" || card.type == "Unit")
         {
-            panel.gameObject.SetActive(true);
-            panelActive = true;
-
-            Name.text = card.name;
-            Type.text = card.type;
-            Title.text = card.title;
-
-            Action.text = card.action;
-            Constant.text = card.constant;
-            Response.text = card.response;
-            OnPlay.text = card.onPlay;
-
-            Quote.text = card.quote;
-            Solo.text = card.solo;
-
-            CostText.text = card.cost.ToString();
-
-            if (card.type == "Leader" || card.type == "Character" || card.type == "Unit")
+            ZealText.text = card.zeal.ToString();
+            MightText.text = card.might.ToString();
+            HealthText.text = card.health.ToString();
+        }
+        else
+        {
+            if (card.zeal == 0)
             {
-                ZealText.text = card.zeal.ToString();
-                MightText.text = card.might.ToString();
-                HealthText.text = card.health.ToString();
+                ZealText.text = "";
+
             }
             else
             {
-                if (card.zeal == 0)
-                {
-                    ZealText.text = "";
-
-                }
-                else
-                {
-                    ZealText.text = card.zeal.ToString();
-                }
-
-                if (card.might == 0)
-                {
-                    MightText.text = "";
-
-                }
-                else
-                {
-                    MightText.text = card.might.ToString();
-                }
-
-                if (card.health == 0)
-                {
-                    HealthText.text = "";
-
-                }
-                else
-                {
-                    HealthText.text = card.health.ToString();
-                }
+                ZealText.text = card.zeal.ToString();
             }
 
-            image.sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
+            if (card.might == 0)
+            {
+                MightText.text = "";
+
+            }
+            else
+            {
+                MightText.text = card.might.ToString();
+            }
+
+            if (card.health == 0)
+            {
+                HealthText.text = "";
+
+            }
+            else
+            {
+                HealthText.text = card.health.ToString();
+            }
         }
+
+        image.sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
     }
 
     public void HideDisplay()
@@ -98,5 +96,6 @@ public class CardDisplayScript : MonoBehaviour {
             panelActive = false;
             panel.gameObject.SetActive(false);
         }
+        Debug.Log(panelActive);
     }
 }
