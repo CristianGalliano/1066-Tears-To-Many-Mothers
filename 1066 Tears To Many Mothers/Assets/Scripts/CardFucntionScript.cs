@@ -25,6 +25,7 @@ public class CardFucntionScript : MonoBehaviour
         if(attacker != null && target != null)
         {
             Debug.Log(attacker.name);
+            Debug.Log(attacker.cardNumber);
             Debug.Log(target.name);
             UseAbility();
         }
@@ -39,7 +40,48 @@ public class CardFucntionScript : MonoBehaviour
     void UseAbility()
     {
         targeting = false;
-        Damage(attacker, target, 3, 3);
+        switch (attacker.cardNumber)
+        {
+            case 1:
+
+                break;
+            case 22:
+
+                break;
+            case 60:
+                Damage(attacker, target, 1, 3);
+                break;
+            case 61:
+                Damage(attacker, target, 1, 3);
+                break;
+            case 63:
+
+                break;
+            case 64:
+                Damage(attacker, target, 1, 3);
+                break;
+            case 66:
+
+                break;
+            case 67:
+
+                break;
+            case 68:
+                Damage(attacker, target, 1, 3);
+                break;
+            case 69:
+                Damage(attacker, target, 1, 5);
+                break;
+            case 70:
+
+                break;
+            case 73:
+
+                break;
+            case 76:
+
+                break;
+        }
         attacker = null;
         target = null;
     }
