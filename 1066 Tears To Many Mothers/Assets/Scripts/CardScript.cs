@@ -594,24 +594,19 @@ public class CardScript : MonoBehaviour
     {
         if (gameObject.tag == "Norman")
         {
-            if (normanCard.health <= 0)
+            if (normanCard.health <= 0 && normanCard.type == "Unit" || normanCard.health <= 0 && normanCard.type == "Character" || normanCard.health <= 0 && normanCard.type == "Leader")
             {
-                if (normanCard.type == "Unit" || normanCard.type == "Character" || normanCard.type == "Leader")
-                {
-                    controller.normanLane[lane] -= 1;
-                    Destroy(gameObject);
-                }
+                controller.normanLane[lane] -= 1;
+                Destroy(gameObject);
             }
         }
-        else if (gameObject.tag == "Saxon")
+        if (gameObject.tag == "Saxon")
         {
-            if (saxonCard.health <= 0)
+            if (saxonCard.health <= 0 && saxonCard.type == "Unit" || saxonCard.health <= 0 && saxonCard.type == "Character" || saxonCard.health <= 0 && saxonCard.type == "Leader")
             {
-                if (saxonCard.type == "Unit" || saxonCard.type == "Character" || saxonCard.type == "Leader")
-                {
-                    controller.saxonlane[lane] -= 1;
-                    Destroy(gameObject);
-                }
+                Debug.Log("should be dead!");
+                controller.saxonlane[lane] -= 1;
+                Destroy(gameObject);
             }
         }
     }
