@@ -28,6 +28,7 @@ public class CardFucntionScript : MonoBehaviour
             Debug.Log(attacker.cardNumber);
             Debug.Log(target.name);
             UseAbility();
+            Destroy(target);
         }
 
     }
@@ -40,6 +41,7 @@ public class CardFucntionScript : MonoBehaviour
     void UseAbility()
     {
         targeting = false;
+        Damage(attacker, target, target.health, 1000);
         switch (attacker.cardNumber)
         {
             case 1:
@@ -92,15 +94,6 @@ public class CardFucntionScript : MonoBehaviour
         if(InRange(Attacker,Target, Range))
         {
             Target.health -= Amount;
-        }
-    }
-
-    void Destroy(NormanCard Attacker, NormanCard Target, int Range)
-    {
-        Target = target;
-        if (InRange(Attacker, Target, Range))
-        {
-            Target.health = 0;
         }
     }
 

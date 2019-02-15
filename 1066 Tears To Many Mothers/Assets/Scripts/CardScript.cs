@@ -35,8 +35,10 @@ public class CardScript : MonoBehaviour
 
     public TextMesh CostMesh, ZealMesh, MightMesh, HealthMesh;
 
-    bool saved = false;
     public float time;
+
+    public int lane;
+
 
     // Use this for initialization
     void Start()
@@ -81,9 +83,10 @@ public class CardScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Destroy();
         if (controller.turn == 0 && gameObject.tag == "Saxon")
         {
-            readyCard();
+            readyCard();           
         }
         if (controller.turn == 1 && gameObject.tag == "Norman")
         {
@@ -213,6 +216,7 @@ public class CardScript : MonoBehaviour
                     if (!placed && count[index] < 3)//checks that the card isnt placed.
                     {
                         Vector3 dropPosition = new Vector3(point, 2, List[count[index]]);//sets the drop position.
+                        lane = index;
                         transform.position = dropPosition;//move the card to the drop position.
                         Vector3 Rotation = new Vector3(-50, 0, 0);//creat a vector to rotate.
                         transform.Rotate(Rotation);//rotate the card.
@@ -581,4 +585,34 @@ public class CardScript : MonoBehaviour
         }
     }
 
+    public void reposition()
+    {
+
+    }
+
+    private void Destroy()
+    {
+        if (gameObject.tag == "Norman")
+        {
+            if (normanCard.health <= 0)
+            {
+                if (normanCard.type == "Unit" || normanCard.type == "Character" || normanCard.type == "Leader")
+                {
+                    controller.normanLane[lane] -= 1;
+                    Destroy(gameObject);
+                }
+            }
+        }
+        else if (gameObject.tag == "Saxon")
+        {
+            if (saxonCard.health <= 0)
+            {
+                if (saxonCard.type == "Unit" || saxonCard.type == "Character" || saxonCard.type == "Leader")
+                {
+                    controller.saxonlane[lane] -= 1;
+                    Destroy(gameObject);
+                }
+            }
+        }
+    }
 }
