@@ -77,8 +77,8 @@ public class DeckManager : MonoBehaviour
 
             SaxonDeck[idNum].cardNumber = idNum;
             SaxonDeck[idNum].name = cardDataText[1];
-            SaxonDeck[idNum].title = cardDataText[2];
-            SaxonDeck[idNum].type = cardDataText[3];
+            SaxonDeck[idNum].type = cardDataText[2];
+            SaxonDeck[idNum].title = cardDataText[3];
 
             SaxonDeck[idNum].cost = int.Parse(cardDataText[4]);
             SaxonDeck[idNum].zeal = int.Parse(cardDataText[5]);

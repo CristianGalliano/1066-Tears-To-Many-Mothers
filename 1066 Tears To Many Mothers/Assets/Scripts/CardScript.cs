@@ -84,6 +84,11 @@ public class CardScript : MonoBehaviour
     void Update()
     {
         Destroy();
+        if(placed)
+        {
+            Reposition();
+        }
+
         if (controller.turn == 0 && gameObject.tag == "Saxon")
         {
             readyCard();           
@@ -585,9 +590,10 @@ public class CardScript : MonoBehaviour
         }
     }
 
-    public void reposition()
+    public void Reposition()
     {
-
+        int positionZ = controller.normanDropPointsZ[lane];
+        Debug.Log(positionZ);
     }
 
     private void Destroy()

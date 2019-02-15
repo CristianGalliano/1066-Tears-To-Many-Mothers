@@ -9,7 +9,9 @@ public class GameController : MonoBehaviour
     public List<int> saxonDropPointsZ = new List<int> { -326, -663, -1000};
     public List<int> xPositions = new List<int> { 300, 0, -300 };
     public List<int> normanLane = new List<int> { 0, 0, 0 };
+    //public int[,] normanLane = new int[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
     public List<int> saxonlane = new List<int> { 0, 0, 0 };
+
     public DrawScript SDS , NDS;
     public int saxonResources = 0;
     public int normanResources = 0;
