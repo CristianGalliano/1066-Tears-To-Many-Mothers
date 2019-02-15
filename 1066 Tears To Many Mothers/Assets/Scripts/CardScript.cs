@@ -38,6 +38,7 @@ public class CardScript : MonoBehaviour
     public float time;
 
     public int lane;
+    public int laneNum;
 
 
     // Use this for initialization
@@ -84,6 +85,7 @@ public class CardScript : MonoBehaviour
     void Update()
     {
         Destroy();
+        GetPosition();
         if(placed)
         {
             Reposition();
@@ -120,7 +122,14 @@ public class CardScript : MonoBehaviour
     {
         if(placed)
         {
-            EnableButton();
+            if(functScript.attacker != null)
+            {
+                UI.InfoButton.gameObject.SetActive(true);
+            }
+            else if(functScript.attacker == null)
+            {
+                UI.InfoButton.gameObject.SetActive(false);
+            }
         }
         if (functScript.targeting && placed)
         {
@@ -522,22 +531,45 @@ public class CardScript : MonoBehaviour
 
     }
 
-    void EnableButton()
+    void GetPosition()
     {
+        int ZPos = (int)gameObject.transform.position.z;
 
-        UI.InfoButton.gameObject.SetActive(true);
+        if(gameObject.tag == "Norman")
+        {
+            switch (ZPos)
+            {
+                case 1000:
+                    laneNum = 3;
+                    break;
+                case 663:
+                    laneNum = 2;
+                    break;
+                case 326:
+                    laneNum = 1;
+                    break;
+            }
+        }
 
-        if (tag == "Norman")
+        if (gameObject.tag == "Saxon")
         {
-            UI.passedCard = normanCard;
+            switch (ZPos)
+            {
+                case -1000:
+                    laneNum = 3;
+                    break;
+                case -663:
+                    laneNum = 2;
+                    break;
+                case -326:
+                    laneNum = 1;
+                    break;
+            }
         }
-        else if (tag == "Saxon")
-        {
-            UI.passedCard = saxonCard;
-        }
+
     }
 
-   void FindPosition()
+    void FindPosition()
     {
         int ZPos = (int)gameObject.transform.position.z;
 
@@ -592,8 +624,113 @@ public class CardScript : MonoBehaviour
 
     public void Reposition()
     {
-        int positionZ = controller.normanDropPointsZ[lane];
-        Debug.Log(positionZ);
+        if(gameObject.tag == "Norman")
+        {
+            GameObject[] cards = GameObject.FindGameObjectsWithTag("Norman");
+
+            if (controller.normanLane[lane] == 1)
+            {
+                Vector3 newPos = transform.position;
+                newPos.z = controller.normanDropPointsZ[0];
+                transform.position = newPos;
+            }
+            else if(controller.normanLane[lane] == 2)
+            {
+                if(laneNum == 2)
+                {
+                    CardScript card1 = null;
+                    foreach (GameObject card in cards)
+                    {
+                        CardScript thisCard = card.GetComponent<CardScript>();
+                        if (thisCard != null && thisCard.lane == lane && thisCard.laneNum == 1)
+                        {
+                            card1 = thisCard;
+                        }
+                    }
+
+                    if (card1 == null)
+                    {
+                        Vector3 newPos = transform.position;
+                        newPos.z = controller.normanDropPointsZ[0];
+                        transform.position = newPos;
+                    }
+                }
+
+                if (laneNum == 3)
+                {
+                    CardScript card1 = null;
+                    foreach (GameObject card in cards)
+                    {
+                        CardScript thisCard = card.GetComponent<CardScript>();
+                        if (thisCard != null && thisCard.lane == lane && thisCard.laneNum == 2)
+                        {
+                            card1 = thisCard;
+                        }
+                    }
+
+                    if (card1 == null)
+                    {
+                        Vector3 newPos = transform.position;
+                        newPos.z = controller.normanDropPointsZ[1];
+                        transform.position = newPos;
+                    }
+                }
+            }
+        }
+
+        if (gameObject.tag == "Saxon")
+        {
+            GameObject[] cards = GameObject.FindGameObjectsWithTag("Saxon");
+
+            if (controller.saxonlane[lane] == 1)
+            {
+                Vector3 newPos = transform.position;
+                newPos.z = controller.saxonDropPointsZ[0];
+                transform.position = newPos;
+            }
+            else if (controller.saxonlane[lane] == 2)
+            {
+                if (laneNum == 2)
+                {
+                    CardScript card1 = null;
+                    foreach (GameObject card in cards)
+                    {
+                        CardScript thisCard = card.GetComponent<CardScript>();
+                        if (thisCard != null && thisCard.lane == lane && thisCard.laneNum == 1)
+                        {
+                            card1 = thisCard;
+                        }
+                    }
+
+                    if (card1 == null)
+                    {
+                        Vector3 newPos = transform.position;
+                        newPos.z = controller.saxonDropPointsZ[0];
+                        transform.position = newPos;
+                    }
+                }
+
+                if (laneNum == 3)
+                {
+                    CardScript card1 = null;
+                    foreach (GameObject card in cards)
+                    {
+                        CardScript thisCard = card.GetComponent<CardScript>();
+                        if (thisCard != null && thisCard.lane == lane && thisCard.laneNum == 2)
+                        {
+                            card1 = thisCard;
+                        }
+                    }
+
+                    if (card1 == null)
+                    {
+                        Vector3 newPos = transform.position;
+                        newPos.z = controller.saxonDropPointsZ[1];
+                        transform.position = newPos;
+                    }
+                }
+            }
+        }
     }
 
     private void Destroy()

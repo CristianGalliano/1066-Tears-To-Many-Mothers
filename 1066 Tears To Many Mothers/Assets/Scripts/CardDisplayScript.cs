@@ -13,7 +13,6 @@ public class CardDisplayScript : MonoBehaviour {
     public bool panelActive = false;
 
     public Button InfoButton;
-    public NormanCard passedCard;
     // Use this for initialization
     void Start ()
     {

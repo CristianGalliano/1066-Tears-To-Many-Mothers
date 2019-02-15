@@ -34,12 +34,14 @@ public class CardFucntionScript : MonoBehaviour
 
     public void EnterTargeting()
     {
-        targeting = true;
+        if(attacker != null)
+        {
+            targeting = true;
+        }
     }
 
     void UseAbility()
     {
-        targeting = false;
         Damage(attacker, target, target.health,6);
         switch (attacker.cardNumber)
         {
@@ -85,6 +87,7 @@ public class CardFucntionScript : MonoBehaviour
         }
         attacker = null;
         target = null;
+        targeting = false;
     }
 
     void Damage(NormanCard Attacker, NormanCard Target, int Amount, int Range)
