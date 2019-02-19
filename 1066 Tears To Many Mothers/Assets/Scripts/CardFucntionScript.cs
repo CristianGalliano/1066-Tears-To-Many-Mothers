@@ -42,7 +42,7 @@ public class CardFucntionScript : MonoBehaviour
 
     void UseAbility()
     {
-        Damage(attacker, target, target.health,6);
+        Heal(target, 5);
         switch (attacker.cardNumber)
         {
             case 1:
@@ -125,6 +125,11 @@ public class CardFucntionScript : MonoBehaviour
                 target.might += value;
                 break;
         }
+    }
+
+    void Destroy(NormanCard card)
+    {
+        card.health = 0;
     }
 
     void Discard()
