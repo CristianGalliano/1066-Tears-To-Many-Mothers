@@ -376,6 +376,7 @@ MonoBehaviour:
   activate: 0
   decreaseHeight: 0
   objNum: 0
+  usedObj: {fileID: 463204011}
   mats:
   - {fileID: 2100000, guid: eb23d8a519d8bc54c98fa14f17725cd1, type: 2}
   - {fileID: 2100000, guid: 3557094323099f34b8e6083eef261f47, type: 2}
@@ -775,6 +776,7 @@ MonoBehaviour:
   activate: 0
   decreaseHeight: 0
   objNum: 0
+  usedObj: {fileID: 420284008}
   mats:
   - {fileID: 2100000, guid: 7c97711311e553d49ac3a56c1237e91a, type: 2}
   - {fileID: 2100000, guid: b4c4b2f4f44611f4290238a0556ee2ff, type: 2}
@@ -1253,8 +1255,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objective: {fileID: 222044640}
-  increaseHeight: 0
-  activate: 0
 --- !u!1 &433090284
 GameObject:
   m_ObjectHideFlags: 0
@@ -1365,8 +1365,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objective: {fileID: 139799870}
-  increaseHeight: 0
-  activate: 0
 --- !u!1 &484916970
 GameObject:
   m_ObjectHideFlags: 0

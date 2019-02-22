@@ -11,6 +11,7 @@ public class ObjectivesScript : MonoBehaviour
     private Vector3 mPosition;
     public int objNum = 0;
     private Renderer rend;
+    public UsedObjectivesScript usedObj;
 
     public Material[] mats;
     // Start is called before the first frame update
@@ -28,6 +29,7 @@ public class ObjectivesScript : MonoBehaviour
         if (activate == true)
         {
             nextCard();
+            usedObj.increaseSize();
             activate = false;
         }
     }

@@ -5,11 +5,9 @@ using UnityEngine;
 public class UsedObjectivesScript : MonoBehaviour
 {
     public ObjectivesScript objective;
-    public float increaseHeight;
     private Vector3 scale;
     private Vector3 oPosition;
     private Vector3 mPosition;
-    public bool activate = false;
     // Start is called before the first frame update
     void Start()
     {       
@@ -27,16 +25,12 @@ public class UsedObjectivesScript : MonoBehaviour
         {
             gameObject.GetComponent<MeshRenderer>().enabled = true;
         }
-        if (objective.activate == true)
-        {
-            increaseHeight = objective.decreaseHeight * (objective.objNum+1);
-            increaseSize();
-        }
     }
 
-    void increaseSize()
+    public void increaseSize()
     {
-        scale = new Vector3(transform.localScale.x, transform.localScale.y, increaseHeight);
+        scale = new Vector3(transform.localScale.x, transform.localScale.y, objective.decreaseHeight * (objective.objNum + 1));
+        Debug.Log(scale);
         mPosition = new Vector3(oPosition.x, (scale.z / 60), oPosition.z);
         transform.localPosition = mPosition;
         transform.localScale = scale;
