@@ -175,10 +175,16 @@ public class ObjectivesScript : MonoBehaviour
         switch (statToAttack)
         {
             case 0:
-                objective.health -= totalStat - objective.zeal;
+                if (totalStat - objective.zeal > 0)
+                {
+                    objective.health -= totalStat - objective.zeal;
+                }
                 break;
             case 1:
-                objective.health -= totalStat - objective.might;
+                if (totalStat - objective.might > 0)
+                {
+                    objective.health -= totalStat - objective.might;
+                }
                 break;
         }
 
