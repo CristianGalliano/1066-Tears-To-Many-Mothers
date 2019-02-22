@@ -19,6 +19,8 @@ public class GameController : MonoBehaviour
     public int numberOfTurns = 1;
     public Text SaxonResourcesText, NormanResourcesText;
 
+    public ObjectivesScript NormanObj, SaxonObj;
+
     // Use this for initialization
     void Start()
     {
@@ -57,12 +59,30 @@ public class GameController : MonoBehaviour
         }
         if (turn == 1)
         {
+            if(NormanObj.objNum  > 0)
+            {
+                NormanObj.AttackObjective();
+            }
+            else
+            {
+                NormanObj.activate = true;
+            }
+            
             normanResources = 0;
             //set normans to ready
             SDS.drawFunc(2);
+            
         }
         else if (turn == 0)
         {
+            if (SaxonObj.objNum > 0)
+            {
+                SaxonObj.AttackObjective();
+            }
+            else
+            {
+                SaxonObj.activate = true;
+            }
             saxonResources = 0;
             //set saxons to ready
             NDS.drawFunc(2);

@@ -18,7 +18,7 @@ public class CardScript : MonoBehaviour
 
     private bool dragging = false; // bools for setting conditions.
     private bool placed = false;
-    private bool tired = false;
+    public bool tired = false;
     private bool buttonPressed, timeRead = false;
     private BoxCollider thisCollider; //variable for the box collider attached to this gameobject.
 
@@ -27,8 +27,8 @@ public class CardScript : MonoBehaviour
     private GameObject[] placedCards;
     private GameController controller;
     private DeckManager deck;
-    private CardDisplayScript UI;
-    private NormanCard normanCard, saxonCard;
+    public CardDisplayScript UI;
+    public NormanCard normanCard, saxonCard;
     private CardFucntionScript functScript;
 
     private MeshRenderer cardMesh;
@@ -106,6 +106,15 @@ public class CardScript : MonoBehaviour
 
         UpdateStats();
         ShowUI();
+
+        if(gameObject.tag == "Norman")
+        {
+            normanCard.lane = lane;
+        }
+        else if(gameObject.tag == "Saxon")
+        {
+            saxonCard.lane = lane;
+        }
     }
 
     private void OnMouseEnter()
@@ -124,36 +133,30 @@ public class CardScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(placed)
-        {
-            if(functScript.attacker != null)
-            {
-                UI.InfoButton.gameObject.SetActive(true);
-            }
-            else if(functScript.attacker == null)
-            {
-                UI.InfoButton.gameObject.SetActive(false);
-            }
-        }
+
         if (functScript.targeting && placed)
         {
             if (gameObject.tag == "Norman")
             {
+                functScript.targetScript = this;
                 functScript.target = normanCard;
             }
             else if (gameObject.tag == "Saxon")
             {
+                functScript.targetScript = this;
                 functScript.target = saxonCard;
             }
         }
-        else if (!functScript.targeting && placed)
+        else if (!functScript.targeting && placed && !tired)
         {
             if (gameObject.tag == "Norman")
             {
+                functScript.attackerScript = this;
                 functScript.attacker = normanCard;
             }
             else if (gameObject.tag == "Saxon")
             {
+                functScript.attackerScript = this;
                 functScript.attacker = saxonCard;
             }
         }
@@ -179,11 +182,6 @@ public class CardScript : MonoBehaviour
         disablePlacholders();
     }
 
-    private void OnMouseOver()
-    {
-        tireCard();
-    }
-
     private void getPointer()
     {
         RaycastHit hit;//creats a raycasthit.
@@ -193,30 +191,27 @@ public class CardScript : MonoBehaviour
         }
     }
 
-    private void tireCard()
+    public void tireCard()
     {
-        if (Input.GetMouseButtonDown(1))//on right click.
+        if (placed)//if the card is placed.
         {
-            if (placed)//if the card is placed.
+            if (!tired)//if the card isnt already tired.
             {
-                if (!tired)//if the card isnt already tired.
+                if (gameObject.tag == "Norman" && controller.turn == 0)
                 {
-                    if (gameObject.tag == "Norman" && controller.turn == 0)
-                    {
-                        Vector3 Rotation = new Vector3(0, 0, 90);//vector to rotate.
-                        transform.Rotate(Rotation);//rotate by the vector.
-                        tired = true;//set tired to true.
-                        controller.normanResources++;
-                        //Debug.Log("norman resources: " + controller.normanResources);
-                    }
-                    else if (gameObject.tag == "Saxon" && controller.turn == 1)
-                    {
-                        Vector3 Rotation = new Vector3(0, 0, 90);//vector to rotate.
-                        transform.Rotate(Rotation);//rotate by the vector.
-                        tired = true;//set tired to true.
-                        controller.saxonResources++;
-                        //Debug.Log("saxon resources: " + controller.saxonResources);
-                    }
+                    Vector3 Rotation = new Vector3(0, 0, 90);//vector to rotate.
+                    transform.Rotate(Rotation);//rotate by the vector.
+                    tired = true;//set tired to true.
+                    controller.normanResources++;
+                    //Debug.Log("norman resources: " + controller.normanResources);
+                }
+                else if (gameObject.tag == "Saxon" && controller.turn == 1)
+                {
+                    Vector3 Rotation = new Vector3(0, 0, 90);//vector to rotate.
+                    transform.Rotate(Rotation);//rotate by the vector.
+                    tired = true;//set tired to true.
+                    controller.saxonResources++;
+                    //Debug.Log("saxon resources: " + controller.saxonResources);
                 }
             }
         }
@@ -243,7 +238,8 @@ public class CardScript : MonoBehaviour
                         boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
                         thisCollider.center = boxPos;//move the collider by boxPos vector.
                         thisCollider.size = boxScale;//scale the collider by boxscale vector.
-                        gameObject.transform.SetParent(null);//take this card out of the hand.
+                        GameObject targetParent = GameObject.Find(str + "Field");
+                        gameObject.transform.SetParent(targetParent.transform);//take this card out of the hand and put it as a child of the field
                         count[index]++;
                     }
                 }
@@ -269,6 +265,8 @@ public class CardScript : MonoBehaviour
             gameObject.layer = 1;
             FindPosition();
         }
+
+        Debug.Log(lane + "," + laneNum);
     }
 
     void dragCard()

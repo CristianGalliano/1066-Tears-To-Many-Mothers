@@ -21,6 +21,7 @@ public class NormanCard : ScriptableObject
     public string solo;
 
     public int PositionZ;
+    public int lane;
 
     public void StartingValues()
     {

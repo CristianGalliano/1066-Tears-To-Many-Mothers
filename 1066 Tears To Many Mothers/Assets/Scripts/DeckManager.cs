@@ -7,8 +7,8 @@ public class DeckManager : MonoBehaviour
     public Dictionary<int, NormanCard> NormanDeck = new Dictionary<int, NormanCard>();
     public Dictionary<int, NormanCard> SaxonDeck = new Dictionary<int, NormanCard>();
 
-    public Dictionary<string, NormanObjectiveCard> NormanObjectives = new Dictionary<string, NormanObjectiveCard>();
-    public Dictionary<string, NormanObjectiveCard> SaxonObjectives = new Dictionary<string, NormanObjectiveCard>();
+    public Dictionary<int, NormanObjectiveCard> NormanObjectives = new Dictionary<int, NormanObjectiveCard>();
+    public Dictionary<int, NormanObjectiveCard> SaxonObjectives = new Dictionary<int, NormanObjectiveCard>();
 
     public string[] cardDataRows;
     public string[] cardDataText;
@@ -110,21 +110,21 @@ public class DeckManager : MonoBehaviour
         {
             cardDataText = cardDataRows[i].Split(',');
             idChar = cardDataText[1];
-            NormanObjectives.Add(idChar, ScriptableObject.CreateInstance<NormanObjectiveCard>());
+            NormanObjectives.Add(i, ScriptableObject.CreateInstance<NormanObjectiveCard>());
 
-            NormanObjectives[idChar].cardNumber = int.Parse(cardDataText[0]);
-            NormanObjectives[idChar].idChar = idChar;
-            NormanObjectives[idChar].name = cardDataText[2];
-            NormanObjectives[idChar].title = cardDataText[3];
-            NormanObjectives[idChar].type = cardDataText[4];
+            NormanObjectives[i].cardNumber = int.Parse(cardDataText[0]);
+            NormanObjectives[i].idChar = idChar;
+            NormanObjectives[i].name = cardDataText[2];
+            NormanObjectives[i].title = cardDataText[3];
+            NormanObjectives[i].type = cardDataText[4];
 
-            NormanObjectives[idChar].zeal = int.Parse(cardDataText[5]);
-            NormanObjectives[idChar].might = int.Parse(cardDataText[6]);
-            NormanObjectives[idChar].health = int.Parse(cardDataText[7]);
+            NormanObjectives[i].zeal = int.Parse(cardDataText[5]);
+            NormanObjectives[i].might = int.Parse(cardDataText[6]);
+            NormanObjectives[i].health = int.Parse(cardDataText[7]);
 
-            NormanObjectives[idChar].ability = cardDataText[8];
-            NormanObjectives[idChar].quote = cardDataText[9];
-            NormanObjectives[idChar].solo = cardDataText[10];
+            NormanObjectives[i].ability = cardDataText[8];
+            NormanObjectives[i].quote = cardDataText[9];
+            NormanObjectives[i].solo = cardDataText[10];
 
         }
 
@@ -136,21 +136,21 @@ public class DeckManager : MonoBehaviour
         {
             cardDataText = cardDataRows[i].Split(',');
             idChar = cardDataText[1];
-            SaxonObjectives.Add(idChar, ScriptableObject.CreateInstance<NormanObjectiveCard>());
+            SaxonObjectives.Add(i, ScriptableObject.CreateInstance<NormanObjectiveCard>());
 
-            SaxonObjectives[idChar].cardNumber = int.Parse(cardDataText[0]);
-            SaxonObjectives[idChar].idChar = idChar;
-            SaxonObjectives[idChar].name = cardDataText[2];
-            SaxonObjectives[idChar].title = cardDataText[3];
-            SaxonObjectives[idChar].type = cardDataText[4];
+            SaxonObjectives[i].cardNumber = int.Parse(cardDataText[0]);
+            SaxonObjectives[i].idChar = idChar;
+            SaxonObjectives[i].name = cardDataText[2];
+            SaxonObjectives[i].title = cardDataText[3];
+            SaxonObjectives[i].type = cardDataText[4];
 
-            SaxonObjectives[idChar].zeal = int.Parse(cardDataText[5]);
-            SaxonObjectives[idChar].might = int.Parse(cardDataText[6]);
-            SaxonObjectives[idChar].health = int.Parse(cardDataText[7]);
+            SaxonObjectives[i].zeal = int.Parse(cardDataText[5]);
+            SaxonObjectives[i].might = int.Parse(cardDataText[6]);
+            SaxonObjectives[i].health = int.Parse(cardDataText[7]);
 
-            SaxonObjectives[idChar].ability = cardDataText[8];
-            SaxonObjectives[idChar].quote = cardDataText[9];
-            SaxonObjectives[idChar].solo = cardDataText[10];
+            SaxonObjectives[i].ability = cardDataText[8];
+            SaxonObjectives[i].quote = cardDataText[9];
+            SaxonObjectives[i].solo = cardDataText[10];
 
         }
     }
@@ -187,11 +187,11 @@ public class DeckManager : MonoBehaviour
         return SaxonDeck[index];
     }
 
-    public NormanObjectiveCard DrawNormanObj(string index)
+    public NormanObjectiveCard DrawNormanObj(int index)
     {
         return NormanObjectives[index];
     }
-    public NormanObjectiveCard DrawSaxonObj(string index)
+    public NormanObjectiveCard DrawSaxonObj(int index)
     {
         return SaxonObjectives[index];
     }

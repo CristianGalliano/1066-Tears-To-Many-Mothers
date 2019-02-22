@@ -12,9 +12,8 @@ public class NormanObjectiveCard : ScriptableObject
     public string title;
     public string type;
 
-    public int zeal;
-    public int might;
-    public int health;
+    public int zeal, might, health;
+    public int startZeal, startMight, startHealth;
 
     public string ability;
 

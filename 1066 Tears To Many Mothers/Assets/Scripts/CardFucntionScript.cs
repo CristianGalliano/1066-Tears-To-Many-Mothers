@@ -8,8 +8,11 @@ public class CardFucntionScript : MonoBehaviour
     private GameController Game;
     private HandScript HandN, HandS;
     private Vector3 positionOfMouse;
-    public bool targeting = false;
+    public bool targeting, targetIsValid = false;
+    public CardScript attackerScript, targetScript;
     public NormanCard attacker, target;
+
+    private CardDisplayScript UI;
     // Use this for initialization
     void Start ()
     {
@@ -17,6 +20,7 @@ public class CardFucntionScript : MonoBehaviour
         Game = GameObject.Find("GameController").GetComponent<GameController>();
         HandN = GameObject.Find("normanHand").GetComponent<HandScript>();
         HandS = GameObject.Find("saxonHand").GetComponent<HandScript>();
+        UI = GameObject.Find("UIController").GetComponent<CardDisplayScript>();
     }
 	
 	// Update is called once per frame
@@ -30,6 +34,14 @@ public class CardFucntionScript : MonoBehaviour
             UseAbility();         
         }
 
+        if (attacker != null && attackerScript != null)
+        {
+            UI.InfoButton.gameObject.SetActive(true);
+        }
+        else if (attacker == null && attackerScript == null)
+        {
+            UI.InfoButton.gameObject.SetActive(false);
+        }
     }
 
     public void EnterTargeting()
@@ -42,7 +54,8 @@ public class CardFucntionScript : MonoBehaviour
 
     void UseAbility()
     {
-        Heal(target, 5);
+        targetIsValid = false;
+        Damage(attacker,target,3,3);
         switch (attacker.cardNumber)
         {
             case 1:
@@ -88,42 +101,63 @@ public class CardFucntionScript : MonoBehaviour
         attacker = null;
         target = null;
         targeting = false;
+
+        if(targetIsValid)
+        {
+            attackerScript.tireCard();
+        }
+        
     }
 
     void Damage(NormanCard Attacker, NormanCard Target, int Amount, int Range)
     {
-        if(InRange(Attacker,Target, Range))
+        if(attackerScript.tag != targetScript.tag)
         {
-            Target.health -= Amount;
+            if (InRange(Attacker, Target, Range))
+            {
+                targetIsValid = true;
+                Target.health -= Amount;
+            }
+            
         }
     }
 
     void Heal(NormanCard Target, int value)
     {
-        Target.health += value;
+        if(attackerScript.tag == targetScript.tag)
+        {
+            Target.health += value;
+            targetIsValid = true;
+        }
     }
 
     void DrawCard(int value)
     {
-        if(gameObject.tag == "Norman")
+        if(attackerScript.tag == "Norman")
         {
             Game.NDS.drawFunc(value);
         }
-        else if (gameObject.tag == "Saxon")
+        else if (attackerScript.tag == "Saxon")
         {
             Game.SDS.drawFunc(value);
         }
+
+        targetIsValid = true;
     }
 
     void Buff(NormanCard target, string stat, int value)
     {
-        switch(stat)
+        if (attackerScript.tag == targetScript.tag)
         {
-            case "Zeal": target.zeal += value;
-                break;
-            case "Might":
-                target.might += value;
-                break;
+            switch (stat)
+            {
+                case "Zeal":
+                    target.zeal += value;
+                    break;
+                case "Might":
+                    target.might += value;
+                    break;
+            }
         }
     }
 
@@ -180,7 +214,7 @@ public class CardFucntionScript : MonoBehaviour
 
     bool InRange(NormanCard attacker, NormanCard target, int Range)
     {
-        if (highest(attacker, target).PositionZ - lowest(attacker,target).PositionZ <= Range)
+        if (highest(attacker, target).PositionZ - lowest(attacker,target).PositionZ <= Range && (attacker.lane == target.lane))
         {
             return true;
         }
