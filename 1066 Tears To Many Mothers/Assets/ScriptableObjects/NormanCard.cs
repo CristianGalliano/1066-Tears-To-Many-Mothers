@@ -10,25 +10,25 @@ public class NormanCard : ScriptableObject
     public int cardNumber;
 
     public new string name;
-    public string title;
-    public string type;
+    public string title, type;
 
-    public int cost;
-    public int zeal;
-    public int might;
-    public int health;
-    public int resources;
+    public int cost, might, health, zeal, resources;
+    public int startCost, startZeal, startMight, startHealth;
 
-    public string action;
-    public string constant;
-    public string response;
-    public string onPlay;
+    public string action, constant, response, onPlay;
 
     public string quote;
-
     public string solo;
 
     public int PositionZ;
+
+    public void StartingValues()
+    {
+        startCost = cost;
+        startZeal = zeal;
+        startMight = might;
+        startHealth = health;
+    }
 
 
 }

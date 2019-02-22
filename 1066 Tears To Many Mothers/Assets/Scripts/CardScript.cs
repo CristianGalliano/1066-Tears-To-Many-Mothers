@@ -57,11 +57,13 @@ public class CardScript : MonoBehaviour
         if (gameObject.tag == "Norman" && deck.NormanLeaderDrawn == true)
         {
             normanCard = deck.DrawRandomNormanCard();
+            normanCard.StartingValues();
         }
 
         if (gameObject.tag == "Saxon" && deck.SaxonLeaderDrawn == true)
         {
             saxonCard = deck.DrawRandomSaxonCard();
+            saxonCard.StartingValues();
         }
 
         if (gameObject.tag == "Norman" && deck.NormanLeaderDrawn == false)
@@ -69,6 +71,7 @@ public class CardScript : MonoBehaviour
             normanCard = deck.DrawNormanCard(1);
             deck.NormanLeaderDrawn = true;
             Debug.Log("Leader Drawn : " + normanCard.name);
+            normanCard.StartingValues();
         }
 
         if (gameObject.tag == "Saxon" && deck.SaxonLeaderDrawn == false)
@@ -76,6 +79,7 @@ public class CardScript : MonoBehaviour
             saxonCard = deck.DrawSaxonCard(85);
             deck.SaxonLeaderDrawn = true;
             Debug.Log("Leader Drawn : " + saxonCard.name);
+            saxonCard.StartingValues();
         }
         functScript = controller.GetComponent<CardFucntionScript>();
         AssignImage();
@@ -472,6 +476,33 @@ public class CardScript : MonoBehaviour
                     HealthMesh.text = normanCard.health.ToString(); ;
                 }
             }
+
+            if (normanCard.cost == normanCard.startCost)
+                CostMesh.color = Color.black;
+            if (normanCard.zeal == normanCard.startZeal)
+                ZealMesh.color = Color.black;
+            if (normanCard.might == normanCard.startMight)
+                MightMesh.color = Color.black;
+            if (normanCard.health == normanCard.startHealth)
+                HealthMesh.color = Color.black;
+
+            if (normanCard.cost < normanCard.startCost)
+                CostMesh.color = Color.red;
+            if (normanCard.zeal < normanCard.startZeal)
+                ZealMesh.color = Color.red;
+            if (normanCard.might < normanCard.startMight)
+                MightMesh.color = Color.red;
+            if (normanCard.health < normanCard.startHealth)
+                HealthMesh.color = Color.red;
+
+            if (normanCard.cost > normanCard.startCost)
+                CostMesh.color = Color.green;
+            if (normanCard.zeal > normanCard.startZeal)
+                ZealMesh.color = Color.green;
+            if (normanCard.might > normanCard.startMight)
+                MightMesh.color = Color.green;
+            if (normanCard.health > normanCard.startHealth)
+                HealthMesh.color = Color.green;
         }
         else if (gameObject.tag == "Saxon")
         {

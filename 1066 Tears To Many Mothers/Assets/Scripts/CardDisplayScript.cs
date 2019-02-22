@@ -46,6 +46,33 @@ public class CardDisplayScript : MonoBehaviour {
 
         if (card.type == "Leader" || card.type == "Character" || card.type == "Unit")
         {
+            if (card.cost == card.startCost)
+                CostText.color = Color.black;
+            if (card.zeal == card.startZeal)
+                ZealText.color = Color.black;
+            if (card.might == card.startMight)
+                MightText.color = Color.black;
+            if (card.health == card.startHealth)
+                HealthText.color = Color.black;
+
+            if (card.cost < card.startCost)
+                CostText.color = Color.red;
+            if (card.zeal < card.startZeal)
+                ZealText.color = Color.red;
+            if (card.might < card.startMight)
+                MightText.color = Color.red;
+            if (card.health < card.startHealth)
+                HealthText.color = Color.red;
+
+            if (card.cost > card.startCost)
+                CostText.color = Color.green;
+            if (card.zeal > card.startZeal)
+                ZealText.color = Color.green;
+            if (card.might > card.startMight)
+                MightText.color = Color.green;
+            if (card.health > card.startHealth)
+                HealthText.color = Color.green;
+
             ZealText.text = card.zeal.ToString();
             MightText.text = card.might.ToString();
             HealthText.text = card.health.ToString();
