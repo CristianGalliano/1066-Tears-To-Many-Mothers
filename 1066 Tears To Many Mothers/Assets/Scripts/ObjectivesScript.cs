@@ -15,19 +15,25 @@ public class ObjectivesScript : MonoBehaviour
 
     public Material[] mats;
     private Dictionary<int, NormanObjectiveCard> objectives;
-    private NormanObjectiveCard objective;
+    public NormanObjectiveCard objective;
     private DeckManager deck;
+    private CardDisplayScript UI;
 
     public GameObject field;
 
     public TextMesh stat, health;
     private int statToAttack, totalStat;
+
+    private bool buttonPressed, timeRead = false;
+    private float time;
+
     // Start is called before the first frame update
     void Start()
     {
         deck = GameObject.Find("DeckManager").GetComponent<DeckManager>();
+        UI = GameObject.Find("UIController").GetComponent<CardDisplayScript>();
 
-        if(gameObject.tag == "Norman")
+        if (gameObject.tag == "Norman")
         {
             objectives =  deck.NormanObjectives;
         }
@@ -51,6 +57,39 @@ public class ObjectivesScript : MonoBehaviour
             nextCard();
             usedObj.increaseSize();
             activate = false;
+        }
+        ShowUI();
+    }
+
+    void OnMouseDown()
+    {
+        buttonPressed = true;
+        Debug.Log("pressed");
+    }
+
+
+    void OnMouseUp()
+    {
+        buttonPressed = false;
+        Debug.Log("letgo");
+        UI.HideDisplay();
+    }
+
+    void ShowUI()
+    {
+        if (buttonPressed && !timeRead)
+        {
+            time = Time.time + 0.5f;
+            timeRead = true;
+        }
+
+        if (buttonPressed && Time.time > time && timeRead)
+        {
+            UI.SetObjDisplay(objective);
+        }
+        else if (!buttonPressed)
+        {
+            timeRead = false;
         }
     }
 

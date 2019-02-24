@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class CardDisplayScript : MonoBehaviour {
 
-    public GameObject panel;
-    public Image image;
+    public GameObject CardPanel, ObjPanel;
+    public Image image, image2;
     public Text Name, Title, Type, Action, Constant, Response, OnPlay, Quote, Solo;
-    public Text CostText, ZealText, MightText, HealthText;
+    public Text CostText, ZealText, MightText, HealthText, ResourcesText;
+    public Text ObjStat, ObjHealth;
 
     public bool panelActive = false;
 
@@ -27,7 +28,7 @@ public class CardDisplayScript : MonoBehaviour {
 
     public void SetDisplay(NormanCard card)
     {
-        panel.gameObject.SetActive(true);
+        CardPanel.gameObject.SetActive(true);
         panelActive = true;
 
         Name.text = card.name;
@@ -76,6 +77,7 @@ public class CardDisplayScript : MonoBehaviour {
             ZealText.text = card.zeal.ToString();
             MightText.text = card.might.ToString();
             HealthText.text = card.health.ToString();
+            ResourcesText.text = card.resources.ToString();
         }
         else
         {
@@ -113,13 +115,54 @@ public class CardDisplayScript : MonoBehaviour {
         image.sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
     }
 
+    public void SetObjDisplay(NormanObjectiveCard card)
+    {
+        ObjPanel.gameObject.SetActive(true);
+        panelActive = true;
+
+        if (card.might > 0 && card.zeal == 0)
+            ObjStat.text = card.might.ToString();
+        if (card.zeal > 0 && card.might == 0)
+            ObjStat.text = card.zeal.ToString();
+
+        ObjHealth.text = card.health.ToString();
+
+
+
+        if (card.zeal == card.startZeal)
+            ZealText.color = Color.black;
+        if (card.might == card.startMight)
+            MightText.color = Color.black;
+        if (card.health == card.startHealth)
+            ObjHealth.color = Color.black;
+
+        if (card.zeal < card.startZeal)
+            ObjStat.color = Color.red;
+        if (card.might < card.startMight)
+            ObjStat.color = Color.red;
+        if (card.health < card.startHealth)
+            ObjHealth.color = Color.red;
+
+        if (card.zeal > card.startZeal)
+            ObjStat.color = Color.green;
+        if (card.might > card.startMight)
+            ObjStat.color = Color.green;
+        if (card.health > card.startMight)
+            ObjHealth.color = Color.green;
+
+        image2.sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
+    }
+
     public void HideDisplay()
     {
 
         if(panelActive == true)
         {
             panelActive = false;
-            panel.gameObject.SetActive(false);
+            CardPanel.gameObject.SetActive(false);
+            ObjPanel.gameObject.SetActive(false);
         }
     }
+
+
 }
