@@ -33,7 +33,7 @@ public class CardScript : MonoBehaviour
 
     private MeshRenderer cardMesh;
 
-    public TextMesh CostMesh, ZealMesh, MightMesh, HealthMesh;
+    public TextMesh CostMesh, ZealMesh, MightMesh, HealthMesh, ResourceMesh;
 
     public float time;
 
@@ -136,12 +136,12 @@ public class CardScript : MonoBehaviour
 
         if (functScript.targeting && placed)
         {
-            if (gameObject.tag == "Norman")
+            if (gameObject.tag == "Norman" && controller.turn == 1)
             {
                 functScript.targetScript = this;
                 functScript.target = normanCard;
             }
-            else if (gameObject.tag == "Saxon")
+            else if (gameObject.tag == "Saxon" && controller.turn == 0)
             {
                 functScript.targetScript = this;
                 functScript.target = saxonCard;
@@ -149,12 +149,12 @@ public class CardScript : MonoBehaviour
         }
         else if (!functScript.targeting && placed && !tired)
         {
-            if (gameObject.tag == "Norman")
+            if (gameObject.tag == "Norman" && controller.turn == 0)
             {
                 functScript.attackerScript = this;
                 functScript.attacker = normanCard;
             }
-            else if (gameObject.tag == "Saxon")
+            else if (gameObject.tag == "Saxon" && controller.turn == 1)
             {
                 functScript.attackerScript = this;
                 functScript.attacker = saxonCard;
@@ -471,8 +471,17 @@ public class CardScript : MonoBehaviour
                 }
                 else
                 {
-                    HealthMesh.text = normanCard.health.ToString(); ;
+                    HealthMesh.text = normanCard.health.ToString();
                 }
+            }
+
+            if (normanCard.resources == 0)
+            {
+                ResourceMesh.text = "";
+            }
+            else
+            {
+                ResourceMesh.text = normanCard.resources.ToString();
             }
 
             if (normanCard.cost == normanCard.startCost)
@@ -540,9 +549,45 @@ public class CardScript : MonoBehaviour
                 }
                 else
                 {
-                    HealthMesh.text = saxonCard.health.ToString(); ;
+                    HealthMesh.text = saxonCard.health.ToString();
                 }
             }
+
+            if (saxonCard.resources == 0)
+            {
+                ResourceMesh.text = "";
+            }
+            else
+            {
+                ResourceMesh.text = saxonCard.resources.ToString();
+            }
+
+            if (saxonCard.cost == saxonCard.startCost)
+                CostMesh.color = Color.black;
+            if (saxonCard.zeal == saxonCard.startZeal)
+                ZealMesh.color = Color.black;
+            if (saxonCard.might == saxonCard.startMight)
+                MightMesh.color = Color.black;
+            if (saxonCard.health == saxonCard.startHealth)
+                HealthMesh.color = Color.black;
+
+            if (saxonCard.cost < saxonCard.startCost)
+                CostMesh.color = Color.red;
+            if (saxonCard.zeal < saxonCard.startZeal)
+                ZealMesh.color = Color.red;
+            if (saxonCard.might < saxonCard.startMight)
+                MightMesh.color = Color.red;
+            if (saxonCard.health < saxonCard.startHealth)
+                HealthMesh.color = Color.red;
+
+            if (saxonCard.cost > saxonCard.startCost)
+                CostMesh.color = Color.green;
+            if (saxonCard.zeal > saxonCard.startZeal)
+                ZealMesh.color = Color.green;
+            if (saxonCard.might > saxonCard.startMight)
+                MightMesh.color = Color.green;
+            if (saxonCard.health > saxonCard.startHealth)
+                HealthMesh.color = Color.green;
         }
 
     }
