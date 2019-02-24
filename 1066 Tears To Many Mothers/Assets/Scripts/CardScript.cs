@@ -568,13 +568,13 @@ public class CardScript : MonoBehaviour
         {
             switch (ZPos)
             {
-                case 1000:
+                case 750:
                     laneNum = 3;
                     break;
-                case 663:
+                case 500:
                     laneNum = 2;
                     break;
-                case 326:
+                case 250:
                     laneNum = 1;
                     break;
             }
@@ -584,13 +584,13 @@ public class CardScript : MonoBehaviour
         {
             switch (ZPos)
             {
-                case -1000:
+                case -750:
                     laneNum = 3;
                     break;
-                case -663:
+                case -500:
                     laneNum = 2;
                     break;
-                case -326:
+                case -250:
                     laneNum = 1;
                     break;
             }
@@ -604,22 +604,22 @@ public class CardScript : MonoBehaviour
 
         switch(ZPos)
         {
-            case 1000:
+            case 750:
                 normanCard.PositionZ = 1;
                 break;
-            case 663:
+            case 500:
                 normanCard.PositionZ = 2;
                 break;
-            case 326:
+            case 250:
                 normanCard.PositionZ = 3;
                 break;
-            case -326:
+            case -250:
                 saxonCard.PositionZ = 4;
                 break;
-            case -663:
+            case -500:
                 saxonCard.PositionZ = 5;
                 break;
-            case -1000:
+            case -750:
                 saxonCard.PositionZ = 6;
                 break;
         }
@@ -760,6 +760,8 @@ public class CardScript : MonoBehaviour
                 }
             }
         }
+
+
     }
 
     private void Destroy()
