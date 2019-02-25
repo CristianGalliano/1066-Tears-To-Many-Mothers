@@ -126,6 +126,10 @@ public class DeckManager : MonoBehaviour
             NormanObjectives[i].quote = cardDataText[9];
             NormanObjectives[i].solo = cardDataText[10];
 
+            NormanObjectives[i].startHealth = NormanObjectives[i].health;
+            NormanObjectives[i].startZeal = NormanObjectives[i].zeal;
+            NormanObjectives[i].startMight = NormanObjectives[i].might;
+
         }
 
         //Initialising Saxon Objectives
@@ -151,6 +155,10 @@ public class DeckManager : MonoBehaviour
             SaxonObjectives[i].ability = cardDataText[8];
             SaxonObjectives[i].quote = cardDataText[9];
             SaxonObjectives[i].solo = cardDataText[10];
+
+            SaxonObjectives[i].startHealth = SaxonObjectives[i].health;
+            SaxonObjectives[i].startZeal = SaxonObjectives[i].zeal;
+            SaxonObjectives[i].startMight = SaxonObjectives[i].might;
 
         }
     }

@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     public int turn = 0;
     public int numberOfTurns = 1;
     public Text SaxonResourcesText, NormanResourcesText;
+    public int camCount = 0;
+    public CameraControl camControl;
 
     public ObjectivesScript NormanObj, SaxonObj;
 
@@ -91,6 +93,7 @@ public class GameController : MonoBehaviour
             NDS.drawFunc(2);
         }
         Debug.Log("turn : " + numberOfTurns);
+        camControl.changeImage(turn);
     }
 
     public void damageObjective()
@@ -105,4 +108,6 @@ public class GameController : MonoBehaviour
     {
 
     }
+
+    
 }

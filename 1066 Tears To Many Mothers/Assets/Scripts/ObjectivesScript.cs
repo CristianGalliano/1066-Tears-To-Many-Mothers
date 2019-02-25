@@ -59,6 +59,7 @@ public class ObjectivesScript : MonoBehaviour
         }
         objective = objectives[objNum + 1];
         ShowUI();
+        UpdateText();
     }
 
     void OnMouseDown()
@@ -99,7 +100,6 @@ public class ObjectivesScript : MonoBehaviour
         {
             objNum++;
             changeMat();
-            changeCard();
             scale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z - decreaseHeight);
             mPosition = new Vector3(oPosition.x, (scale.z / 33) / 2, oPosition.z);
             transform.localPosition = mPosition;
@@ -114,14 +114,7 @@ public class ObjectivesScript : MonoBehaviour
         rend.materials = temp;
     }
 
-    private void changeCard()
-    {
-        objective.startHealth = objective.health;
-        objective.startMight = objective.might;
-        objective.startZeal = objective.zeal;
-
-        UpdateText();
-    }
+        
 
     public void UpdateText()
     {

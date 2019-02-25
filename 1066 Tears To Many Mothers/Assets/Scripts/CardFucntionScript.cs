@@ -12,6 +12,8 @@ public class CardFucntionScript : MonoBehaviour
     public CardScript attackerScript, targetScript;
     public NormanCard attacker, target;
 
+    public GraveyardScripts saxonGrave, normanGrave;
+
     private CardDisplayScript UI;
     // Use this for initialization
     void Start ()
@@ -21,6 +23,8 @@ public class CardFucntionScript : MonoBehaviour
         HandN = GameObject.Find("normanHand").GetComponent<HandScript>();
         HandS = GameObject.Find("saxonHand").GetComponent<HandScript>();
         UI = GameObject.Find("UIController").GetComponent<CardDisplayScript>();
+        saxonGrave = GameObject.Find("SaxonDiscardPile").GetComponent<GraveyardScripts>();
+        normanGrave = GameObject.Find("NormanDiscardPile").GetComponent<GraveyardScripts>();
     }
 	
 	// Update is called once per frame
@@ -55,7 +59,7 @@ public class CardFucntionScript : MonoBehaviour
     void UseAbility()
     {
         targetIsValid = false;
-        Damage(attacker,target,3,3);
+        Destroy(target);
         switch (attacker.cardNumber)
         {
             case 1:
@@ -98,15 +102,15 @@ public class CardFucntionScript : MonoBehaviour
 
                 break;
         }
+
+        if (targetIsValid)
+        {
+            attackerScript.tireCard();
+        }
         attacker = null;
         target = null;
         targeting = false;
 
-        if(targetIsValid)
-        {
-            attackerScript.tireCard();
-        }
-        
     }
 
     void Damage(NormanCard Attacker, NormanCard Target, int Amount, int Range)
@@ -117,8 +121,7 @@ public class CardFucntionScript : MonoBehaviour
             {
                 targetIsValid = true;
                 Target.health -= Amount;
-            }
-            
+            }           
         }
     }
 
@@ -161,8 +164,17 @@ public class CardFucntionScript : MonoBehaviour
         }
     }
 
-    void Destroy(NormanCard card)
+    public void Destroy(NormanCard card)
     {
+        if (card.cardNumber < 76)
+        {
+            normanGrave.sendToGrave(card);
+        }
+        else
+        {
+            saxonGrave.sendToGrave(card);
+        }
+        targetIsValid = true;
         card.health = 0;
     }
 

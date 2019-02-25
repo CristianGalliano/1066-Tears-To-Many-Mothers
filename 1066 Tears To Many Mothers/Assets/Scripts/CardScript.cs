@@ -202,7 +202,6 @@ public class CardScript : MonoBehaviour
                     Vector3 Rotation = new Vector3(0, 0, 90);//vector to rotate.
                     transform.Rotate(Rotation);//rotate by the vector.
                     tired = true;//set tired to true.
-                    controller.normanResources++;
                     //Debug.Log("norman resources: " + controller.normanResources);
                 }
                 else if (gameObject.tag == "Saxon" && controller.turn == 1)
@@ -210,7 +209,6 @@ public class CardScript : MonoBehaviour
                     Vector3 Rotation = new Vector3(0, 0, 90);//vector to rotate.
                     transform.Rotate(Rotation);//rotate by the vector.
                     tired = true;//set tired to true.
-                    controller.saxonResources++;
                     //Debug.Log("saxon resources: " + controller.saxonResources);
                 }
             }
@@ -265,8 +263,6 @@ public class CardScript : MonoBehaviour
             gameObject.layer = 1;
             FindPosition();
         }
-
-        Debug.Log(lane + "," + laneNum);
     }
 
     void dragCard()

@@ -147,7 +147,7 @@ public class CardDisplayScript : MonoBehaviour {
             ObjStat.color = Color.green;
         if (card.might > card.startMight)
             ObjStat.color = Color.green;
-        if (card.health > card.startMight)
+        if (card.health > card.startHealth)
             ObjHealth.color = Color.green;
 
         image2.sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);

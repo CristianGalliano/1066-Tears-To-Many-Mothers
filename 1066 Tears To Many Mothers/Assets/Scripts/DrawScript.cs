@@ -14,7 +14,7 @@ public class DrawScript : MonoBehaviour
     private Vector3 mPosition;
     Quaternion qrotation;
     private int cardsRemaining = 76;
-    float decreaseHeight;
+    public float decreaseHeight;
     private HandScript handScript;
 
     // Use this for initialization
