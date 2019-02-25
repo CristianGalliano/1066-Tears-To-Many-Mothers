@@ -42,7 +42,6 @@ public class ObjectivesScript : MonoBehaviour
         {
             objectives = deck.SaxonObjectives;
         }
-
         decreaseHeight = (gameObject.transform.localScale.z) / 7;
         oPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         rend = gameObject.GetComponent<Renderer>();
@@ -58,6 +57,7 @@ public class ObjectivesScript : MonoBehaviour
             usedObj.increaseSize();
             activate = false;
         }
+        objective = objectives[objNum + 1];
         ShowUI();
     }
 
@@ -116,7 +116,6 @@ public class ObjectivesScript : MonoBehaviour
 
     private void changeCard()
     {
-        objective = objectives[objNum + 1];
         objective.startHealth = objective.health;
         objective.startMight = objective.might;
         objective.startZeal = objective.zeal;
