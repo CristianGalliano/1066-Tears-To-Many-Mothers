@@ -5,19 +5,28 @@ using UnityEngine.UI;
 
 public class CardDisplayScript : MonoBehaviour {
 
-    public GameObject CardPanel, ObjPanel;
+    public GameObject CardPanel, ObjPanel, GraveyardPanel, GraveScroll;
     public Image image, image2;
     public Text Name, Title, Type, Action, Constant, Response, OnPlay, Quote, Solo;
     public Text CostText, ZealText, MightText, HealthText, ResourcesText;
     public Text ObjStat, ObjHealth;
 
+    public RectTransform GraveContent;
+    public GameObject UICard;
+
     public bool panelActive = false;
 
+    public bool GraveyardShown = false;
+
     public Button InfoButton;
+
+    private Vector3 startPos;
+    private float startRight;
     // Use this for initialization
     void Start ()
     {
-		
+        startPos = GraveContent.transform.position;
+        startRight = GraveContent.rect.width;
 	}
 	
 	// Update is called once per frame
@@ -161,8 +170,46 @@ public class CardDisplayScript : MonoBehaviour {
             panelActive = false;
             CardPanel.gameObject.SetActive(false);
             ObjPanel.gameObject.SetActive(false);
+
+            GraveyardPanel.gameObject.SetActive(false);
+            GraveContent.transform.position = startPos;
+
+            foreach(Transform child in GraveContent)
+            {
+                Destroy(child.gameObject);
+            }
         }
     }
 
+    public void ShowGraveyard(List<NormanCard> cards)
+    {
+        if(!GraveyardShown)
+        {
+            List<NormanCard> newCards = cards;
+            newCards.Reverse();
+
+            float boxPosition = 1000;
+            float cardPos = 0;
+
+            GraveyardPanel.SetActive(true);
+            panelActive = true;
+
+            foreach (NormanCard card in newCards)
+            {
+                boxPosition += 1000;
+            }
+
+            GraveContent.right += new Vector3(GraveContent.right.x + boxPosition, GraveContent.right.y, GraveContent.right.z);
+
+            foreach (NormanCard card in newCards)
+            {
+                Instantiate(UICard, new Vector3(GraveContent.transform.position.x + cardPos, GraveContent.transform.position.y - 300, GraveContent.transform.position.z), Quaternion.identity, GraveContent.transform);
+                cardPos += 300;
+            }
+
+            GraveyardShown = true;
+        }
+
+    }
 
 }

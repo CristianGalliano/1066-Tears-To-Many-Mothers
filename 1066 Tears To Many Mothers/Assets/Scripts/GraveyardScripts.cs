@@ -15,10 +15,15 @@ public class GraveyardScripts : MonoBehaviour
 
     public bool activated = false;
 
+    private CardDisplayScript UI;
+    private bool buttonPressed, timeRead = false;
+    private float time;
+
     // Start is called before the first frame update
     void Start()
     {
         funcScript = GameObject.Find("GameController").GetComponent<CardFucntionScript>();
+        UI = GameObject.Find("UIController").GetComponent<CardDisplayScript>();
         rend = gameObject.GetComponent<Renderer>();
         oPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
     }
@@ -26,6 +31,38 @@ public class GraveyardScripts : MonoBehaviour
     void Update()
     {
         increaseSize();
+        ShowUI();
+    }
+
+    void OnMouseDown()
+    {
+        buttonPressed = true;
+    }
+
+
+    void OnMouseUp()
+    {
+        buttonPressed = false;
+        UI.HideDisplay();
+        UI.GraveyardShown = false;
+    }
+
+    void ShowUI()
+    {
+        if (buttonPressed && !timeRead)
+        {
+            time = Time.time + 0.5f;
+            timeRead = true;
+        }
+
+        if (buttonPressed && Time.time > time && timeRead)
+        {
+            UI.ShowGraveyard(UsedCards);
+        }
+        else if (!buttonPressed)
+        {
+            timeRead = false;
+        }
     }
 
     public void increaseSize()
