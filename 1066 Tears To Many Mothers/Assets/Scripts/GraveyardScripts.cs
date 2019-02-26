@@ -16,7 +16,7 @@ public class GraveyardScripts : MonoBehaviour
     public bool activated = false;
 
     private CardDisplayScript UI;
-    private bool buttonPressed, timeRead = false;
+    private bool UIActive;
     private float time;
 
     // Start is called before the first frame update
@@ -31,39 +31,21 @@ public class GraveyardScripts : MonoBehaviour
     void Update()
     {
         increaseSize();
-        ShowUI();
     }
 
     void OnMouseDown()
     {
-        buttonPressed = true;
-    }
-
-
-    void OnMouseUp()
-    {
-        buttonPressed = false;
-        UI.HideDisplay();
-        UI.GraveyardShown = false;
-    }
-
-    void ShowUI()
-    {
-        if (buttonPressed && !timeRead)
+        if (!UIActive)
         {
-            time = Time.time + 0.5f;
-            timeRead = true;
-        }
-
-        if (buttonPressed && Time.time > time && timeRead)
-        {
+            UIActive = true;
             UI.ShowGraveyard(UsedCards);
         }
-        else if (!buttonPressed)
+        else
         {
-            timeRead = false;
+            UIActive = false;
+            UI.HideDisplay();
         }
-    }
+    }       
 
     public void increaseSize()
     {

@@ -173,6 +173,7 @@ public class CardDisplayScript : MonoBehaviour {
 
             GraveyardPanel.gameObject.SetActive(false);
             GraveContent.transform.position = startPos;
+            GraveyardShown = false;
 
             foreach(Transform child in GraveContent)
             {
@@ -185,10 +186,18 @@ public class CardDisplayScript : MonoBehaviour {
     {
         if(!GraveyardShown)
         {
-            List<NormanCard> newCards = cards;
+            List<NormanCard> newCards = new List<NormanCard>();
+
+            foreach(NormanCard card in cards)
+            {
+                newCards.Add(card);
+            }
+
             newCards.Reverse();
 
-            float boxPosition = 1000;
+            GraveContent.sizeDelta = new Vector2(0, 1500);
+
+            float boxPosition = 1100;
             float cardPos = 0;
 
             GraveyardPanel.SetActive(true);
@@ -196,20 +205,49 @@ public class CardDisplayScript : MonoBehaviour {
 
             foreach (NormanCard card in newCards)
             {
-                boxPosition += 1000;
+                GraveContent.sizeDelta = new Vector2(GraveContent.sizeDelta.x + boxPosition, GraveContent.sizeDelta.y);
             }
-
-            GraveContent.right += new Vector3(GraveContent.right.x + boxPosition, GraveContent.right.y, GraveContent.right.z);
 
             foreach (NormanCard card in newCards)
             {
-                Instantiate(UICard, new Vector3(GraveContent.transform.position.x + cardPos, GraveContent.transform.position.y - 300, GraveContent.transform.position.z), Quaternion.identity, GraveContent.transform);
-                cardPos += 300;
+                GameObject currentCard = Instantiate(UICard, new Vector3(0,0,0), Quaternion.identity, GraveContent.transform);
+                currentCard.transform.localPosition = new Vector3(500 + cardPos, 0, 0);
+                Debug.Log(currentCard.transform.localPosition.x);
+                Debug.Log(currentCard.transform.localPosition.y);
+
+                cardPos += 1100;
+
+
+                currentCard.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
+                Text[] texts = currentCard.GetComponentsInChildren<Text>();
+
+                texts[0].text = card.cost.ToString();
+                texts[1].text = card.startZeal.ToString();
+                texts[2].text = card.startMight.ToString();
+                texts[3].text = card.startHealth.ToString();
+                hideText(texts[4], card.resources);
+
+
+
+
+
             }
 
             GraveyardShown = true;
         }
 
+    }
+
+    private void hideText(Text text, int num)
+    {
+        if (num > 0)
+        {
+            text.text = num.ToString();
+        }
+        else
+        {
+            text.text = "";
+        }
     }
 
 }
