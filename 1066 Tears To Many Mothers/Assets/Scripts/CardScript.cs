@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class CardScript : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class CardScript : MonoBehaviour
 
     private MeshRenderer cardMesh;
 
-    public TextMesh CostMesh, ZealMesh, MightMesh, HealthMesh, ResourceMesh;
+    public TextMeshPro CostMesh, ZealMesh, MightMesh, HealthMesh, ResourceMesh;
 
     public float time;
 
