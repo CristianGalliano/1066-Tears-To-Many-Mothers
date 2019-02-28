@@ -178,8 +178,8 @@ public class CardScript : MonoBehaviour
         UI.HideDisplay();
 
         thisCollider.enabled = true;//re enamble the collider.
-        dropCard("Norman", controller.normanDropPointsZ, controller.normanLane);
-        dropCard("Saxon", controller.saxonDropPointsZ, controller.saxonlane);
+        dropCard("Norman", controller.normanDropPointsZ, controller.normanLane, 0);
+        dropCard("Saxon", controller.saxonDropPointsZ, controller.saxonlane, 1);
         disablePlacholders();
     }
 
@@ -216,35 +216,38 @@ public class CardScript : MonoBehaviour
         }
     }
 
-    void dropCard(string str, List<int> List, List<int> count)
+    void dropCard(string str, List<int> List, List<int> count, int turnnum)
     {
         if (gameObject.tag == str)
         {
-            foreach (int point in controller.xPositions)//for each vector3 in the array.
+            if (controller.turn == turnnum)
             {
-                if (positionOfMouse.x < point + 147 && positionOfMouse.x > point - 147)//check its in the correct parameters.
+                foreach (int point in controller.xPositions)//for each vector3 in the array.
                 {
-                    int index = controller.xPositions.IndexOf(point);
-                    if (!placed && count[index] < 3)//checks that the card isnt placed.
+                    if (positionOfMouse.x < point + 147 && positionOfMouse.x > point - 147)//check its in the correct parameters.
                     {
-                        Vector3 dropPosition = new Vector3(point, 2, List[count[index]]);//sets the drop position.
-                        lane = index;
-                        transform.position = dropPosition;//move the card to the drop position.
-                        Vector3 Rotation = new Vector3(-50, 0, 0);//creat a vector to rotate.
-                        transform.Rotate(Rotation);//rotate the card.
-                        placed = true;//the card should now be placed so set placed to true.this will enable / disable certain functions based off conditions.
-                        boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
-                        boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
-                        thisCollider.center = boxPos;//move the collider by boxPos vector.
-                        thisCollider.size = boxScale;//scale the collider by boxscale vector.
-                        GameObject targetParent = GameObject.Find(str + "Field");
-                        gameObject.transform.SetParent(targetParent.transform);//take this card out of the hand and put it as a child of the field
-                        count[index]++;
+                        int index = controller.xPositions.IndexOf(point);
+                        if (!placed && count[index] < 3)//checks that the card isnt placed.
+                        {
+                            Vector3 dropPosition = new Vector3(point, 2, List[count[index]]);//sets the drop position.
+                            lane = index;
+                            transform.position = dropPosition;//move the card to the drop position.
+                            Vector3 Rotation = new Vector3(-50, 0, 0);//creat a vector to rotate.
+                            transform.Rotate(Rotation);//rotate the card.
+                            placed = true;//the card should now be placed so set placed to true.this will enable / disable certain functions based off conditions.
+                            boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
+                            boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
+                            thisCollider.center = boxPos;//move the collider by boxPos vector.
+                            thisCollider.size = boxScale;//scale the collider by boxscale vector.
+                            GameObject targetParent = GameObject.Find(str + "Field");
+                            gameObject.transform.SetParent(targetParent.transform);//take this card out of the hand and put it as a child of the field
+                            count[index]++;
+                        }
                     }
-                }
-                else
-                {
-                    Count++;//add to count.
+                    else
+                    {
+                        Count++;//add to count.
+                    }
                 }
             }
 
