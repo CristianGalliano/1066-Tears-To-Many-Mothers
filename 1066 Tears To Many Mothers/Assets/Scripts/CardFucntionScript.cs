@@ -107,10 +107,6 @@ public class CardFucntionScript : MonoBehaviour
         {
             attackerScript.tireCard();
         }
-        attacker = null;
-        target = null;
-        targeting = false;
-
     }
 
     void Damage(NormanCard Attacker, NormanCard Target, int Amount, int Range)
@@ -123,6 +119,8 @@ public class CardFucntionScript : MonoBehaviour
                 Target.health -= Amount;
             }           
         }
+
+        Reset();
     }
 
     void Heal(NormanCard Target, int value)
@@ -132,6 +130,8 @@ public class CardFucntionScript : MonoBehaviour
             Target.health += value;
             targetIsValid = true;
         }
+
+        Reset();
     }
 
     void DrawCard(int value)
@@ -146,6 +146,7 @@ public class CardFucntionScript : MonoBehaviour
         }
 
         targetIsValid = true;
+        Reset();
     }
 
     void Buff(NormanCard target, string stat, int value)
@@ -162,6 +163,8 @@ public class CardFucntionScript : MonoBehaviour
                     break;
             }
         }
+
+        Reset();
     }
 
     public void Destroy(NormanCard card)
@@ -176,6 +179,8 @@ public class CardFucntionScript : MonoBehaviour
         }
         targetIsValid = true;
         card.health = 0;
+
+        Reset();
     }
 
     void Discard()
@@ -185,7 +190,18 @@ public class CardFucntionScript : MonoBehaviour
 
     void Spy()
     {
+        GameObject SaxonCard = GameObject.Find("saxonHand");
+        CardScript[] cards = SaxonCard.GetComponentsInChildren<CardScript>();
+        List<NormanCard> cardsInHand = new List<NormanCard>();
 
+        foreach(CardScript card in cards)
+        {
+            cardsInHand.Add(card.saxonCard);
+        }
+
+        UI.ShowGraveyard(cardsInHand);
+
+        targetIsValid = true;
     }
 
     void Discount(NormanCard target, int value)
@@ -214,6 +230,7 @@ public class CardFucntionScript : MonoBehaviour
             }
         }
 
+        Reset();
     }
 
     void Agile(NormanCard target, int targetWedge)
@@ -222,6 +239,8 @@ public class CardFucntionScript : MonoBehaviour
         {
             
         }
+
+        Reset();
     }
 
     bool InRange(NormanCard attacker, NormanCard target, int Range)
@@ -234,6 +253,7 @@ public class CardFucntionScript : MonoBehaviour
         {
             return false;
         }
+
     }
 
     NormanCard highest(NormanCard a, NormanCard b)
@@ -258,5 +278,12 @@ public class CardFucntionScript : MonoBehaviour
         {
             return b;
         }
+    }
+
+    public void Reset()
+    {
+        attacker = null;
+        target = null;
+        targeting = false;
     }
 }
