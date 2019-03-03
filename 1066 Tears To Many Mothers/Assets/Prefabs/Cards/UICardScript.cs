@@ -31,11 +31,22 @@ public class UICardScript : MonoBehaviour
     {
         if(!discarded && functScript.DiscardCount < 2)
         {
-            GameObject hand = GameObject.Find("saxonHand");
+            GameObject hand = GameObject.Find("normanHand");
+            GameObject hand2 = GameObject.Find("saxonHand");
             image = gameObject.GetComponentInChildren<Image>();
             cardNum = int.Parse(image.sprite.name);
 
             foreach (Transform child in hand.transform)
+            {
+                if (child.gameObject.GetComponent<CardScript>().normanCard.cardNumber == cardNum)
+                {
+                    Destroy(child.gameObject);
+                    discarded = true;
+                    functScript.DiscardCount++;
+                }
+            }
+
+            foreach (Transform child in hand2.transform)
             {
                 if (child.gameObject.GetComponent<CardScript>().saxonCard.cardNumber == cardNum)
                 {

@@ -58,7 +58,7 @@ public class CardFucntionScript : MonoBehaviour
     void UseAbility()
     {
         targetIsValid = false;
-        Spy("saxon");
+        Spy("norman");
         switch (attacker.cardNumber)
         {
             case 1:
