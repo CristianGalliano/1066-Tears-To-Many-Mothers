@@ -14,6 +14,8 @@ public class CardFucntionScript : MonoBehaviour
 
     public GraveyardScripts saxonGrave, normanGrave;
 
+    public int DiscardCount = 0;
+
     private CardDisplayScript UI;
     // Use this for initialization
     void Start ()
@@ -32,9 +34,6 @@ public class CardFucntionScript : MonoBehaviour
     {
         if(attacker != null && target != null)
         {
-            Debug.Log(attacker.name);
-            Debug.Log(attacker.cardNumber);
-            Debug.Log(target.name);
             UseAbility();         
         }
 
@@ -59,7 +58,7 @@ public class CardFucntionScript : MonoBehaviour
     void UseAbility()
     {
         targetIsValid = false;
-        Destroy(target);
+        Spy("saxon");
         switch (attacker.cardNumber)
         {
             case 1:
@@ -183,20 +182,20 @@ public class CardFucntionScript : MonoBehaviour
         Reset();
     }
 
-    void Discard()
+    void Spy(string target)
     {
-
-    }
-
-    void Spy()
-    {
-        GameObject SaxonCard = GameObject.Find("saxonHand");
-        CardScript[] cards = SaxonCard.GetComponentsInChildren<CardScript>();
+        GameObject hand = GameObject.Find(target + "Hand");
+        CardScript[] cards = hand.GetComponentsInChildren<CardScript>();
         List<NormanCard> cardsInHand = new List<NormanCard>();
 
-        foreach(CardScript card in cards)
+        foreach (CardScript card in cards)
         {
-            cardsInHand.Add(card.saxonCard);
+            if(target == "norman")
+                cardsInHand.Add(card.normanCard);
+
+            if(target == "saxon")
+                cardsInHand.Add(card.saxonCard);
+
         }
 
         UI.ShowGraveyard(cardsInHand);
@@ -285,5 +284,6 @@ public class CardFucntionScript : MonoBehaviour
         attacker = null;
         target = null;
         targeting = false;
+        DiscardCount = 0;
     }
 }
