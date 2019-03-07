@@ -10,6 +10,7 @@ public class CardDisplayScript : MonoBehaviour {
     public Text Name, Title, Type, Action, Constant, Response, OnPlay, Quote, Solo;
     public Text CostText, ZealText, MightText, HealthText, ResourcesText;
     public Text ObjStat, ObjHealth;
+    public GameObject TagretingText;
 
     public RectTransform GraveContent;
     public GameObject UICard;

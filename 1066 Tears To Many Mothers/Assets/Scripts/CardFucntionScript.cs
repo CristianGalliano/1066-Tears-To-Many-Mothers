@@ -10,7 +10,7 @@ public class CardFucntionScript : MonoBehaviour
     private Vector3 positionOfMouse;
     public bool targeting, targetIsValid = false;
     public CardScript attackerScript, targetScript;
-    public NormanCard attacker, target;
+    public NormanCard attacker, target, onPlayAttacker;
 
     public GraveyardScripts saxonGrave, normanGrave;
 
@@ -37,6 +37,11 @@ public class CardFucntionScript : MonoBehaviour
             UseAbility();         
         }
 
+        if(attacker == null && onPlayAttacker != null && target != null)
+        {
+            OnPlayAbility();
+        }
+
         if (attacker != null && attackerScript != null)
         {
             UI.InfoButton.gameObject.SetActive(true);
@@ -45,6 +50,11 @@ public class CardFucntionScript : MonoBehaviour
         {
             UI.InfoButton.gameObject.SetActive(false);
         }
+
+        if (targeting)
+            UI.TagretingText.SetActive(true);
+        else
+            UI.TagretingText.SetActive(false);
     }
 
     public void EnterTargeting()
@@ -58,7 +68,9 @@ public class CardFucntionScript : MonoBehaviour
     void UseAbility()
     {
         targetIsValid = false;
-        Spy("norman");
+        Buff(target,"Zeal",3);
+
+        /*
         switch (attacker.cardNumber)
         {
             case 1:
@@ -101,11 +113,32 @@ public class CardFucntionScript : MonoBehaviour
 
                 break;
         }
+        */
 
         if (targetIsValid)
         {
             attackerScript.tireCard();
         }
+    }
+
+    void OnPlayAbility()
+    {
+        Damage(onPlayAttacker, target, 3, 3);
+
+        /*
+        switch (attacker.cardNumber)
+        {
+            case 1:
+
+                break;
+        }
+        */
+
+        if (targetIsValid)
+        {
+            attackerScript.tireCard();
+        }
+
     }
 
     void Damage(NormanCard Attacker, NormanCard Target, int Amount, int Range)
@@ -116,6 +149,13 @@ public class CardFucntionScript : MonoBehaviour
             {
                 targetIsValid = true;
                 Target.health -= Amount;
+                if(Target.health <= 0)
+                {
+                    if (targetScript.tag == "Norman")
+                        normanGrave.sendToGrave(target);
+                    if (targetScript.tag == "Saxon")
+                        saxonGrave.sendToGrave(target);
+                }
             }           
         }
 
@@ -161,6 +201,8 @@ public class CardFucntionScript : MonoBehaviour
                     target.might += value;
                     break;
             }
+
+            targetIsValid = true;
         }
 
         Reset();
@@ -195,7 +237,6 @@ public class CardFucntionScript : MonoBehaviour
 
             if(target == "saxon")
                 cardsInHand.Add(card.saxonCard);
-
         }
 
         UI.ShowGraveyard(cardsInHand);
@@ -225,7 +266,7 @@ public class CardFucntionScript : MonoBehaviour
             }
             if (1 != 0)
             {
-                Game.SDS.drawFunc(value);
+                target.cost -= value;
             }
         }
 
@@ -283,6 +324,7 @@ public class CardFucntionScript : MonoBehaviour
     {
         attacker = null;
         target = null;
+        onPlayAttacker = null;
         targeting = false;
         DiscardCount = 0;
     }

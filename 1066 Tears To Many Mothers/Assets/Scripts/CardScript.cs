@@ -20,7 +20,7 @@ public class CardScript : MonoBehaviour
     private bool dragging = false; // bools for setting conditions.
     private bool placed = false;
     public bool tired = false;
-    private bool buttonPressed, timeRead = false;
+    private bool buttonPressed, timeRead, onPlayUsed = false;
     private BoxCollider thisCollider; //variable for the box collider attached to this gameobject.
 
     string[] NormanPlaceholders = new string[] { "Norman1", "Norman2", "Norman3" };
@@ -134,15 +134,14 @@ public class CardScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-
         if (functScript.targeting && placed)
         {
-            if (gameObject.tag == "Norman" && controller.turn == 1)
+            if (gameObject.tag == "Norman")
             {
                 functScript.targetScript = this;
                 functScript.target = normanCard;
             }
-            else if (gameObject.tag == "Saxon" && controller.turn == 0)
+            else if (gameObject.tag == "Saxon")
             {
                 functScript.targetScript = this;
                 functScript.target = saxonCard;
@@ -150,12 +149,12 @@ public class CardScript : MonoBehaviour
         }
         else if (!functScript.targeting && placed && !tired)
         {
-            if (gameObject.tag == "Norman" && controller.turn == 0)
+            if (gameObject.tag == "Norman")
             {
                 functScript.attackerScript = this;
                 functScript.attacker = normanCard;
             }
-            else if (gameObject.tag == "Saxon" && controller.turn == 1)
+            else if (gameObject.tag == "Saxon")
             {
                 functScript.attackerScript = this;
                 functScript.attacker = saxonCard;
@@ -266,6 +265,28 @@ public class CardScript : MonoBehaviour
         {
             gameObject.layer = 1;
             FindPosition();
+        }
+
+        if(gameObject.tag == "Norman" && placed && !onPlayUsed)
+        {
+            if(normanCard.onPlay != "No OnPlay Ability")
+            {
+                functScript.onPlayAttacker = normanCard;
+                functScript.attackerScript = this;
+                functScript.targeting = true;
+                onPlayUsed = true;
+            }
+        }
+
+        if (gameObject.tag == "Saxon" && placed && !onPlayUsed)
+        {
+            if (saxonCard.onPlay != "No OnPlay Ability")
+            {
+                functScript.onPlayAttacker = saxonCard;
+                functScript.attackerScript = this;
+                functScript.targeting = true;
+                onPlayUsed = true;
+            }
         }
     }
 
