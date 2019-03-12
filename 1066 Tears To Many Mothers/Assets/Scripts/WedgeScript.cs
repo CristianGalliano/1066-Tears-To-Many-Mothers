@@ -31,7 +31,7 @@ public class WedgeScript : MonoBehaviour
    
     void Update()
     {
-        
+        CheckObjectiveState();
     }
 
     void WedgeBattle()
@@ -46,6 +46,10 @@ public class WedgeScript : MonoBehaviour
     {
         NormanAtBOH = NormanObj.objNum == 6;
         SaxonAtBOH = SaxonObj.objNum == 6;
+        if (SaxonAtBOH && NormanAtBOH)
+        {
+            Debug.Log("Wedges can be attacked by both players.");
+        }
     }
 
     void CalculateAllCards()
