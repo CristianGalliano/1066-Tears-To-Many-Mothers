@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WedgeScript : MonoBehaviour
 {
@@ -8,22 +9,30 @@ public class WedgeScript : MonoBehaviour
     int pos;
 
     int NormanMightTBV, SaxonMightTBV, NormanZealTBV, SaxonZealTBV;
-    int NormanDamage, SaxonDamage;
+    public int NormanDamage, SaxonDamage;
     bool NormanAtBOH, SaxonAtBOH;
 
     public ObjectivesScript NormanObj, SaxonObj;
-    
+
+    public GameObject[] cards;
+    public List<CardScript> normans = new List<CardScript>();
+    public List<CardScript> saxons = new List<CardScript>();
+
+    public TextMeshPro[] normanDamageText;
+    public TextMeshPro[] saxonDamageText;
+
+
     void Start()
     {
         pos = (int)transform.position.x;
 
         switch(pos)
         {
-            case 300: wedgeNum = 1;
+            case 300: wedgeNum = 0;
                 break;
-            case 0: wedgeNum = 2;
+            case 0: wedgeNum = 1;
                 break;
-            case -300: wedgeNum = 3;
+            case -300: wedgeNum = 2;
                 break;
         }
     }
@@ -34,18 +43,20 @@ public class WedgeScript : MonoBehaviour
         CheckObjectiveState();
     }
 
-    void WedgeBattle()
+    public void WedgeBattle()
     {
+        Reset();
         CalculateAllCards();
         MightBattle();
         ZealBattle();
-        Reset();
+        UpdateText();
     }
 
     void CheckObjectiveState()
     {
         NormanAtBOH = NormanObj.objNum == 6;
         SaxonAtBOH = SaxonObj.objNum == 6;
+
         if (SaxonAtBOH && NormanAtBOH)
         {
             Debug.Log("Wedges can be attacked by both players.");
@@ -55,24 +66,33 @@ public class WedgeScript : MonoBehaviour
     void CalculateAllCards()
     {
         //Gather Norman Cards
-        GameObject[] cards = GameObject.FindGameObjectsWithTag("Norman");
-        List<CardScript> normans = new List<CardScript>();
 
+        cards = GameObject.FindGameObjectsWithTag("Norman");
         foreach (GameObject card in cards)
         {
-            if(card.GetComponent<CardScript>().lane == wedgeNum)
-                normans.Add(card.GetComponent<CardScript>());
+            if(card.GetComponent<CardScript>())
+            {
+                if(card.GetComponent<CardScript>().placed && card.GetComponent<CardScript>().lane == wedgeNum)
+                {
+                    normans.Add(card.GetComponent<CardScript>());
+                }
+            }
         }
 
         //Gather Saxon Cards
-        GameObject[] cards2 = GameObject.FindGameObjectsWithTag("Saxon");
-        List<CardScript> saxons = new List<CardScript>();
 
+        cards = GameObject.FindGameObjectsWithTag("Saxon");
         foreach (GameObject card in cards)
         {
-            if (card.GetComponent<CardScript>().lane == wedgeNum)
-                saxons.Add(card.GetComponent<CardScript>());
+            if (card.GetComponent<CardScript>())
+            {
+                if (card.GetComponent<CardScript>().placed && card.GetComponent<CardScript>().lane == wedgeNum)
+                {
+                    saxons.Add(card.GetComponent<CardScript>());
+                }
+            }
         }
+
 
         //Calculate Total TBV's
         foreach(CardScript card in normans)
@@ -81,7 +101,8 @@ public class WedgeScript : MonoBehaviour
             {
                 NormanMightTBV += card.normanCard.might;
                 NormanZealTBV += card.normanCard.zeal;
-            } 
+            }
+
         }
 
         foreach (CardScript card in saxons)
@@ -142,5 +163,30 @@ public class WedgeScript : MonoBehaviour
         SaxonMightTBV = 0;
         NormanZealTBV = 0;
         SaxonZealTBV = 0;
+
+        normans = new List<CardScript>();
+        saxons = new List<CardScript>();
+    }
+
+    void UpdateText()
+    {
+        foreach(TextMeshPro text in normanDamageText)
+        {
+            if(text != null)
+            {
+                if(NormanDamage != 0)
+                    text.text = NormanDamage.ToString();
+            }
+
+        }
+
+        foreach (TextMeshPro text in saxonDamageText)
+        {
+            if (text != null)
+            {
+                if (SaxonDamage != 0)
+                    text.text = SaxonDamage.ToString();
+            }
+        }
     }
 }

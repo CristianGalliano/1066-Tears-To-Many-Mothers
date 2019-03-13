@@ -18,7 +18,7 @@ public class CardScript : MonoBehaviour
     int Count = 0;
 
     private bool dragging = false; // bools for setting conditions.
-    private bool placed = false;
+    public bool placed = false;
     public bool tired = false;
     private bool buttonPressed, timeRead, onPlayUsed = false;
     private BoxCollider thisCollider; //variable for the box collider attached to this gameobject.

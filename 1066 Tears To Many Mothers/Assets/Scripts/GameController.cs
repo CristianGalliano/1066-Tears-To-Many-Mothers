@@ -26,6 +26,8 @@ public class GameController : MonoBehaviour
 
     public ObjectivesScript NormanObj, SaxonObj;
 
+    public WedgeScript[] wedges = new WedgeScript[3];
+
     // Use this for initialization
     void Start()
     {
@@ -58,6 +60,10 @@ public class GameController : MonoBehaviour
     {
         numberOfTurns++;
         turn++;
+
+        foreach (WedgeScript wedge in wedges)
+            wedge.WedgeBattle();
+
         if (turn > 1)
         {
             turn = 0;
