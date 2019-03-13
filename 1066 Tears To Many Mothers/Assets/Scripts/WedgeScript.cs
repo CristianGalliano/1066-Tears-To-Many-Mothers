@@ -5,7 +5,7 @@ using TMPro;
 
 public class WedgeScript : MonoBehaviour
 {
-    int wedgeNum;
+    public int wedgeNum;
     int pos;
 
     int NormanMightTBV , SaxonMightTBV, NormanZealTBV, SaxonZealTBV = 0;
@@ -21,6 +21,11 @@ public class WedgeScript : MonoBehaviour
     public TextMeshPro[] normanDamageText;
     public TextMeshPro[] saxonDamageText;
 
+    private CardDisplayScript UI;
+
+    private bool buttonPressed, timeRead = false;
+    private float time;
+
 
     void Start()
     {
@@ -35,12 +40,43 @@ public class WedgeScript : MonoBehaviour
             case -300: wedgeNum = 2;
                 break;
         }
+
+        UI = GameObject.Find("UIController").GetComponent<CardDisplayScript>();
     }
 
-   
     void Update()
     {
         CheckObjectiveState();
+        ShowUI();
+    }
+
+    void OnMouseDown()
+    {
+        buttonPressed = true;
+    }
+
+    void OnMouseUp()
+    {
+        buttonPressed = false;
+        UI.HideDisplay();
+    }
+
+    void ShowUI()
+    {
+        if (buttonPressed && !timeRead)
+        {
+            time = Time.time + 0.5f;
+            timeRead = true;
+        }
+
+        if (buttonPressed && Time.time > time && timeRead)
+        {
+            UI.ShowWedge(this);
+        }
+        else if (!buttonPressed)
+        {
+            timeRead = false;
+        }
     }
 
     public void WedgeBattle()

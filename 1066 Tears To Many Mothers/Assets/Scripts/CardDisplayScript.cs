@@ -15,6 +15,10 @@ public class CardDisplayScript : MonoBehaviour {
     public RectTransform GraveContent;
     public GameObject UICard;
 
+    public GameObject WedgePanel;
+    public Image WedgeImage;
+    public Text NormanDamage, SaxonDamage;
+
     public bool panelActive = false;
 
     public bool GraveyardShown = false;
@@ -180,6 +184,8 @@ public class CardDisplayScript : MonoBehaviour {
             {
                 Destroy(child.gameObject);
             }
+
+            WedgePanel.SetActive(false);
         }
     }
 
@@ -288,6 +294,32 @@ public class CardDisplayScript : MonoBehaviour {
 
             GraveyardShown = true;
         }
+    }
+
+    public void ShowWedge(WedgeScript wedge)
+    {
+        WedgePanel.SetActive(true);
+
+        switch(wedge.wedgeNum)
+        {
+            case 0:
+                WedgeImage.sprite = Resources.Load<Sprite>("CardImages/WedgeCardOne");
+                break;
+            case 1:
+                WedgeImage.sprite = Resources.Load<Sprite>("CardImages/WedgeCardTwo");
+                break;
+            case 2:
+                WedgeImage.sprite = Resources.Load<Sprite>("CardImages/WedgeCardThree");
+                break;
+
+        }
+
+        if(wedge.NormanDamage != 0)
+            NormanDamage.text = wedge.NormanDamage.ToString();
+        if(wedge.SaxonDamage != 0)
+            SaxonDamage.text = wedge.SaxonDamage.ToString();
+
+        panelActive = true;
 
     }
 
