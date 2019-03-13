@@ -68,7 +68,7 @@ public class CardFucntionScript : MonoBehaviour
     void UseAbility()
     {
         targetIsValid = false;
-        Buff(target,"Zeal",3);
+        Spy("saxon");
 
         /*
         switch (attacker.cardNumber)
@@ -327,5 +327,17 @@ public class CardFucntionScript : MonoBehaviour
         onPlayAttacker = null;
         targeting = false;
         DiscardCount = 0;
+    }
+
+    public bool useEventCard()
+    {
+        if (target)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

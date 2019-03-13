@@ -225,22 +225,38 @@ public class CardScript : MonoBehaviour
                 {
                     if (positionOfMouse.x < point + 147 && positionOfMouse.x > point - 147)//check its in the correct parameters.
                     {
-                        int index = controller.xPositions.IndexOf(point);
-                        if (!placed && count[index] < 3)//checks that the card isnt placed.
+                        if (str == "Norman" && normanCard.type == "Event")
                         {
-                            Vector3 dropPosition = new Vector3(point, 2, List[count[index]]);//sets the drop position.
-                            lane = index;
-                            transform.position = dropPosition;//move the card to the drop position.
-                            Vector3 Rotation = new Vector3(-50, 0, 0);//creat a vector to rotate.
-                            transform.Rotate(Rotation);//rotate the card.
-                            placed = true;//the card should now be placed so set placed to true.this will enable / disable certain functions based off conditions.
-                            boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
-                            boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
-                            thisCollider.center = boxPos;//move the collider by boxPos vector.
-                            thisCollider.size = boxScale;//scale the collider by boxscale vector.
-                            GameObject targetParent = GameObject.Find(str + "Field");
-                            gameObject.transform.SetParent(targetParent.transform);//take this card out of the hand and put it as a child of the field
-                            count[index]++;
+                            //use its ability before doing this, if you dont use it it should get returned to your hand
+                            functScript.normanGrave.sendToGrave(normanCard);
+                            Destroy(gameObject);
+                        }
+                        else if (str == "Saxon" && saxonCard.type == "Event")
+                        {
+                            //use its ability before doing this, if you dont use it it should get returned to your hand
+                            functScript.saxonGrave.sendToGrave(saxonCard);
+                            //functscript.useevent
+                            Destroy(gameObject);
+                        }
+                        else
+                        {
+                            int index = controller.xPositions.IndexOf(point);
+                            if (!placed && count[index] < 3)//checks that the card isnt placed.
+                            {
+                                Vector3 dropPosition = new Vector3(point, 2, List[count[index]]);//sets the drop position.
+                                lane = index;
+                                transform.position = dropPosition;//move the card to the drop position.
+                                Vector3 Rotation = new Vector3(-50, 0, 0);//creat a vector to rotate.
+                                transform.Rotate(Rotation);//rotate the card.
+                                placed = true;//the card should now be placed so set placed to true.this will enable / disable certain functions based off conditions.
+                                boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
+                                boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
+                                thisCollider.center = boxPos;//move the collider by boxPos vector.
+                                thisCollider.size = boxScale;//scale the collider by boxscale vector.
+                                GameObject targetParent = GameObject.Find(str + "Field");
+                                gameObject.transform.SetParent(targetParent.transform);//take this card out of the hand and put it as a child of the field
+                                count[index]++;
+                            }
                         }
                     }
                     else

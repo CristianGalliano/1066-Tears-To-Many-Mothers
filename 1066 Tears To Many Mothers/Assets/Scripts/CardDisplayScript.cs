@@ -138,8 +138,10 @@ public class CardDisplayScript : MonoBehaviour {
             ObjStat.text = card.might.ToString();
         if (card.zeal > 0 && card.might == 0)
             ObjStat.text = card.zeal.ToString();
-
-        ObjHealth.text = card.health.ToString();
+        if (card.health != 0)
+        {
+            ObjHealth.text = card.health.ToString();
+        }
 
 
 
@@ -314,10 +316,22 @@ public class CardDisplayScript : MonoBehaviour {
 
         }
 
-        if(wedge.NormanDamage != 0)
+        if (wedge.NormanDamage != 0)
+        {
             NormanDamage.text = wedge.NormanDamage.ToString();
-        if(wedge.SaxonDamage != 0)
+        }
+        else
+        {
+            NormanDamage.text = "";
+        }
+        if (wedge.SaxonDamage != 0)
+        {
             SaxonDamage.text = wedge.SaxonDamage.ToString();
+        }
+        else
+        {
+            SaxonDamage.text = "";
+        }
 
         panelActive = true;
 

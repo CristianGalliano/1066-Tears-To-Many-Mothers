@@ -26,6 +26,9 @@ public class WedgeScript : MonoBehaviour
     private bool buttonPressed, timeRead = false;
     private float time;
 
+    public int winner;
+    public bool hasWon = false;
+
 
     void Start()
     {
@@ -48,6 +51,19 @@ public class WedgeScript : MonoBehaviour
     {
         CheckObjectiveState();
         ShowUI();
+        if (hasWon == false)
+        {
+            if (NormanDamage >= 10)
+            {
+                winner = 1;
+                hasWon = true;
+            }
+            if (SaxonDamage >= 10)
+            {
+                winner = 2;
+                hasWon = true;
+            }
+        }
     }
 
     void OnMouseDown()
@@ -81,11 +97,14 @@ public class WedgeScript : MonoBehaviour
 
     public void WedgeBattle()
     {
-        Reset();
-        CalculateAllCards();
-        MightBattle();
-        ZealBattle();
-        UpdateText();
+        if (hasWon == false)
+        {
+            Reset();
+            CalculateAllCards();
+            MightBattle();
+            ZealBattle();
+            UpdateText();
+        }
     }
 
     void CheckObjectiveState()
@@ -227,8 +246,14 @@ public class WedgeScript : MonoBehaviour
         {
             if(text != null)
             {
-                if(NormanDamage != 0)
+                if (NormanDamage != 0)
+                {
                     text.text = NormanDamage.ToString();
+                }
+                else
+                {
+                    text.text = "";
+                }
             }
 
         }
@@ -238,7 +263,13 @@ public class WedgeScript : MonoBehaviour
             if (text != null)
             {
                 if (SaxonDamage != 0)
+                {
                     text.text = SaxonDamage.ToString();
+                }
+                else
+                {
+                    text.text = "";
+                }
             }
         }
     }

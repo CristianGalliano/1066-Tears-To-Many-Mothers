@@ -26,22 +26,33 @@ public class GameController : MonoBehaviour
 
     public ObjectivesScript NormanObj, SaxonObj;
 
-    public WedgeScript[] wedges = new WedgeScript[3];
+    public List <WedgeScript> wedges = new List<WedgeScript> {};
+    public int normanWedgesTaken, saxonWedgesTaken = 0;
+
+    public GameObject gameOverPanel, mainPanel;
+    public Text winnerText;
+    private bool gameOver = false;
 
     // Use this for initialization
     void Start()
     {
         SDS = GameObject.Find("SaxonDeck").GetComponent<DrawScript>();
         NDS = GameObject.Find("NormanDeck").GetComponent<DrawScript>();
-
+        mainPanel.SetActive(true);
+        gameOverPanel.SetActive(false);
         StartCoroutine("startDraw");
     }
 
     // Update is called once per frame
     void Update()
     {
-        SaxonResourcesText.text = "Saxon Resources : " + saxonResources;
-        NormanResourcesText.text = "Norman Resources : " + normanResources;
+        if (gameOver == false)
+        {
+            SaxonResourcesText.text = "Saxon Resources : " + saxonResources;
+            NormanResourcesText.text = "Norman Resources : " + normanResources;
+            wedgeWon();
+            showGameOverUI();
+        }
     }
 
     private IEnumerator startDraw()
@@ -62,7 +73,11 @@ public class GameController : MonoBehaviour
         turn++;
 
         foreach (WedgeScript wedge in wedges)
+        {
             wedge.WedgeBattle();
+        }
+
+        
 
         if (turn > 1)
         {
@@ -106,14 +121,49 @@ public class GameController : MonoBehaviour
     {
     }
 
-    public void damageWedge()
+    public void wedgeWon()
     {
+        int count = 0;
+        foreach (WedgeScript wedge in wedges)
+        {
+            if (wedge.hasWon == true)
+            {
+                if (wedge.winner == 1)
+                {
+                    normanWedgesTaken++;
+                }
+                else if (wedge.winner == 2)
+                {
+                    saxonWedgesTaken++;
+                }
+                wedges.RemoveAt(count);
+            }
+            count++;
+        }
     }
 
     public void damageEnemy(NormanCard attacker, NormanCard target)
     {
 
     }
-
     
+    public void showGameOverUI()
+    {
+        if (normanWedgesTaken >= 2)
+        {
+            //show normans win.
+            mainPanel.SetActive(false);
+            gameOverPanel.SetActive(true);
+            winnerText.text += " Normans Win!";
+            gameOver = true;
+        }
+        else if (saxonWedgesTaken >= 2)
+        {
+            //show saxons win.
+            mainPanel.SetActive(false);
+            gameOverPanel.SetActive(true);
+            winnerText.text += " Saxons Win!";
+            gameOver = true;
+        }
+    }
 }
