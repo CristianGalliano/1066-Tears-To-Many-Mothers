@@ -8,7 +8,7 @@ public class WedgeScript : MonoBehaviour
     int wedgeNum;
     int pos;
 
-    int NormanMightTBV, SaxonMightTBV, NormanZealTBV, SaxonZealTBV;
+    int NormanMightTBV , SaxonMightTBV, NormanZealTBV, SaxonZealTBV = 0;
     public int NormanDamage, SaxonDamage;
     bool NormanAtBOH, SaxonAtBOH;
 
@@ -140,10 +140,27 @@ public class WedgeScript : MonoBehaviour
         switch (NormanZealTBV.CompareTo(SaxonZealTBV))
         {
             case 0:
-                if(NormanZealTBV != 0)
+                if (SaxonAtBOH)
                 {
-                    NormanDamage++;
-                    SaxonDamage++;
+                    if (NormanZealTBV != 0)
+                    {
+                        SaxonDamage++;
+                    }
+                }
+                else if (NormanAtBOH)
+                {
+                    if (NormanZealTBV != 0)
+                    {
+                        NormanDamage++;
+                    }
+                }
+                else if (NormanAtBOH && SaxonAtBOH)
+                {
+                    if (NormanZealTBV != 0)
+                    {
+                        NormanDamage++;
+                        SaxonDamage++;
+                    }
                 }
                 break;
             case -1:
