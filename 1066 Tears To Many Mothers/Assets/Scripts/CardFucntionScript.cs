@@ -10,7 +10,8 @@ public class CardFucntionScript : MonoBehaviour
     private Vector3 positionOfMouse;
     public bool targeting, targetIsValid = false;
     public CardScript attackerScript, targetScript;
-    public NormanCard attacker, target, onPlayAttacker, eventAttacker, eventTarget;
+    public NormanCard attacker, target, onPlayAttacker, eventAttacker, eventTarget, attachment, attachTarget;
+    private bool usedEvent = false;
 
     public GraveyardScripts saxonGrave, normanGrave;
 
@@ -48,12 +49,23 @@ public class CardFucntionScript : MonoBehaviour
                 targeting = true;
             else
             {
-                eventTarget = attacker;
+                eventTarget = eventAttacker;
+                targetScript = attackerScript;
             }
 
             if(eventTarget != null)
             {
                 useEventCard();
+            }
+        }
+
+        if(attachment != null)
+        {
+            targeting = true;
+
+            if(attachTarget != null)
+            {
+                useAttachment();
             }
         }
 
@@ -83,6 +95,7 @@ public class CardFucntionScript : MonoBehaviour
             else
             {
                 target = attacker;
+                targetScript = attackerScript;
             }
         }
 
@@ -91,6 +104,9 @@ public class CardFucntionScript : MonoBehaviour
     void UseAbility()
     {
         targetIsValid = false;
+
+        Spy("norman");
+
         //if (attackerScript.gameObject.tag == "Norman")
         //{
         //    Spy("saxon");
@@ -99,7 +115,7 @@ public class CardFucntionScript : MonoBehaviour
         //{
         //    Spy("norman");
         //}
-
+        /*
         switch (attacker.cardNumber)
         {
             case 1:
@@ -236,11 +252,14 @@ public class CardFucntionScript : MonoBehaviour
                 Reset();
                 break;
         }
+        */
 
         if (targetIsValid)
         {
             attackerScript.tireCard();
         }
+
+        targetIsValid = false;
     }
 
     void OnPlayAbility()
@@ -261,6 +280,7 @@ public class CardFucntionScript : MonoBehaviour
             attackerScript.tireCard();
         }
 
+        targetIsValid = false;
     }
 
     void Damage(NormanCard Attacker, NormanCard Target, int Amount, int Range)
@@ -306,7 +326,7 @@ public class CardFucntionScript : MonoBehaviour
             Game.SDS.drawFunc(value);
         }
 
-        targetIsValid = true;
+        //targetIsValid = true;
         //Reset();
     }
 
@@ -454,29 +474,39 @@ public class CardFucntionScript : MonoBehaviour
         onPlayAttacker = null;
         eventAttacker = null;
         eventTarget = null;
+        attachment = null;
+        attachTarget = null;
         targeting = false;
-        targetIsValid = false;
+        usedEvent = false;
         DiscardCount = 0;
     }
 
     public void useEventCard()
     {
-        Buff(eventTarget,"Zeal",3);
+        Spy("saxon");
 
-        if(targetIsValid)
+        if (targetIsValid && !usedEvent)
         {
-            if(attackerScript.gameObject.tag == "Norman")
+            if (attackerScript.gameObject.tag == "Norman")
                 normanGrave.sendToGrave(eventAttacker);
-            else if(attackerScript.gameObject.tag == "Saxon")
+            else if (attackerScript.gameObject.tag == "Saxon")
                 saxonGrave.sendToGrave(eventAttacker);
 
             Destroy(attackerScript.gameObject);
+
+            usedEvent = true;
         }
+
         Reset();
     }
 
     public void useAttachment()
     {
-
+        Buff(attachTarget, "Zeal", 3);
+        attackerScript.gameObject.transform.parent = targetScript.gameObject.transform;
+        attackerScript.gameObject.transform.localPosition = new Vector3(40, 0, -1);
+        attackerScript.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        attackerScript.placed = true;
+        Reset();
     }
 }

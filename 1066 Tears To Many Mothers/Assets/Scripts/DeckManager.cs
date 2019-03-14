@@ -170,7 +170,7 @@ public class DeckManager : MonoBehaviour
 	}
 
     public NormanCard DrawRandomNormanCard()
-    {       
+    {
         rnd = Random.Range(0, usedNormanCards.Count);
         temp = usedNormanCards[rnd];
         usedNormanCards.RemoveAt(rnd);

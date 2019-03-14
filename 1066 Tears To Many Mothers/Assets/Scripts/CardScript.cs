@@ -69,7 +69,7 @@ public class CardScript : MonoBehaviour
 
         if (gameObject.tag == "Norman" && deck.NormanLeaderDrawn == false)
         {
-            normanCard = deck.DrawNormanCard(1);
+            normanCard = deck.DrawNormanCard(30);
             deck.NormanLeaderDrawn = true;
             Debug.Log("Leader Drawn : " + normanCard.name);
             normanCard.StartingValues();
@@ -175,7 +175,21 @@ public class CardScript : MonoBehaviour
             }
         }
 
-            buttonPressed = true;
+        if (functScript.targeting && functScript.attachment != null && placed)
+        {
+            if (gameObject.tag == "Norman")
+            {
+                functScript.targetScript = this;
+                functScript.attachTarget = normanCard;
+            }
+            else if (gameObject.tag == "Saxon")
+            {
+                functScript.targetScript = this;
+                functScript.attachTarget = saxonCard;
+            }
+        }
+
+        buttonPressed = true;
     }
 
     public void OnMouseDrag()
@@ -251,9 +265,10 @@ public class CardScript : MonoBehaviour
                             functScript.eventAttacker = saxonCard;
                             functScript.attackerScript = this;
                         }
-                        else if(str == "Norman" && normanCard.type == "Attachment")
+                        else if(str == "Norman" && normanCard.type == "Attachment" && !placed)
                         {
-
+                            functScript.attachment = normanCard;
+                            functScript.attackerScript = this;
                         }
                         else
                         {
@@ -432,7 +447,7 @@ public class CardScript : MonoBehaviour
     {
         if (gameObject.tag == "Norman")
         {
-            if (clickCount == 0 && dragging == false)//conditions to run.
+            if (clickCount == 0 && dragging == false && !placed)//conditions to run.
             {
                 originalCardPosition = transform.position;//sets the original card position(this will run after adjustPos function in the hand).
                 boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y * 2, thisCollider.size.z);//used to modify scale of the box collider.
@@ -448,7 +463,7 @@ public class CardScript : MonoBehaviour
         else if (gameObject.tag == "Saxon")
         {
 
-            if (clickCount == 0 && dragging == false)//conditions to run.
+            if (clickCount == 0 && dragging == false && !placed)//conditions to run.
             {
                 originalCardPosition = transform.position;//sets the original card position(this will run after adjustPos function in the hand).
                 boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y * 2, thisCollider.size.z);//used to modify scale of the box collider.
@@ -465,7 +480,7 @@ public class CardScript : MonoBehaviour
 
     void hoverEnd(string str)
     {
-        if (gameObject.tag == str)
+        if (gameObject.tag == str && !placed)
         {
             boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
             boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
