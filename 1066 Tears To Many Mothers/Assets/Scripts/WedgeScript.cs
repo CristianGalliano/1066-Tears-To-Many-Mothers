@@ -22,6 +22,7 @@ public class WedgeScript : MonoBehaviour
     public TextMeshPro[] saxonDamageText;
 
     private CardDisplayScript UI;
+    private CardFucntionScript functScript;
 
     private bool buttonPressed, timeRead = false;
     private float time;
@@ -29,6 +30,7 @@ public class WedgeScript : MonoBehaviour
     public int winner;
     public bool hasWon = false;
 
+    public int NormanMightBuff, NormanZealBuff, SaxonMightBuff, SaxonZealBuff;
 
     void Start()
     {
@@ -45,6 +47,7 @@ public class WedgeScript : MonoBehaviour
         }
 
         UI = GameObject.Find("UIController").GetComponent<CardDisplayScript>();
+        functScript = GameObject.Find("GameController").GetComponent<CardFucntionScript>();
     }
 
     void Update()
@@ -68,6 +71,11 @@ public class WedgeScript : MonoBehaviour
 
     void OnMouseDown()
     {
+        if(functScript.targeting)
+        {
+            functScript.wedgeTarget = gameObject;
+        }
+
         buttonPressed = true;
     }
 
@@ -101,6 +109,7 @@ public class WedgeScript : MonoBehaviour
         {
             Reset();
             CalculateAllCards();
+            ApplyBuffs();
             MightBattle();
             ZealBattle();
             UpdateText();
@@ -272,5 +281,14 @@ public class WedgeScript : MonoBehaviour
                 }
             }
         }
+    }
+
+    void ApplyBuffs()
+    {
+        NormanMightTBV += NormanMightBuff;
+        NormanZealTBV += NormanZealBuff;
+
+        SaxonMightTBV += SaxonMightBuff;
+        NormanZealTBV += SaxonZealBuff;
     }
 }

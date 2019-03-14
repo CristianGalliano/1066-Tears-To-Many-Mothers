@@ -41,6 +41,8 @@ public class CardScript : MonoBehaviour
     public int lane;
     public int laneNum;
 
+    public bool InLane = true;
+
 
     // Use this for initialization
     void Start()
@@ -69,7 +71,7 @@ public class CardScript : MonoBehaviour
 
         if (gameObject.tag == "Norman" && deck.NormanLeaderDrawn == false)
         {
-            normanCard = deck.DrawNormanCard(30);
+            normanCard = deck.DrawNormanCard(55);
             deck.NormanLeaderDrawn = true;
             Debug.Log("Leader Drawn : " + normanCard.name);
             normanCard.StartingValues();
@@ -91,7 +93,7 @@ public class CardScript : MonoBehaviour
     {
         Destroy();
         GetPosition();
-        if(placed)
+        if(placed && InLane)
         {
             Reposition();
         }

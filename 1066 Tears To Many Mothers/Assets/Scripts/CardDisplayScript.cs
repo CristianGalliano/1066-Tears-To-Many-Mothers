@@ -11,6 +11,7 @@ public class CardDisplayScript : MonoBehaviour {
     public Text CostText, ZealText, MightText, HealthText, ResourcesText;
     public Text ObjStat, ObjHealth;
     public GameObject TagretingText;
+    public Button Cancel;
 
     public RectTransform GraveContent;
     public GameObject UICard;

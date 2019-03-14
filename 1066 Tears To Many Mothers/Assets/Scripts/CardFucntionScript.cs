@@ -11,6 +11,7 @@ public class CardFucntionScript : MonoBehaviour
     public bool targeting, targetIsValid = false;
     public CardScript attackerScript, targetScript;
     public NormanCard attacker, target, onPlayAttacker, eventAttacker, eventTarget, attachment, attachTarget;
+    public GameObject wedgeTarget;
     private bool usedEvent = false;
 
     public GraveyardScripts saxonGrave, normanGrave;
@@ -63,7 +64,7 @@ public class CardFucntionScript : MonoBehaviour
         {
             targeting = true;
 
-            if(attachTarget != null)
+            if(attachTarget != null || wedgeTarget != null)
             {
                 useAttachment();
             }
@@ -79,9 +80,15 @@ public class CardFucntionScript : MonoBehaviour
         }
 
         if (targeting)
+        {
             UI.TagretingText.SetActive(true);
-        else
+            UI.Cancel.gameObject.SetActive(true);
+        }
+        else if(!targeting)
+        {
             UI.TagretingText.SetActive(false);
+            UI.Cancel.gameObject.SetActive(false);
+        }
     }
 
     public void EnterTargeting()
@@ -105,7 +112,7 @@ public class CardFucntionScript : MonoBehaviour
     {
         targetIsValid = false;
 
-        Spy("norman");
+        Damage(attacker, target, 3, 3);
 
         //if (attackerScript.gameObject.tag == "Norman")
         //{
@@ -120,51 +127,40 @@ public class CardFucntionScript : MonoBehaviour
         {
             case 1:
                 //agile
-                Reset();
                 break;
             case 22:
                 Destroy(attacker);
                 Damage(attacker, target, 1, 100);
-                Reset();
                 break;
             case 60:
                 Damage(attacker, target, 1, 3);
-                Reset();
                 break;
             case 61:
                 Damage(attacker, target, 1, 3);
-                Reset();
                 break;
             case 63:
                 //agile
                 break;
             case 64:
                 Damage(attacker, target, 1, 3);
-                Reset();
                 break;
             case 66:
                 //agile
-                Reset();
                 break;
             case 67:
                 //agile
-                Reset();
                 break;
             case 68:
                 Damage(attacker, target, 1, 3);
-                Reset();
                 break;
             case 69:
                 Damage(attacker, target, 1, 5);
-                Reset();
                 break;
             case 70:
                 //agile
-                Reset();
                 break;
             case 73:
                 //agile
-                Reset();
                 break;
             case 76:
                 if (target.type == "Cavalry")
@@ -172,84 +168,66 @@ public class CardFucntionScript : MonoBehaviour
                     Destroy(attacker);
                     Heal(target, target.startHealth - target.health);
                 }
-                Reset();
                 break;
             case 85:
                 //agile
-                Reset();
                 break;
             case 91:
                 if (target.type == "Unit" || target.type == "Character")
                 {
                     Heal(target, 1);
                 }
-                Reset();
                 break;
             case 104:
                 if (target.zeal <= 1)
                 {
                     Destroy(target);
                 }
-                Reset();
                 break;
             case 105:
                 //buff all saxons by 1 might
-                Reset();
                 break;
             case 130:
                 Damage(attacker, target, 1, 5);
-                Reset();
                 break;
             case 131:
                 //agile
-                Reset();
                 break;
             case 132:
                 //agile
-                Reset();
                 break;
             case 133:
                 Damage(attacker, attacker, 1, 100);
                 Damage(attacker, target, 1, 100);
-                Reset();
                 break;
             case 134:
                 Damage(attacker, attacker, 1, 100);
                 Damage(attacker, target, 1, 100);
-                Reset();
                 break;
             case 135:
                 Damage(attacker, attacker, 1, 100);
                 Damage(attacker, target, 1, 100);
-                Reset();
                 break;
             case 141:
                 Damage(attacker, target, 1, 3);
-                Reset();
                 break;
             case 142:
                 Damage(attacker, target, 1, 3);
-                Reset();
                 break;
             case 148:
                 Damage(attacker, target, 1, 3);
-                Reset();
                 break;
             case 155:
                 Damage(attacker, target, 1,3);
-                Reset();
                 break;
             case 159:
                 //agile
-                Reset();
                 break;
             case 160:
                 //agile
-                Reset();
                 break;
             case 161:
                 //agile
-                Reset();
                 break;
         }
         */
@@ -260,6 +238,7 @@ public class CardFucntionScript : MonoBehaviour
         }
 
         targetIsValid = false;
+        Reset();
     }
 
     void OnPlayAbility()
@@ -299,6 +278,10 @@ public class CardFucntionScript : MonoBehaviour
                         saxonGrave.sendToGrave(target);
                 }
             }           
+        }
+        else
+        {
+            Reset();
         }
 
         //Reset();
@@ -476,6 +459,7 @@ public class CardFucntionScript : MonoBehaviour
         eventTarget = null;
         attachment = null;
         attachTarget = null;
+        wedgeTarget = null;
         targeting = false;
         usedEvent = false;
         DiscardCount = 0;
@@ -496,17 +480,32 @@ public class CardFucntionScript : MonoBehaviour
 
             usedEvent = true;
         }
-
-        Reset();
     }
 
     public void useAttachment()
     {
-        Buff(attachTarget, "Zeal", 3);
-        attackerScript.gameObject.transform.parent = targetScript.gameObject.transform;
-        attackerScript.gameObject.transform.localPosition = new Vector3(40, 0, -1);
-        attackerScript.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
-        attackerScript.placed = true;
+        if(wedgeTarget != null)
+        {
+            wedgeTarget.GetComponent<WedgeScript>().NormanZealBuff = 3;
+
+            attackerScript.gameObject.transform.parent = wedgeTarget.transform;
+            attackerScript.gameObject.transform.localPosition = new Vector3(40, 0, -1);
+            attackerScript.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            attackerScript.InLane = false;
+            attackerScript.placed = true;
+        }
+
+        if(targetScript != null)
+        {
+            Buff(attachTarget, "Zeal", 10);
+
+            attackerScript.gameObject.transform.parent = targetScript.gameObject.transform;
+            attackerScript.gameObject.transform.localPosition = new Vector3(40, 0, -1);
+            attackerScript.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            attackerScript.InLane = false;
+            attackerScript.placed = true;
+        }
+
         Reset();
     }
 }
