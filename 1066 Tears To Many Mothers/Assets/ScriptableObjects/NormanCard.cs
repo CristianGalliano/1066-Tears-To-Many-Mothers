@@ -22,7 +22,7 @@ public class NormanCard : ScriptableObject
 
     public int PositionZ;
     public int lane;
-    public bool needTarget = false;
+    public bool needTarget = true;
 
     
 

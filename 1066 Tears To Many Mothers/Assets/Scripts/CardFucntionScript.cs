@@ -10,7 +10,7 @@ public class CardFucntionScript : MonoBehaviour
     private Vector3 positionOfMouse;
     public bool targeting, targetIsValid = false;
     public CardScript attackerScript, targetScript;
-    public NormanCard attacker, target, onPlayAttacker, eventTarget;
+    public NormanCard attacker, target, onPlayAttacker, eventAttacker, eventTarget;
 
     public GraveyardScripts saxonGrave, normanGrave;
 
@@ -40,6 +40,21 @@ public class CardFucntionScript : MonoBehaviour
         if(attacker == null && onPlayAttacker != null && target != null)
         {
             OnPlayAbility();
+        }
+
+        if(eventAttacker != null)
+        {
+            if (eventAttacker.needTarget)
+                targeting = true;
+            else
+            {
+                eventTarget = attacker;
+            }
+
+            if(eventTarget != null)
+            {
+                useEventCard();
+            }
         }
 
         if (attacker != null && attackerScript != null)
@@ -390,6 +405,11 @@ public class CardFucntionScript : MonoBehaviour
         //Reset();
     }
 
+    void Attachment(NormanCard target, string stat)
+    {
+
+    }
+
     bool InRange(NormanCard attacker, NormanCard target, int Range)
     {
         if (highest(attacker, target).PositionZ - lowest(attacker,target).PositionZ <= Range && (attacker.lane == target.lane))
@@ -432,12 +452,31 @@ public class CardFucntionScript : MonoBehaviour
         attacker = null;
         target = null;
         onPlayAttacker = null;
+        eventAttacker = null;
+        eventTarget = null;
         targeting = false;
+        targetIsValid = false;
         DiscardCount = 0;
     }
 
-    public void useEventCard(NormanCard card)
+    public void useEventCard()
     {
-        Damage(card, target, 3, 6);
+        Buff(eventTarget,"Zeal",3);
+
+        if(targetIsValid)
+        {
+            if(attackerScript.gameObject.tag == "Norman")
+                normanGrave.sendToGrave(eventAttacker);
+            else if(attackerScript.gameObject.tag == "Saxon")
+                saxonGrave.sendToGrave(eventAttacker);
+
+            Destroy(attackerScript.gameObject);
+        }
+        Reset();
+    }
+
+    public void useAttachment()
+    {
+
     }
 }

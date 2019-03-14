@@ -161,7 +161,21 @@ public class CardScript : MonoBehaviour
             }
         }
 
-        buttonPressed = true;
+        if (functScript.targeting && functScript.eventAttacker != null && placed)
+        {
+            if (gameObject.tag == "Norman")
+            {
+                functScript.targetScript = this;
+                functScript.eventTarget = normanCard;
+            }
+            else if (gameObject.tag == "Saxon")
+            {
+                functScript.targetScript = this;
+                functScript.eventTarget = saxonCard;
+            }
+        }
+
+            buttonPressed = true;
     }
 
     public void OnMouseDrag()
@@ -228,15 +242,18 @@ public class CardScript : MonoBehaviour
                         if (str == "Norman" && normanCard.type == "Event")
                         {
                             //use its ability before doing this, if you dont use it it should get returned to your hand
-                            functScript.normanGrave.sendToGrave(normanCard);
-                            Destroy(gameObject);
+                            functScript.eventAttacker = normanCard;
+                            functScript.attackerScript = this;
                         }
                         else if (str == "Saxon" && saxonCard.type == "Event")
                         {
                             //use its ability before doing this, if you dont use it it should get returned to your hand
-                            functScript.saxonGrave.sendToGrave(saxonCard);
-                            //functscript.useevent
-                            Destroy(gameObject);
+                            functScript.eventAttacker = saxonCard;
+                            functScript.attackerScript = this;
+                        }
+                        else if(str == "Norman" && normanCard.type == "Attachment")
+                        {
+
                         }
                         else
                         {
