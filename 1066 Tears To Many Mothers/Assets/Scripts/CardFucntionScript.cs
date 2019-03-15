@@ -112,8 +112,6 @@ public class CardFucntionScript : MonoBehaviour
     {
         targetIsValid = false;
 
-        //Damage(attacker, target, 3, 3);
-
         //if (attackerScript.gameObject.tag == "Norman")
         //{
         //    Spy("saxon");
@@ -126,7 +124,7 @@ public class CardFucntionScript : MonoBehaviour
         switch (attacker.cardNumber)
         {
             case 1:
-                //agile
+                Agile(target, 0);
                 break;
             case 22:
                 Destroy(attacker);
@@ -139,16 +137,16 @@ public class CardFucntionScript : MonoBehaviour
                 Damage(attacker, target, 1, 3);
                 break;
             case 63:
-                //agile
+                Agile(target, 0);
                 break;
             case 64:
                 Damage(attacker, target, 1, 3);
                 break;
             case 66:
-                //agile
+                Agile(target, 0);
                 break;
             case 67:
-                //agile
+                Agile(target, 0);
                 break;
             case 68:
                 Damage(attacker, target, 1, 3);
@@ -157,10 +155,10 @@ public class CardFucntionScript : MonoBehaviour
                 Damage(attacker, target, 1, 5);
                 break;
             case 70:
-                //agile
+                Agile(target, 0);
                 break;
             case 73:
-                //agile
+                Agile(target, 0);
                 break;
             case 76:
                 if (target.type == "Cavalry")
@@ -170,7 +168,7 @@ public class CardFucntionScript : MonoBehaviour
                 }
                 break;
             case 85:
-                //agile
+                Agile(target, 0);
                 break;
             case 91:
                 if (target.type == "Unit" || target.type == "Character")
@@ -191,10 +189,10 @@ public class CardFucntionScript : MonoBehaviour
                 Damage(attacker, target, 1, 5);
                 break;
             case 131:
-                //agile
+                Agile(target, 0);
                 break;
             case 132:
-                //agile
+                Agile(target, 0);
                 break;
             case 133:
                 Damage(attacker, attacker, 1, 100);
@@ -221,23 +219,22 @@ public class CardFucntionScript : MonoBehaviour
                 Damage(attacker, target, 1,3);
                 break;
             case 159:
-                //agile
+                Agile(target, 0);
                 break;
             case 160:
-                //agile
+                Agile(target, 0);
                 break;
             case 161:
-                //agile
+                Agile(target, 0);
                 break;
         }
-        
 
         if (targetIsValid)
         {
             attackerScript.tireCard();
         }
-
         targetIsValid = false;
+
         Reset();
     }
 
@@ -400,12 +397,29 @@ public class CardFucntionScript : MonoBehaviour
 
     void Agile(NormanCard target, int targetWedge)
     {
-        if(Game.normanLane[targetWedge] < 3)
+        if(attackerScript.gameObject.tag == "Norman")
         {
-            
+            if (Game.normanLane[targetWedge] != 3)
+            {
+                Game.normanLane[target.lane]--;
+                targetScript.gameObject.transform.position = new Vector3(Game.xPositions[targetWedge], targetScript.gameObject.transform.position.y, Game.normanDropPointsZ[2]);
+                targetScript.lane = targetWedge;
+                targetScript.laneNum = 3;
+                Game.normanLane[targetWedge]++;
+            }
         }
 
-        //Reset();
+        if(attackerScript.gameObject.tag == "Saxon")
+        {
+            if (Game.saxonlane[targetWedge] != 3)
+            {
+                Game.saxonlane[target.lane]--;
+                targetScript.gameObject.transform.position = new Vector3(Game.xPositions[targetWedge], targetScript.gameObject.transform.position.y, Game.saxonDropPointsZ[2]);
+                targetScript.lane = targetWedge;
+                targetScript.laneNum = 3;
+                Game.saxonlane[targetWedge]++;
+            }
+        }
     }
 
     void Attachment(NormanCard target, string stat)

@@ -73,7 +73,7 @@ public class CardScript : MonoBehaviour
 
         if (gameObject.tag == "Norman" && deck.NormanLeaderDrawn == false)
         {
-            normanCard = deck.DrawNormanCard(54);
+            normanCard = deck.DrawNormanCard(1);
             deck.NormanLeaderDrawn = true;
             Debug.Log("Leader Drawn : " + normanCard.name);
             normanCard.StartingValues();
@@ -81,7 +81,7 @@ public class CardScript : MonoBehaviour
 
         if (gameObject.tag == "Saxon" && deck.SaxonLeaderDrawn == false)
         {
-            saxonCard = deck.DrawSaxonCard(121);
+            saxonCard = deck.DrawSaxonCard(85);
             deck.SaxonLeaderDrawn = true;
             Debug.Log("Leader Drawn : " + saxonCard.name);
             saxonCard.StartingValues();
@@ -117,6 +117,7 @@ public class CardScript : MonoBehaviour
     {
         Destroy();
         GetPosition();
+
         if(placed && InLane)
         {
             Reposition();
@@ -236,8 +237,55 @@ public class CardScript : MonoBehaviour
         if (!functScript.targeting)
         {
             thisCollider.enabled = true;//re enamble the collider.
-            dropCard("Norman", controller.normanDropPointsZ, controller.normanLane, 0);
-            dropCard("Saxon", controller.saxonDropPointsZ, controller.saxonlane, 1);          
+
+
+            dragDiscard();
+
+            if (controller.USERESOURCES)
+            {
+                if (gameObject.tag == "Norman")
+                {
+                    if (normanCard.cost > controller.normanResources && !placed)
+                    {
+                        transform.position = originalCardPosition;//send the card back to the hand.
+                        dragging = false;//set dragging to be false.
+                        boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);
+                        boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);
+                        thisCollider.center = boxPos;//move the collider by boxPos vector.
+                        thisCollider.size = boxScale;//scale the collider by boxscale vector.
+                    }
+                    else if (normanCard.cost <= controller.normanResources && !placed)
+                    {
+                        dropCard("Norman", controller.normanDropPointsZ, controller.normanLane, 0);
+                    }
+                }
+
+                if(gameObject.tag == "Saxon")
+                { 
+                    if (saxonCard.cost > controller.saxonResources && !placed)
+                    {
+                        transform.position = originalCardPosition;//send the card back to the hand.
+                        dragging = false;//set dragging to be false.
+                        boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);
+                        boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);
+                        thisCollider.center = boxPos;//move the collider by boxPos vector.
+                        thisCollider.size = boxScale;//scale the collider by boxscale vector.
+                    }
+                    else if (normanCard.cost <= controller.normanResources && !placed)
+                    {
+                        dropCard("Saxon", controller.saxonDropPointsZ, controller.saxonlane, 1);
+                    }
+                }
+            }
+            else if(!placed)
+            {
+                dropCard("Norman", controller.normanDropPointsZ, controller.normanLane, 0);
+                dropCard("Saxon", controller.saxonDropPointsZ, controller.saxonlane, 1);
+            }
+
+
+ 
+            
             disablePlacholders();
         }
         buttonPressed = false;
@@ -306,19 +354,6 @@ public class CardScript : MonoBehaviour
                     placed = true;
                     transform.localRotation = Quaternion.Euler(-90, 0, 0);
                     controller.saxonTactics++;
-                }
-                else if (str == "Norman" && positionOfMouse.x < normanGrave.transform.position.x + 100 && positionOfMouse.x > normanGrave.transform.position.x - 100 && positionOfMouse.z < normanGrave.transform.position.z + 150 && positionOfMouse.z > normanGrave.transform.position.z - 150)
-                {
-                    controller.normanResources++;
-                    functScript.Destroy(normanCard);
-                    Destroy(gameObject);
-                }
-                else if (str == "Saxon" && positionOfMouse.x < SaxonGrave.transform.position.x + 100 && positionOfMouse.x > SaxonGrave.transform.position.x - 100 && positionOfMouse.z < SaxonGrave.transform.position.z + 150 && positionOfMouse.z > SaxonGrave.transform.position.z - 150)
-                {
-
-                    controller.saxonResources++;
-                    functScript.Destroy(saxonCard);
-                    Destroy(gameObject);
                 }
                 else if (str == "Norman" && normanCard.type != "Tactic" || str == "Saxon" && saxonCard.type != "Tactic")
                 {
@@ -414,6 +449,22 @@ public class CardScript : MonoBehaviour
                 functScript.targeting = true;
                 onPlayUsed = true;
             }
+        }
+    }
+
+    void dragDiscard()
+    {
+        if (gameObject.tag == "Norman" && positionOfMouse.x < normanGrave.transform.position.x + 100 && positionOfMouse.x > normanGrave.transform.position.x - 100 && positionOfMouse.z < normanGrave.transform.position.z + 150 && positionOfMouse.z > normanGrave.transform.position.z - 150)
+        {
+            controller.normanResources++;
+            functScript.Destroy(normanCard);
+            Destroy(gameObject);
+        }
+        else if (gameObject.tag == "Saxon" && positionOfMouse.x < SaxonGrave.transform.position.x + 100 && positionOfMouse.x > SaxonGrave.transform.position.x - 100 && positionOfMouse.z < SaxonGrave.transform.position.z + 150 && positionOfMouse.z > SaxonGrave.transform.position.z - 150)
+        {
+            controller.saxonResources++;
+            functScript.Destroy(saxonCard);
+            Destroy(gameObject);
         }
     }
 
