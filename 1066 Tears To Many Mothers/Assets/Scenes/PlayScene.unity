@@ -536,6 +536,8 @@ MonoBehaviour:
   wedgeNum: 0
   NormanDamage: 0
   SaxonDamage: 0
+  zeal: 0
+  might: 0
   NormanObj: {fileID: 139799870}
   SaxonObj: {fileID: 222044640}
   cards: []
@@ -545,6 +547,10 @@ MonoBehaviour:
   saxonDamageText: []
   winner: 0
   hasWon: 0
+  NormanMightBuff: 0
+  NormanZealBuff: 0
+  SaxonMightBuff: 0
+  SaxonZealBuff: 0
 --- !u!65 &21699038
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1547,6 +1553,8 @@ MonoBehaviour:
   wedgeNum: 0
   NormanDamage: 0
   SaxonDamage: 0
+  zeal: 0
+  might: 0
   NormanObj: {fileID: 139799870}
   SaxonObj: {fileID: 222044640}
   cards: []
@@ -1562,6 +1570,10 @@ MonoBehaviour:
   - {fileID: 963748058}
   winner: 0
   hasWon: 0
+  NormanMightBuff: 0
+  NormanZealBuff: 0
+  SaxonMightBuff: 0
+  SaxonZealBuff: 0
 --- !u!65 &149202796
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3566,6 +3578,7 @@ MonoBehaviour:
   panelActive: 0
   GraveyardShown: 0
   InfoButton: {fileID: 942973233}
+  colliders: {fileID: 1223487879}
 --- !u!4 &359721901
 Transform:
   m_ObjectHideFlags: 0
@@ -3737,6 +3750,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 381289354}
   m_CullTransparentMesh: 0
+--- !u!1 &390308504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 390308505}
+  m_Layer: 0
+  m_Name: SaxonTacticsArea
+  m_TagString: Saxon
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &390308505
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390308504}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -860}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1077001658}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 650, y: 1}
+  m_SizeDelta: {x: 0, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &420284005 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: be9c96a3cf5d80e469d4ebcde62a9714,
@@ -4807,6 +4855,8 @@ MonoBehaviour:
   wedgeNum: 0
   NormanDamage: 0
   SaxonDamage: 0
+  zeal: 0
+  might: 0
   NormanObj: {fileID: 139799870}
   SaxonObj: {fileID: 222044640}
   cards: []
@@ -4816,6 +4866,10 @@ MonoBehaviour:
   saxonDamageText: []
   winner: 0
   hasWon: 0
+  NormanMightBuff: 0
+  NormanZealBuff: 0
+  SaxonMightBuff: 0
+  SaxonZealBuff: 0
 --- !u!65 &543568089
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5934,6 +5988,8 @@ MonoBehaviour:
   NormanResourcesText: {fileID: 1203664550}
   camCount: 0
   camControl: {fileID: 1664435026}
+  normanTactics: 0
+  saxonTactics: 0
   NormanObj: {fileID: 139799870}
   SaxonObj: {fileID: 222044640}
   wedges:
@@ -5945,6 +6001,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1185802280}
   mainPanel: {fileID: 1081813172}
   winnerText: {fileID: 368821483}
+  USERESOURCES: 0
 --- !u!4 &719131377
 Transform:
   m_ObjectHideFlags: 0
@@ -6001,6 +6058,8 @@ MonoBehaviour:
   eventTarget: {fileID: 0}
   attachment: {fileID: 0}
   attachTarget: {fileID: 0}
+  tactic: {fileID: 0}
+  wedgeTarget: {fileID: 0}
   saxonGrave: {fileID: 0}
   normanGrave: {fileID: 0}
   DiscardCount: 0
@@ -7169,6 +7228,8 @@ MonoBehaviour:
   wedgeNum: 0
   NormanDamage: 0
   SaxonDamage: 0
+  zeal: 0
+  might: 0
   NormanObj: {fileID: 139799870}
   SaxonObj: {fileID: 222044640}
   cards: []
@@ -7178,6 +7239,10 @@ MonoBehaviour:
   saxonDamageText: []
   winner: 0
   hasWon: 0
+  NormanMightBuff: 0
+  NormanZealBuff: 0
+  SaxonMightBuff: 0
+  SaxonZealBuff: 0
 --- !u!65 &943194257
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8419,6 +8484,43 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075119306}
   m_Mesh: {fileID: 0}
+--- !u!1 &1077001657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1077001658}
+  m_Layer: 0
+  m_Name: Tactics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1077001658
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077001657}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 390308505}
+  - {fileID: 1563602596}
+  m_Father: {fileID: 2026223522}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1081813172
 GameObject:
   m_ObjectHideFlags: 0
@@ -8889,6 +8991,8 @@ MonoBehaviour:
   wedgeNum: 0
   NormanDamage: 0
   SaxonDamage: 0
+  zeal: 0
+  might: 0
   NormanObj: {fileID: 139799870}
   SaxonObj: {fileID: 222044640}
   cards: []
@@ -8898,6 +9002,10 @@ MonoBehaviour:
   saxonDamageText: []
   winner: 0
   hasWon: 0
+  NormanMightBuff: 0
+  NormanZealBuff: 0
+  SaxonMightBuff: 0
+  SaxonZealBuff: 0
 --- !u!65 &1112805700
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8925,6 +9033,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parentWedge: {fileID: 149202795}
   thisWedge: {fileID: 1112805699}
+--- !u!1 &1116041425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1116041426}
+  - component: {fileID: 1116041427}
+  m_Layer: 0
+  m_Name: collider3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1116041426
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116041425}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 2198, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1223487880}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1116041427
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116041425}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1000, y: 1000, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1128668597
 GameObject:
   m_ObjectHideFlags: 0
@@ -9395,6 +9547,39 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1223487879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1223487880}
+  m_Layer: 0
+  m_Name: Colliders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1223487880
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223487879}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1569217995}
+  - {fileID: 1869685457}
+  - {fileID: 1116041426}
+  m_Father: {fileID: 1664435027}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1223656977 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: fd62781e9b745854b9ecbb68a5c5fa61,
@@ -9416,6 +9601,8 @@ MonoBehaviour:
   wedgeNum: 0
   NormanDamage: 0
   SaxonDamage: 0
+  zeal: 0
+  might: 0
   NormanObj: {fileID: 139799870}
   SaxonObj: {fileID: 222044640}
   cards: []
@@ -9425,6 +9612,10 @@ MonoBehaviour:
   saxonDamageText: []
   winner: 0
   hasWon: 0
+  NormanMightBuff: 0
+  NormanZealBuff: 0
+  SaxonMightBuff: 0
+  SaxonZealBuff: 0
 --- !u!65 &1223656979
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9822,9 +10013,9 @@ RectTransform:
   m_Father: {fileID: 1267609305}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -250, y: 100}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -250, y: -225}
   m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1295379543
@@ -11784,6 +11975,85 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1838938408}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1563602595
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1563602596}
+  m_Layer: 0
+  m_Name: NormanTacticsArea
+  m_TagString: Norman
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1563602596
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563602595}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 860}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1077001658}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -650, y: 1}
+  m_SizeDelta: {x: 0, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1569217994
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1569217995}
+  - component: {fileID: 1569217996}
+  m_Layer: 0
+  m_Name: collider1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1569217995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569217994}
+  m_LocalRotation: {x: -0, y: 0.9396927, z: -0.3420201, w: 0}
+  m_LocalPosition: {x: 0, y: 1098.7145, z: 1883.4679}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1223487880}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1569217996
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1569217994}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1000, y: 1000, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1581255273
 GameObject:
   m_ObjectHideFlags: 0
@@ -12083,6 +12353,8 @@ MonoBehaviour:
   wedgeNum: 0
   NormanDamage: 0
   SaxonDamage: 0
+  zeal: 0
+  might: 0
   NormanObj: {fileID: 139799870}
   SaxonObj: {fileID: 222044640}
   cards: []
@@ -12098,6 +12370,10 @@ MonoBehaviour:
   - {fileID: 1091806330}
   winner: 0
   hasWon: 0
+  NormanMightBuff: 0
+  NormanZealBuff: 0
+  SaxonMightBuff: 0
+  SaxonZealBuff: 0
 --- !u!65 &1658353844
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12233,6 +12509,7 @@ Transform:
   - {fileID: 1757035340}
   - {fileID: 1756772701}
   - {fileID: 771492455}
+  - {fileID: 1223487880}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13765,6 +14042,50 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: '#Card_Title'
+--- !u!1 &1869685456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1869685457}
+  - component: {fileID: 1869685458}
+  m_Layer: 0
+  m_Name: collider2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1869685457
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869685456}
+  m_LocalRotation: {x: 0.3420201, y: -0, z: -0, w: 0.9396927}
+  m_LocalPosition: {x: 0, y: 1098.7145, z: -1883.4679}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1223487880}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1869685458
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869685456}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1000, y: 1000, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1870467596
 GameObject:
   m_ObjectHideFlags: 0
@@ -14957,6 +15278,8 @@ MonoBehaviour:
   wedgeNum: 0
   NormanDamage: 0
   SaxonDamage: 0
+  zeal: 0
+  might: 0
   NormanObj: {fileID: 139799870}
   SaxonObj: {fileID: 222044640}
   cards: []
@@ -14972,6 +15295,10 @@ MonoBehaviour:
   - {fileID: 315852396}
   winner: 0
   hasWon: 0
+  NormanMightBuff: 0
+  NormanZealBuff: 0
+  SaxonMightBuff: 0
+  SaxonZealBuff: 0
 --- !u!65 &2020132774
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15150,6 +15477,7 @@ RectTransform:
   - {fileID: 1988061433}
   - {fileID: 1060000893}
   - {fileID: 1752425419}
+  - {fileID: 1077001658}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15613,6 +15941,8 @@ MonoBehaviour:
   wedgeNum: 0
   NormanDamage: 0
   SaxonDamage: 0
+  zeal: 0
+  might: 0
   NormanObj: {fileID: 139799870}
   SaxonObj: {fileID: 222044640}
   cards: []
@@ -15622,6 +15952,10 @@ MonoBehaviour:
   saxonDamageText: []
   winner: 0
   hasWon: 0
+  NormanMightBuff: 0
+  NormanZealBuff: 0
+  SaxonMightBuff: 0
+  SaxonZealBuff: 0
 --- !u!65 &2114695418
 BoxCollider:
   m_ObjectHideFlags: 0

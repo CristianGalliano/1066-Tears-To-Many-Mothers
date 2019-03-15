@@ -10,7 +10,7 @@ public class CardFucntionScript : MonoBehaviour
     private Vector3 positionOfMouse;
     public bool targeting, targetIsValid = false;
     public CardScript attackerScript, targetScript;
-    public NormanCard attacker, target, onPlayAttacker, eventAttacker, eventTarget, attachment, attachTarget;
+    public NormanCard attacker, target, onPlayAttacker, eventAttacker, eventTarget, attachment, attachTarget, tactic;
     public GameObject wedgeTarget;
     private bool usedEvent = false;
 
@@ -112,7 +112,7 @@ public class CardFucntionScript : MonoBehaviour
     {
         targetIsValid = false;
 
-        Damage(attacker, target, 3, 3);
+        //Damage(attacker, target, 3, 3);
 
         //if (attackerScript.gameObject.tag == "Norman")
         //{
@@ -122,7 +122,7 @@ public class CardFucntionScript : MonoBehaviour
         //{
         //    Spy("norman");
         //}
-        /*
+        
         switch (attacker.cardNumber)
         {
             case 1:
@@ -230,7 +230,7 @@ public class CardFucntionScript : MonoBehaviour
                 //agile
                 break;
         }
-        */
+        
 
         if (targetIsValid)
         {
@@ -463,11 +463,12 @@ public class CardFucntionScript : MonoBehaviour
         targeting = false;
         usedEvent = false;
         DiscardCount = 0;
+        Debug.Log("should have reset");
     }
 
     public void useEventCard()
     {
-        Spy("saxon");
+        Spy("norman");
 
         if (targetIsValid && !usedEvent)
         {

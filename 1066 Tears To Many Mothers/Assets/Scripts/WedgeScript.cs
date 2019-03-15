@@ -10,6 +10,8 @@ public class WedgeScript : MonoBehaviour
 
     int NormanMightTBV , SaxonMightTBV, NormanZealTBV, SaxonZealTBV = 0;
     public int NormanDamage, SaxonDamage;
+    public int zeal = 0;
+    public int might = 0;
     bool NormanAtBOH, SaxonAtBOH;
 
     public ObjectivesScript NormanObj, SaxonObj;

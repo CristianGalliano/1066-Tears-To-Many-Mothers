@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     public Text SaxonResourcesText, NormanResourcesText;
     public int camCount = 0;
     public CameraControl camControl;
+    public int normanTactics, saxonTactics = 0;
 
     public ObjectivesScript NormanObj, SaxonObj;
 
@@ -32,6 +33,8 @@ public class GameController : MonoBehaviour
     public GameObject gameOverPanel, mainPanel;
     public Text winnerText;
     private bool gameOver = false;
+
+    public bool USERESOURCES = false;
 
     // Use this for initialization
     void Start()

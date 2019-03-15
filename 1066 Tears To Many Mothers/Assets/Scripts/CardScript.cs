@@ -32,6 +32,8 @@ public class CardScript : MonoBehaviour
     public NormanCard normanCard, saxonCard;
     private CardFucntionScript functScript;
 
+    GameObject saxonTactics, normanTactics, normanGrave,SaxonGrave;
+
     private MeshRenderer cardMesh;
 
     public TextMeshPro CostMesh, ZealMesh, MightMesh, HealthMesh, ResourceMesh;
@@ -71,7 +73,7 @@ public class CardScript : MonoBehaviour
 
         if (gameObject.tag == "Norman" && deck.NormanLeaderDrawn == false)
         {
-            normanCard = deck.DrawNormanCard(55);
+            normanCard = deck.DrawNormanCard(54);
             deck.NormanLeaderDrawn = true;
             Debug.Log("Leader Drawn : " + normanCard.name);
             normanCard.StartingValues();
@@ -79,13 +81,35 @@ public class CardScript : MonoBehaviour
 
         if (gameObject.tag == "Saxon" && deck.SaxonLeaderDrawn == false)
         {
-            saxonCard = deck.DrawSaxonCard(85);
+            saxonCard = deck.DrawSaxonCard(121);
             deck.SaxonLeaderDrawn = true;
             Debug.Log("Leader Drawn : " + saxonCard.name);
             saxonCard.StartingValues();
         }
         functScript = controller.GetComponent<CardFucntionScript>();
         AssignImage();
+        if (gameObject.tag == "Saxon")
+        {
+            SaxonGrave = GameObject.Find("SaxonDiscardPile");
+            Debug.Log(SaxonGrave.gameObject.name);
+        }
+        if (gameObject.tag == "Norman")
+        {
+            normanGrave = GameObject.Find("NormanDiscardPile");
+            Debug.Log(normanGrave.gameObject.name);
+        }
+        if (gameObject.tag == "Saxon" && saxonCard.type == "Tactic")
+        {
+            saxonTactics = GameObject.Find("SaxonTacticsArea");
+            InLane = false;
+            Debug.Log(saxonTactics.name);
+        }
+        else if (gameObject.tag == "Norman" && normanCard.type == "Tactic")
+        {
+            normanTactics = GameObject.Find("NormanTacticsArea");
+            InLane = false;
+            Debug.Log(normanTactics.name);
+        }
     }
 
     // Update is called once per frame
@@ -122,12 +146,15 @@ public class CardScript : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        hover();
+        if (!functScript.targeting)
+        {
+            hover();
+        }
     }
 
     private void OnMouseExit()
     {
-        if (clickCount == 0 && dragging == false)//conditions to run.
+        if (clickCount == 0 && dragging == false && !functScript.targeting)//conditions to run.
         {
             hoverEnd("Norman");
             hoverEnd("Saxon");
@@ -196,20 +223,25 @@ public class CardScript : MonoBehaviour
 
     public void OnMouseDrag()
     {
-        getPointer();//runs get point function.
-        dragCard();
-        enablePlaceholders();
+        if (!functScript.targeting)
+        {
+            getPointer();//runs get point function.
+            dragCard();
+            enablePlaceholders();
+        }
     }
 
     public void OnMouseUp()
     {
+        if (!functScript.targeting)
+        {
+            thisCollider.enabled = true;//re enamble the collider.
+            dropCard("Norman", controller.normanDropPointsZ, controller.normanLane, 0);
+            dropCard("Saxon", controller.saxonDropPointsZ, controller.saxonlane, 1);          
+            disablePlacholders();
+        }
         buttonPressed = false;
         UI.HideDisplay();
-
-        thisCollider.enabled = true;//re enamble the collider.
-        dropCard("Norman", controller.normanDropPointsZ, controller.normanLane, 0);
-        dropCard("Saxon", controller.saxonDropPointsZ, controller.saxonlane, 1);
-        disablePlacholders();
     }
 
     private void getPointer()
@@ -251,52 +283,97 @@ public class CardScript : MonoBehaviour
         {
             if (controller.turn == turnnum)
             {
-                foreach (int point in controller.xPositions)//for each vector3 in the array.
+                if (str == "Norman" && normanCard.type == "Tactic" && !placed && positionOfMouse.x < normanTactics.transform.position.x + 150 && positionOfMouse.x > normanTactics.transform.position.x - 150 && positionOfMouse.z < normanTactics.transform.position.z + 100 && positionOfMouse.z > normanTactics.transform.position.z - 100)
                 {
-                    if (positionOfMouse.x < point + 147 && positionOfMouse.x > point - 147)//check its in the correct parameters.
+                    Debug.Log("Placing Tactic");
+                    gameObject.transform.parent = normanTactics.transform;
+                    Vector3 targetPos = normanTactics.transform.position;
+                    targetPos.y += 2 + (controller.normanTactics * 2);
+                    targetPos.x += controller.normanTactics * -40;
+                    gameObject.transform.position = targetPos;
+                    placed = true;
+                    transform.localRotation = Quaternion.Euler(-90, 0, 0);
+                    controller.normanTactics++;
+                }
+                else if (str == "Saxon" && saxonCard.type == "Tactic" && !placed && positionOfMouse.x < saxonTactics.transform.position.x + 150 && positionOfMouse.x > saxonTactics.transform.position.x - 150 && positionOfMouse.z < saxonTactics.transform.position.z + 100 && positionOfMouse.z > saxonTactics.transform.position.z - 100)
+                {
+                    Debug.Log("Placing Tactic");
+                    gameObject.transform.parent = saxonTactics.transform;
+                    Vector3 targetPos = saxonTactics.transform.position;
+                    targetPos.y += 2 + (controller.saxonTactics * 2);
+                    targetPos.x += controller.saxonTactics * 40;
+                    gameObject.transform.position = targetPos;
+                    placed = true;
+                    transform.localRotation = Quaternion.Euler(-90, 0, 0);
+                    controller.saxonTactics++;
+                }
+                else if (str == "Norman" && positionOfMouse.x < normanGrave.transform.position.x + 100 && positionOfMouse.x > normanGrave.transform.position.x - 100 && positionOfMouse.z < normanGrave.transform.position.z + 150 && positionOfMouse.z > normanGrave.transform.position.z - 150)
+                {
+                    controller.normanResources++;
+                    functScript.Destroy(normanCard);
+                    Destroy(gameObject);
+                }
+                else if (str == "Saxon" && positionOfMouse.x < SaxonGrave.transform.position.x + 100 && positionOfMouse.x > SaxonGrave.transform.position.x - 100 && positionOfMouse.z < SaxonGrave.transform.position.z + 150 && positionOfMouse.z > SaxonGrave.transform.position.z - 150)
+                {
+
+                    controller.saxonResources++;
+                    functScript.Destroy(saxonCard);
+                    Destroy(gameObject);
+                }
+                else if (str == "Norman" && normanCard.type != "Tactic" || str == "Saxon" && saxonCard.type != "Tactic")
+                {
+                    foreach (int point in controller.xPositions)//for each vector3 in the array.
                     {
-                        if (str == "Norman" && normanCard.type == "Event")
+                        if (positionOfMouse.x < point + 147 && positionOfMouse.x > point - 147)//check its in the correct parameters.
                         {
-                            //use its ability before doing this, if you dont use it it should get returned to your hand
-                            functScript.eventAttacker = normanCard;
-                            functScript.attackerScript = this;
-                        }
-                        else if (str == "Saxon" && saxonCard.type == "Event")
-                        {
-                            //use its ability before doing this, if you dont use it it should get returned to your hand
-                            functScript.eventAttacker = saxonCard;
-                            functScript.attackerScript = this;
-                        }
-                        else if(str == "Norman" && normanCard.type == "Attachment" && !placed)
-                        {
-                            functScript.attachment = normanCard;
-                            functScript.attackerScript = this;
-                        }
-                        else
-                        {
-                            int index = controller.xPositions.IndexOf(point);
-                            if (!placed && count[index] < 3)//checks that the card isnt placed.
+                            if (str == "Norman" && normanCard.type == "Event")
                             {
-                                Vector3 dropPosition = new Vector3(point, 2, List[count[index]]);//sets the drop position.
-                                lane = index;
-                                transform.position = dropPosition;//move the card to the drop position.
-                                Vector3 Rotation = new Vector3(-50, 0, 0);//creat a vector to rotate.
-                                transform.Rotate(Rotation);//rotate the card.
-                                placed = true;//the card should now be placed so set placed to true.this will enable / disable certain functions based off conditions.
-                                boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
-                                boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
-                                thisCollider.center = boxPos;//move the collider by boxPos vector.
-                                thisCollider.size = boxScale;//scale the collider by boxscale vector.
-                                GameObject targetParent = GameObject.Find(str + "Field");
-                                gameObject.transform.SetParent(targetParent.transform);//take this card out of the hand and put it as a child of the field
-                                count[index]++;
+                                //use its ability before doing this, if you dont use it it should get returned to your hand
+                                functScript.eventAttacker = normanCard;
+                                functScript.attackerScript = this;
                             }
+                            else if (str == "Saxon" && saxonCard.type == "Event")
+                            {
+                                //use its ability before doing this, if you dont use it it should get returned to your hand
+                                functScript.eventAttacker = saxonCard;
+                                functScript.attackerScript = this;
+                            }
+                            else if (str == "Norman" && normanCard.type == "Attachment" && !placed)
+                            {
+                                functScript.attachment = normanCard;
+                                functScript.attackerScript = this;
+                            }
+                            else if (str == "Saxon" && saxonCard.type == "Attachment" && !placed)
+                            {
+                                functScript.attachment = saxonCard;
+                                functScript.attackerScript = this;
+                            }
+                            else
+                            {
+                                int index = controller.xPositions.IndexOf(point);
+                                if (!placed && count[index] < 3)//checks that the card isnt placed.
+                                {
+                                    Vector3 dropPosition = new Vector3(point, 2, List[count[index]]);//sets the drop position.
+                                    lane = index;
+                                    transform.position = dropPosition;//move the card to the drop position.
+                                    Vector3 Rotation = new Vector3(-50, 0, 0);//creat a vector to rotate.
+                                    transform.Rotate(Rotation);//rotate the card.
+                                    placed = true;//the card should now be placed so set placed to true.this will enable / disable certain functions based off conditions.
+                                    boxPos = new Vector3(thisCollider.center.x, thisCollider.center.y + 150, thisCollider.center.z);//used to modify position of the box collider.
+                                    boxScale = new Vector3(thisCollider.size.x, thisCollider.size.y / 2, thisCollider.size.z);//used to modify scale of the box collider.
+                                    thisCollider.center = boxPos;//move the collider by boxPos vector.
+                                    thisCollider.size = boxScale;//scale the collider by boxscale vector.
+                                    GameObject targetParent = GameObject.Find(str + "Field");
+                                    gameObject.transform.SetParent(targetParent.transform);//take this card out of the hand and put it as a child of the field
+                                    count[index]++;
+                                }
+                            }                      
                         }
-                    }
-                    else
-                    {
-                        Count++;//add to count.
-                    }
+                    }                  
+                }
+                else
+                {
+                    Count++;//add to count.
                 }
             }
 

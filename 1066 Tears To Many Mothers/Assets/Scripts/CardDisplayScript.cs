@@ -28,6 +28,8 @@ public class CardDisplayScript : MonoBehaviour {
 
     private Vector3 startPos;
     private float startRight;
+
+    public GameObject colliders;
     // Use this for initialization
     void Start ()
     {
@@ -189,12 +191,14 @@ public class CardDisplayScript : MonoBehaviour {
             }
 
             WedgePanel.SetActive(false);
+            colliders.SetActive(false);
         }
     }
 
     public void ShowGraveyard(List<NormanCard> cards)
     {
-        if(!GraveyardShown)
+        colliders.SetActive(true);
+        if (!GraveyardShown)
         {
             List<NormanCard> newCards = new List<NormanCard>();
 

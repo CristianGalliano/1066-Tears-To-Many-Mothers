@@ -40,7 +40,7 @@ public class UICardScript : MonoBehaviour
             {
                 if (child.gameObject.GetComponent<CardScript>().normanCard.cardNumber == cardNum)
                 {
-                    Destroy(child.gameObject);
+                    functScript.Destroy(child.gameObject.GetComponent<CardScript>().normanCard);
                     discarded = true;
                     functScript.DiscardCount++;
                 }
@@ -50,7 +50,7 @@ public class UICardScript : MonoBehaviour
             {
                 if (child.gameObject.GetComponent<CardScript>().saxonCard.cardNumber == cardNum)
                 {
-                    Destroy(child.gameObject);
+                    functScript.Destroy(child.gameObject.GetComponent<CardScript>().saxonCard);
                     discarded = true;
                     functScript.DiscardCount++;
                 }
