@@ -12,6 +12,7 @@ public class MenuScript : MonoBehaviour
     public Text pageNumberText;
     private bool rulesOpen = false;
     public Sprite[] rulesSprites;
+    public Scrollbar vertBar;
 
 	void Start ()// Use this for initialization
     {
@@ -72,6 +73,7 @@ public class MenuScript : MonoBehaviour
             pageNum = 0;
         }
         rulesImage.GetComponent<Image>().sprite = rulesSprites[pageNum];
+        vertBar.value = 1;
     }
 
     public void prevPage()
@@ -82,5 +84,6 @@ public class MenuScript : MonoBehaviour
             pageNum = rulesSprites.Length - 1;
         }
         rulesImage.GetComponent<Image>().sprite = rulesSprites[pageNum];
+        vertBar.value = 1;
     }
 }
