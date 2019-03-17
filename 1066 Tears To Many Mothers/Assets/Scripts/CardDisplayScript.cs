@@ -11,7 +11,7 @@ public class CardDisplayScript : MonoBehaviour {
     public Text CostText, ZealText, MightText, HealthText, ResourcesText;
     public Text ObjStat, ObjHealth;
     public GameObject TagretingText;
-    public Button Cancel;
+    public Button Cancel, Close;
 
     public RectTransform GraveContent;
     public GameObject UICard;
@@ -30,11 +30,15 @@ public class CardDisplayScript : MonoBehaviour {
     private float startRight;
 
     public GameObject colliders;
+
+    private CardFucntionScript functScript;
     // Use this for initialization
     void Start ()
     {
         startPos = GraveContent.transform.position;
         startRight = GraveContent.rect.width;
+
+        functScript = GameObject.Find("GameController").GetComponent<CardFucntionScript>();
 	}
 	
 	// Update is called once per frame
@@ -298,9 +302,15 @@ public class CardDisplayScript : MonoBehaviour {
                     }
                 }
             }
-
             GraveyardShown = true;
         }
+
+        if (functScript.DiscardCount == functScript.DiscardLimit)
+            Close.gameObject.SetActive(true);
+        else
+            Close.gameObject.SetActive(false);
+            
+        
     }
 
     public void ShowWedge(WedgeScript wedge)

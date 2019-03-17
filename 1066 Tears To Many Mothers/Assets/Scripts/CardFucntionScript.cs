@@ -8,15 +8,16 @@ public class CardFucntionScript : MonoBehaviour
     private GameController Game;
     private HandScript HandN, HandS;
     private Vector3 positionOfMouse;
-    public bool targeting, targetIsValid = false;
+    public bool targeting, agileTargeting, targetIsValid = false;
     public CardScript attackerScript, targetScript;
-    public NormanCard attacker, target, onPlayAttacker, eventAttacker, eventTarget, attachment, attachTarget, tactic;
+    public NormanCard attacker, target, onPlayAttacker, eventAttacker, eventTarget, attachment, attachTarget, agileTarget, tactic;
     public GameObject wedgeTarget;
     private bool usedEvent = false;
 
     public GraveyardScripts saxonGrave, normanGrave;
 
-    public int DiscardCount = 0;
+    public int DiscardCount, DiscardLimit = 0;
+    public bool DiscardLimitSet;
 
     private CardDisplayScript UI;
     // Use this for initialization
@@ -37,6 +38,11 @@ public class CardFucntionScript : MonoBehaviour
         if(attacker != null && target != null)
         {
             UseAbility();         
+        }
+
+        if((attacker != null && agileTarget != null && wedgeTarget != null))
+        {
+            AgileAbility();
         }
 
         if(attacker == null && onPlayAttacker != null && target != null)
@@ -79,12 +85,12 @@ public class CardFucntionScript : MonoBehaviour
             UI.InfoButton.gameObject.SetActive(false);
         }
 
-        if (targeting)
+        if (targeting || agileTargeting)
         {
             UI.TagretingText.SetActive(true);
             UI.Cancel.gameObject.SetActive(true);
         }
-        else if(!targeting)
+        else if(!targeting && !agileTargeting)
         {
             UI.TagretingText.SetActive(false);
             UI.Cancel.gameObject.SetActive(false);
@@ -95,7 +101,19 @@ public class CardFucntionScript : MonoBehaviour
     {
         if(attacker != null)
         {
-            if(attacker.needTarget == true)
+            if (attacker.action.Contains("Move"))
+            {
+                if (attacker.action.Contains("Commander"))
+                    agileTargeting = true;
+                else if (attacker.action.Contains("Agile"))
+                {
+                    agileTarget = attacker;
+                    targetScript = attackerScript;
+                    agileTargeting = true;
+                }
+
+            }
+            else if (attacker.needTarget == true)
             {
                 targeting = true;
             }
@@ -123,9 +141,6 @@ public class CardFucntionScript : MonoBehaviour
         
         switch (attacker.cardNumber)
         {
-            case 1:
-                Agile(target, 0);
-                break;
             case 22:
                 Destroy(attacker);
                 Damage(attacker, target, 1, 100);
@@ -136,17 +151,8 @@ public class CardFucntionScript : MonoBehaviour
             case 61:
                 Damage(attacker, target, 1, 3);
                 break;
-            case 63:
-                Agile(target, 0);
-                break;
             case 64:
                 Damage(attacker, target, 1, 3);
-                break;
-            case 66:
-                Agile(target, 0);
-                break;
-            case 67:
-                Agile(target, 0);
                 break;
             case 68:
                 Damage(attacker, target, 1, 3);
@@ -154,21 +160,12 @@ public class CardFucntionScript : MonoBehaviour
             case 69:
                 Damage(attacker, target, 1, 5);
                 break;
-            case 70:
-                Agile(target, 0);
-                break;
-            case 73:
-                Agile(target, 0);
-                break;
             case 76:
                 if (target.type == "Cavalry")
                 {
                     Destroy(attacker);
                     Heal(target, target.startHealth - target.health);
                 }
-                break;
-            case 85:
-                Agile(target, 0);
                 break;
             case 91:
                 if (target.type == "Unit" || target.type == "Character")
@@ -187,12 +184,6 @@ public class CardFucntionScript : MonoBehaviour
                 break;
             case 130:
                 Damage(attacker, target, 1, 5);
-                break;
-            case 131:
-                Agile(target, 0);
-                break;
-            case 132:
-                Agile(target, 0);
                 break;
             case 133:
                 Damage(attacker, attacker, 1, 100);
@@ -218,15 +209,6 @@ public class CardFucntionScript : MonoBehaviour
             case 155:
                 Damage(attacker, target, 1,3);
                 break;
-            case 159:
-                Agile(target, 0);
-                break;
-            case 160:
-                Agile(target, 0);
-                break;
-            case 161:
-                Agile(target, 0);
-                break;
         }
 
         if (targetIsValid)
@@ -235,6 +217,21 @@ public class CardFucntionScript : MonoBehaviour
         }
         targetIsValid = false;
 
+        Reset();
+    }
+
+    void AgileAbility()
+    {
+        targetIsValid = false;
+
+        Agile(ref targetScript, wedgeTarget.GetComponent<WedgeScript>().wedgeNum);
+        
+        if (targetIsValid)
+        {
+            attackerScript.tireCard();
+        }
+
+        targetIsValid = false;
         Reset();
     }
 
@@ -346,8 +343,10 @@ public class CardFucntionScript : MonoBehaviour
         //Reset();
     }
 
-    void Spy(string target)
+    void Spy(string target, int num)
     {
+        DiscardLimit = num;
+
         GameObject hand = GameObject.Find(target + "Hand");
         CardScript[] cards = hand.GetComponentsInChildren<CardScript>();
         List<NormanCard> cardsInHand = new List<NormanCard>();
@@ -395,28 +394,35 @@ public class CardFucntionScript : MonoBehaviour
         //Reset();
     }
 
-    void Agile(NormanCard target, int targetWedge)
+    void Agile(ref CardScript target, int targetWedge)
     {
-        if(attackerScript.gameObject.tag == "Norman")
+        if (target.gameObject.tag == null)
+            Debug.Log("Empty Card");
+        else
+            Debug.Log(target.gameObject.tag + "REEEEEEEEE");
+
+        if(target.gameObject.tag == "Norman")
         {
+            Debug.Log("Trying...");
+
             if (Game.normanLane[targetWedge] != 3)
             {
                 Game.normanLane[target.lane]--;
-                targetScript.gameObject.transform.position = new Vector3(Game.xPositions[targetWedge], targetScript.gameObject.transform.position.y, Game.normanDropPointsZ[2]);
-                targetScript.lane = targetWedge;
-                targetScript.laneNum = 3;
+                target.gameObject.transform.position = new Vector3(Game.xPositions[targetWedge], target.gameObject.transform.position.y, Game.normanDropPointsZ[2]);
+                target.lane = targetWedge;
+                target.laneNum = 3;
                 Game.normanLane[targetWedge]++;
             }
         }
 
-        if(attackerScript.gameObject.tag == "Saxon")
+        if(target.gameObject.tag == "Saxon")
         {
             if (Game.saxonlane[targetWedge] != 3)
             {
                 Game.saxonlane[target.lane]--;
-                targetScript.gameObject.transform.position = new Vector3(Game.xPositions[targetWedge], targetScript.gameObject.transform.position.y, Game.saxonDropPointsZ[2]);
-                targetScript.lane = targetWedge;
-                targetScript.laneNum = 3;
+                target.gameObject.transform.position = new Vector3(Game.xPositions[targetWedge], target.gameObject.transform.position.y, Game.saxonDropPointsZ[2]);
+                target.lane = targetWedge;
+                target.laneNum = 3;
                 Game.saxonlane[targetWedge]++;
             }
         }
@@ -468,21 +474,33 @@ public class CardFucntionScript : MonoBehaviour
     {
         attacker = null;
         target = null;
+
         onPlayAttacker = null;
+
         eventAttacker = null;
         eventTarget = null;
+
         attachment = null;
         attachTarget = null;
+
         wedgeTarget = null;
+
+        agileTarget = null;
+
         targeting = false;
+        agileTargeting = false;
+
         usedEvent = false;
+
         DiscardCount = 0;
+        DiscardLimit = 0;
+        DiscardLimitSet = false;
         Debug.Log("should have reset");
     }
 
     public void useEventCard()
     {
-        Spy("norman");
+        Spy("norman", 2);
 
         if (targetIsValid && !usedEvent)
         {

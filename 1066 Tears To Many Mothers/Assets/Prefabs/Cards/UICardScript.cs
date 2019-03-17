@@ -29,7 +29,7 @@ public class UICardScript : MonoBehaviour
 
     public void DiscardFromHand()
     {
-        if(!discarded && functScript.DiscardCount < 2)
+        if(!discarded && functScript.DiscardCount < functScript.DiscardLimit)
         {
             GameObject hand = GameObject.Find("normanHand");
             GameObject hand2 = GameObject.Find("saxonHand");
@@ -53,6 +53,7 @@ public class UICardScript : MonoBehaviour
                     functScript.Destroy(child.gameObject.GetComponent<CardScript>().saxonCard);
                     discarded = true;
                     functScript.DiscardCount++;
+                    Destroy(child.gameObject);
                 }
             }
         }

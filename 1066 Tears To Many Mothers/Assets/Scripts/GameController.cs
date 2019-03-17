@@ -19,6 +19,7 @@ public class GameController : MonoBehaviour
     public int saxonResources = 0;
     public int normanResources = 0;
     public int turn = 0;
+    public int phase = 0;
     public int numberOfTurns = 1;
     public Text SaxonResourcesText, NormanResourcesText;
     public int camCount = 0;
@@ -33,6 +34,10 @@ public class GameController : MonoBehaviour
     public GameObject gameOverPanel, mainPanel;
     public Text winnerText;
     private bool gameOver = false;
+    public bool NLeaderPlaced, SLeaderPlaced, FirstDrawN, FirstDrawS;
+
+    private CardFucntionScript FunctScript;
+    private CardDisplayScript UI;
 
     public bool USERESOURCES = false;
 
@@ -41,14 +46,28 @@ public class GameController : MonoBehaviour
     {
         SDS = GameObject.Find("SaxonDeck").GetComponent<DrawScript>();
         NDS = GameObject.Find("NormanDeck").GetComponent<DrawScript>();
+        FunctScript = gameObject.GetComponent<CardFucntionScript>();
+        UI = GameObject.Find("UIController").GetComponent<CardDisplayScript>();
         mainPanel.SetActive(true);
         gameOverPanel.SetActive(false);
-        StartCoroutine("startDraw");
+        StartCoroutine(drawLeaders());
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(NLeaderPlaced && !FirstDrawN && numberOfTurns > 2)
+        {
+            StartCoroutine(NormanStartDraw());
+            FirstDrawN = true;
+        }
+
+        if (SLeaderPlaced && !FirstDrawS && numberOfTurns > 2)
+        {
+            StartCoroutine(SaxonStartDraw());
+            FirstDrawS = true;
+        }
+
         if (gameOver == false)
         {
             SaxonResourcesText.text = "Saxon Resources : " + saxonResources;
@@ -56,18 +75,55 @@ public class GameController : MonoBehaviour
             wedgeWon();
             showGameOverUI();
         }
+
+        DownTo6();
     }
 
-    private IEnumerator startDraw()
+    private IEnumerator NormanStartDraw()
+    {
+        yield return new WaitForSeconds(0.25f);
+        NDS.drawFunc(4);
+    }
+
+    private IEnumerator SaxonStartDraw()
     {
         yield return new WaitForSeconds(0.25f);
         SDS.drawFunc(4);
-        NDS.drawFunc(6);
     }
 
     private IEnumerator drawLeaders()
     {
         yield return new WaitForSeconds(0.25f);
+        SDS.drawFunc(1);
+        NDS.drawFunc(1);
+    }
+
+    void DownTo6()
+    {
+        int numToDiscard = 0;
+
+        GameObject hand = GameObject.Find("normanHand");
+        CardScript[] cards = hand.GetComponentsInChildren<CardScript>();
+        List<NormanCard> cardsInHand = new List<NormanCard>();
+
+        foreach (CardScript card in cards)
+        {
+            cardsInHand.Add(card.normanCard);
+        }
+
+        if(cardsInHand.Count > 6)
+            numToDiscard =  cardsInHand.Count - 6;
+
+        if(numToDiscard > 0)
+        {
+            if(!FunctScript.DiscardLimitSet)
+            {
+                FunctScript.DiscardLimit = numToDiscard;
+                FunctScript.DiscardLimitSet = true;
+            }
+
+            UI.ShowGraveyard(cardsInHand);
+        }
     }
 
     public void EndTurn()
@@ -79,8 +135,6 @@ public class GameController : MonoBehaviour
         {
             wedge.WedgeBattle();
         }
-
-        
 
         if (turn > 1)
         {
@@ -99,7 +153,8 @@ public class GameController : MonoBehaviour
             
             normanResources = 0;
             //set normans to ready
-            SDS.drawFunc(2);
+            if(SLeaderPlaced && numberOfTurns > 3)
+                SDS.drawFunc(2);
             
         }
         else if (turn == 0)
@@ -114,7 +169,8 @@ public class GameController : MonoBehaviour
             }
             saxonResources = 0;
             //set saxons to ready
-            NDS.drawFunc(2);
+            if (NLeaderPlaced && numberOfTurns > 3)
+                NDS.drawFunc(2);
         }
         Debug.Log("turn : " + numberOfTurns);
         camControl.changeImage(turn);

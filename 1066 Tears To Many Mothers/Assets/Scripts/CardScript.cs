@@ -219,6 +219,20 @@ public class CardScript : MonoBehaviour
             }
         }
 
+        if(functScript.agileTargeting)
+        {
+            if (gameObject.tag == "Norman")
+            {
+                functScript.targetScript = this;
+                functScript.agileTarget = normanCard;
+            }
+            else if (gameObject.tag == "Saxon")
+            {
+                functScript.targetScript = this;
+                functScript.agileTarget = saxonCard;
+            }
+        }
+
         buttonPressed = true;
     }
 
@@ -415,6 +429,14 @@ public class CardScript : MonoBehaviour
                                     GameObject targetParent = GameObject.Find(str + "Field");
                                     gameObject.transform.SetParent(targetParent.transform);//take this card out of the hand and put it as a child of the field
                                     count[index]++;
+
+                                    if (normanCard != null)
+                                        if(normanCard.cardNumber == 1)
+                                            controller.NLeaderPlaced = true;
+
+                                    if (saxonCard != null)
+                                        if (saxonCard.cardNumber == 85)
+                                            controller.SLeaderPlaced = true;
                                 }
                             }                      
                         }
@@ -468,13 +490,13 @@ public class CardScript : MonoBehaviour
 
     void dragDiscard()
     {
-        if (gameObject.tag == "Norman" && positionOfMouse.x < normanGrave.transform.position.x + 100 && positionOfMouse.x > normanGrave.transform.position.x - 100 && positionOfMouse.z < normanGrave.transform.position.z + 150 && positionOfMouse.z > normanGrave.transform.position.z - 150)
+        if (gameObject.tag == "Norman" && normanCard.type != "Leader" && positionOfMouse.x < normanGrave.transform.position.x + 100 && positionOfMouse.x > normanGrave.transform.position.x - 100 && positionOfMouse.z < normanGrave.transform.position.z + 150 && positionOfMouse.z > normanGrave.transform.position.z - 150)
         {
             controller.normanResources++;
             functScript.Destroy(normanCard);
             Destroy(gameObject);
         }
-        else if (gameObject.tag == "Saxon" && positionOfMouse.x < SaxonGrave.transform.position.x + 100 && positionOfMouse.x > SaxonGrave.transform.position.x - 100 && positionOfMouse.z < SaxonGrave.transform.position.z + 150 && positionOfMouse.z > SaxonGrave.transform.position.z - 150)
+        else if (gameObject.tag == "Saxon" && saxonCard.type != "Leader" && positionOfMouse.x < SaxonGrave.transform.position.x + 100 && positionOfMouse.x > SaxonGrave.transform.position.x - 100 && positionOfMouse.z < SaxonGrave.transform.position.z + 150 && positionOfMouse.z > SaxonGrave.transform.position.z - 150)
         {
             controller.saxonResources++;
             functScript.Destroy(saxonCard);

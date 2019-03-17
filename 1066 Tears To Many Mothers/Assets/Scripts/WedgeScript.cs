@@ -73,7 +73,7 @@ public class WedgeScript : MonoBehaviour
 
     void OnMouseDown()
     {
-        if(functScript.targeting)
+        if(functScript.agileTargeting)
         {
             functScript.wedgeTarget = gameObject;
         }

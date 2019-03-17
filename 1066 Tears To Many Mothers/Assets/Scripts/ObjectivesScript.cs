@@ -17,6 +17,7 @@ public class ObjectivesScript : MonoBehaviour
     private Dictionary<int, NormanObjectiveCard> objectives;
     public NormanObjectiveCard objective;
     private DeckManager deck;
+    private GameController Game;
     private CardDisplayScript UI;
 
     public GameObject field;
@@ -26,21 +27,25 @@ public class ObjectivesScript : MonoBehaviour
 
     private bool buttonPressed, timeRead = false;
     private float time;
+    private float minTurn = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         deck = GameObject.Find("DeckManager").GetComponent<DeckManager>();
         UI = GameObject.Find("UIController").GetComponent<CardDisplayScript>();
+        Game = GameObject.Find("GameController").GetComponent<GameController>();
 
         if (gameObject.tag == "Norman")
         {
             objectives =  deck.NormanObjectives;
+            minTurn = 3;
         }
 
         if (gameObject.tag == "Saxon")
         {
             objectives = deck.SaxonObjectives;
+            minTurn = 4;
         }
         decreaseHeight = (gameObject.transform.localScale.z) / 7;
         oPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
@@ -51,7 +56,7 @@ public class ObjectivesScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (activate == true)
+        if (activate == true && Game.numberOfTurns > minTurn)
         {
             nextCard();
             usedObj.increaseSize();
