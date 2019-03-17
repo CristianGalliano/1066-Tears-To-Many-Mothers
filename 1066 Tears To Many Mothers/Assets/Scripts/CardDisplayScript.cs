@@ -228,76 +228,81 @@ public class CardDisplayScript : MonoBehaviour {
 
             foreach (NormanCard card in newCards)
             {
-                GameObject currentCard = Instantiate(UICard, new Vector3(0,0,0), Quaternion.identity, GraveContent.transform);
-                currentCard.transform.localPosition = new Vector3(500 + cardPos, 0, 0);
-                Debug.Log(currentCard.transform.localPosition.x);
-                Debug.Log(currentCard.transform.localPosition.y);
-
-                cardPos += 1100;
-
-                currentCard.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
-                Text[] texts = currentCard.GetComponentsInChildren<Text>();
-
-
-
-                if (card.type == "Leader" || card.type == "Character" || card.type == "Unit")
+                if (card)
                 {
-                    texts[0].text = card.cost.ToString();
-                    texts[1].text = card.startZeal.ToString();
-                    texts[2].text = card.startMight.ToString();
-                    texts[3].text = card.startHealth.ToString();
+                    GameObject currentCard = Instantiate(UICard, new Vector3(0, 0, 0), Quaternion.identity, GraveContent.transform);
+                    currentCard.transform.localPosition = new Vector3(500 + cardPos, 0, 0);
+                    Debug.Log(currentCard.transform.localPosition.x);
+                    Debug.Log(currentCard.transform.localPosition.y);
 
-                    if (card.resources == 0)
-                    {
-                        texts[4].text = "";
+                    cardPos += 1100;
 
-                    }
-                    else
-                    {
-                        texts[4].text = card.resources.ToString();
-                    }
+                    currentCard.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
 
-                }
-                else
-                {
-                    if (card.zeal == 0)
-                    {
-                        texts[1].text = "";
 
-                    }
-                    else
+                    Text[] texts = currentCard.GetComponentsInChildren<Text>();
+
+
+
+                    if (card.type == "Leader" || card.type == "Character" || card.type == "Unit")
                     {
+                        texts[0].text = card.cost.ToString();
                         texts[1].text = card.startZeal.ToString();
-                    }
+                        texts[2].text = card.startMight.ToString();
+                        texts[3].text = card.startHealth.ToString();
 
-                    if (card.might == 0)
-                    {
-                        texts[2].text = "";
+                        if (card.resources == 0)
+                        {
+                            texts[4].text = "";
 
-                    }
-                    else
-                    {
-                        texts[2].text = card.might.ToString();
-                    }
-
-                    if (card.health == 0)
-                    {
-                        texts[3].text = "";
+                        }
+                        else
+                        {
+                            texts[4].text = card.resources.ToString();
+                        }
 
                     }
                     else
                     {
-                        texts[3].text = card.health.ToString();
-                    }
+                        if (card.zeal == 0)
+                        {
+                            texts[1].text = "";
 
-                    if (card.resources == 0)
-                    {
-                        texts[4].text = "";
+                        }
+                        else
+                        {
+                            texts[1].text = card.startZeal.ToString();
+                        }
 
-                    }
-                    else
-                    {
-                        texts[4].text = card.resources.ToString();
+                        if (card.might == 0)
+                        {
+                            texts[2].text = "";
+
+                        }
+                        else
+                        {
+                            texts[2].text = card.might.ToString();
+                        }
+
+                        if (card.health == 0)
+                        {
+                            texts[3].text = "";
+
+                        }
+                        else
+                        {
+                            texts[3].text = card.health.ToString();
+                        }
+
+                        if (card.resources == 0)
+                        {
+                            texts[4].text = "";
+
+                        }
+                        else
+                        {
+                            texts[4].text = card.resources.ToString();
+                        }
                     }
                 }
             }

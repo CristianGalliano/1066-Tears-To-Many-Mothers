@@ -43,6 +43,7 @@ public class UICardScript : MonoBehaviour
                     functScript.Destroy(child.gameObject.GetComponent<CardScript>().normanCard);
                     discarded = true;
                     functScript.DiscardCount++;
+                    Destroy(child.gameObject);
                 }
             }
 

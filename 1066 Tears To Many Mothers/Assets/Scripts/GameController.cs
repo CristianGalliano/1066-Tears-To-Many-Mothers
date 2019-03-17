@@ -56,14 +56,7 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (turn == 0)
-        {
-            DownTo6("norman");
-        }
-        else if (turn == 1)
-        {
-            DownTo6("saxon");
-        }
+
         if (NLeaderPlaced && !FirstDrawN && numberOfTurns > 2)
         {
             StartCoroutine(NormanStartDraw());
@@ -82,7 +75,16 @@ public class GameController : MonoBehaviour
             NormanResourcesText.text = "Norman Resources : " + normanResources;
             wedgeWon();
             showGameOverUI();
-        }       
+        }
+
+        if (turn == 0)
+        {
+            DownTo6("norman");
+        }
+        else if (turn == 1)
+        {
+            DownTo6("saxon");
+        }
     }
 
     private IEnumerator NormanStartDraw()
@@ -131,8 +133,9 @@ public class GameController : MonoBehaviour
                         FunctScript.DiscardLimitSet = true;
                     }
 
-                    UI.ShowGraveyard(normanCardsInHand);
+                        UI.ShowGraveyard(normanCardsInHand);
                 }
+               
             }
             break;
         case "saxon":
@@ -157,8 +160,8 @@ public class GameController : MonoBehaviour
                         FunctScript.DiscardLimitSet = true;
                     }
 
-                    UI.ShowGraveyard(saxonCardsInHand);
-                }
+                        UI.ShowGraveyard(saxonCardsInHand);
+                } 
             }
             break;
         }
