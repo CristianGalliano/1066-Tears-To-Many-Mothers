@@ -30,7 +30,7 @@ public class MenuScript : MonoBehaviour
 
     public void openOptions()//runs when options button is clicked.
     {
-        //mainPanel.gameObject.SetActive(false);
+        mainPanel.gameObject.SetActive(false);
         rulesPanel.gameObject.SetActive(false);
         optionsPanel.gameObject.SetActive(true);
 
@@ -39,9 +39,12 @@ public class MenuScript : MonoBehaviour
 
     public void openRules()//runs when options button is clicked.
     {
-        //mainPanel.gameObject.SetActive(false);
+        mainPanel.gameObject.SetActive(false);
         rulesPanel.gameObject.SetActive(true);
         optionsPanel.gameObject.SetActive(false);
+        pageNum = 0;
+        rulesImage.GetComponent<Image>().sprite = rulesSprites[pageNum];
+        vertBar.value = 1;
 
         rulesOpen = true;
     }
