@@ -6,31 +6,52 @@ using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
 {
-    private GameObject mainPanel;//set variables for UI panels.
-    private GameObject optionsPanel;
+    public GameObject mainPanel, optionsPanel, rulesPanel;//set variables for UI panels.
+    public Image rulesImage;
+    int pageNum = 0;
+    public Text pageNumberText;
+    private bool rulesOpen = false;
+    public Sprite[] rulesSprites;
 
 	void Start ()// Use this for initialization
     {
-        mainPanel = GameObject.Find("MainPanel");//find panels in the scene hierachy by name.
-        optionsPanel = GameObject.Find("OptionsPanel");
         optionsPanel.gameObject.SetActive(false);//set this panel to be inactive at start.
-	}
+        rulesPanel.gameObject.SetActive(false);
+    }
 	
 	void Update ()// Update is called once per frame
     {
-		
+        if (rulesOpen == true)
+        {
+            pageNumberText.text = (pageNum + 1) + "/" + rulesSprites.Length;
+        }
 	}
 
     public void openOptions()//runs when options button is clicked.
     {
-        mainPanel.gameObject.SetActive(false);
+        //mainPanel.gameObject.SetActive(false);
+        rulesPanel.gameObject.SetActive(false);
         optionsPanel.gameObject.SetActive(true);
+
+        rulesOpen = false;
+    }
+
+    public void openRules()//runs when options button is clicked.
+    {
+        //mainPanel.gameObject.SetActive(false);
+        rulesPanel.gameObject.SetActive(true);
+        optionsPanel.gameObject.SetActive(false);
+
+        rulesOpen = true;
     }
 
     public void back()//runs when the back button in the options menu is clicked.
     {
         optionsPanel.gameObject.SetActive(false);
+        rulesPanel.gameObject.SetActive(false);
         mainPanel.gameObject.SetActive(true);
+
+        rulesOpen = false;
     }
 
     public void start()//runs when the start button is clicked.
@@ -41,5 +62,25 @@ public class MenuScript : MonoBehaviour
     public void exit()//runs when exit button is clicked.
     {
         Application.Quit();//quit the application.
+    }
+
+    public void nextPage()
+    {
+        pageNum++;
+        if (pageNum > rulesSprites.Length - 1)
+        {
+            pageNum = 0;
+        }
+        rulesImage.GetComponent<Image>().sprite = rulesSprites[pageNum];
+    }
+
+    public void prevPage()
+    {
+        pageNum--;
+        if (pageNum < 0)
+        {
+            pageNum = rulesSprites.Length - 1;
+        }
+        rulesImage.GetComponent<Image>().sprite = rulesSprites[pageNum];
     }
 }

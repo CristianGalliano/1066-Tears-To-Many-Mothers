@@ -329,6 +329,20 @@ public class CardScript : MonoBehaviour
     {
         if (gameObject.tag == str)
         {
+            if (str == "Norman")
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Debug.Log(normanCard.traits[i]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Debug.Log(saxonCard.traits[i]);
+                }
+            }
             if (controller.turn == turnnum)
             {
                 if (str == "Norman" && normanCard.type == "Tactic" && !placed && positionOfMouse.x < normanTactics.transform.position.x + 150 && positionOfMouse.x > normanTactics.transform.position.x - 150 && positionOfMouse.z < normanTactics.transform.position.z + 100 && positionOfMouse.z > normanTactics.transform.position.z - 100)
