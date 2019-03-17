@@ -235,11 +235,10 @@ public class CardDisplayScript : MonoBehaviour {
 
                 cardPos += 1100;
 
-
                 currentCard.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
                 Text[] texts = currentCard.GetComponentsInChildren<Text>();
 
-                
+
 
                 if (card.type == "Leader" || card.type == "Character" || card.type == "Unit")
                 {
@@ -247,7 +246,7 @@ public class CardDisplayScript : MonoBehaviour {
                     texts[1].text = card.startZeal.ToString();
                     texts[2].text = card.startMight.ToString();
                     texts[3].text = card.startHealth.ToString();
-                
+
                     if (card.resources == 0)
                     {
                         texts[4].text = "";
@@ -257,7 +256,7 @@ public class CardDisplayScript : MonoBehaviour {
                     {
                         texts[4].text = card.resources.ToString();
                     }
-                    
+
                 }
                 else
                 {
@@ -273,7 +272,7 @@ public class CardDisplayScript : MonoBehaviour {
 
                     if (card.might == 0)
                     {
-                         texts[2].text = "";
+                        texts[2].text = "";
 
                     }
                     else
@@ -288,7 +287,7 @@ public class CardDisplayScript : MonoBehaviour {
                     }
                     else
                     {
-                         texts[3].text = card.health.ToString();
+                        texts[3].text = card.health.ToString();
                     }
 
                     if (card.resources == 0)

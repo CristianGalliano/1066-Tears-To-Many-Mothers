@@ -56,7 +56,15 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(NLeaderPlaced && !FirstDrawN && numberOfTurns > 2)
+        if (turn == 0)
+        {
+            DownTo6("norman");
+        }
+        else if (turn == 1)
+        {
+            DownTo6("saxon");
+        }
+        if (NLeaderPlaced && !FirstDrawN && numberOfTurns > 2)
         {
             StartCoroutine(NormanStartDraw());
             FirstDrawN = true;
@@ -74,15 +82,13 @@ public class GameController : MonoBehaviour
             NormanResourcesText.text = "Norman Resources : " + normanResources;
             wedgeWon();
             showGameOverUI();
-        }
-
-        DownTo6();
+        }       
     }
 
     private IEnumerator NormanStartDraw()
     {
         yield return new WaitForSeconds(0.25f);
-        NDS.drawFunc(4);
+        NDS.drawFunc(6);
     }
 
     private IEnumerator SaxonStartDraw()
@@ -98,31 +104,63 @@ public class GameController : MonoBehaviour
         NDS.drawFunc(1);
     }
 
-    void DownTo6()
+    void DownTo6(string i)
     {
         int numToDiscard = 0;
-
-        GameObject hand = GameObject.Find("normanHand");
-        CardScript[] cards = hand.GetComponentsInChildren<CardScript>();
-        List<NormanCard> cardsInHand = new List<NormanCard>();
-
-        foreach (CardScript card in cards)
+        switch (i)
         {
-            cardsInHand.Add(card.normanCard);
-        }
-
-        if(cardsInHand.Count > 6)
-            numToDiscard =  cardsInHand.Count - 6;
-
-        if(numToDiscard > 0)
-        {
-            if(!FunctScript.DiscardLimitSet)
+        case "norman":
             {
-                FunctScript.DiscardLimit = numToDiscard;
-                FunctScript.DiscardLimitSet = true;
-            }
+                GameObject normanHand = GameObject.Find("normanHand");
+                CardScript[] normanCards = normanHand.GetComponentsInChildren<CardScript>();
+                List<NormanCard> normanCardsInHand = new List<NormanCard>();
 
-            UI.ShowGraveyard(cardsInHand);
+                foreach (CardScript card in normanCards)
+                {
+                    normanCardsInHand.Add(card.normanCard);
+                }
+
+                if (normanCardsInHand.Count > 6)
+                    numToDiscard = normanCardsInHand.Count - 6;
+
+                if (numToDiscard > 0)
+                {
+                    if (!FunctScript.DiscardLimitSet)
+                    {
+                        FunctScript.DiscardLimit = numToDiscard;
+                        FunctScript.DiscardLimitSet = true;
+                    }
+
+                    UI.ShowGraveyard(normanCardsInHand);
+                }
+            }
+            break;
+        case "saxon":
+            {
+                GameObject saxonHand = GameObject.Find("saxonHand");
+                CardScript[] saxonCards = saxonHand.GetComponentsInChildren<CardScript>();
+                List<NormanCard> saxonCardsInHand = new List<NormanCard>();
+
+                foreach (CardScript card in saxonCards)
+                {
+                    saxonCardsInHand.Add(card.saxonCard);
+                }
+
+                if (saxonCardsInHand.Count > 6)
+                    numToDiscard = saxonCardsInHand.Count - 6;
+
+                if (numToDiscard > 0)
+                {
+                    if (!FunctScript.DiscardLimitSet)
+                    {
+                        FunctScript.DiscardLimit = numToDiscard;
+                        FunctScript.DiscardLimitSet = true;
+                    }
+
+                    UI.ShowGraveyard(saxonCardsInHand);
+                }
+            }
+            break;
         }
     }
 

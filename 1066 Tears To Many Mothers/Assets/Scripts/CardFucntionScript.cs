@@ -130,14 +130,14 @@ public class CardFucntionScript : MonoBehaviour
     {
         targetIsValid = false;
 
-        //if (attackerScript.gameObject.tag == "Norman")
-        //{
-        //    Spy("saxon");
-        //}
-        //else
-        //{
-        //    Spy("norman");
-        //}
+        if (attackerScript.gameObject.tag == "Norman")
+        {
+            Spy("saxon",1);
+        }
+        else
+        {
+            Spy("norman",1);
+        }
         
         switch (attacker.cardNumber)
         {
