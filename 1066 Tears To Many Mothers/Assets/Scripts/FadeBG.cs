@@ -13,10 +13,29 @@ public class FadeBG : MonoBehaviour
     public AnimationClip[] animations;
     public float imageDisplayTime;
 
+    Vector2 imageDefaultSize;
+    Vector3 imageDefaultPos;
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(fade());
+        imageDefaultSize = thisImage.rectTransform.sizeDelta;
+        imageDefaultPos = thisImage.rectTransform.localPosition;
+    }
+
+    private void Update()
+    {
+        if (Camera.main.aspect > 2)
+        {
+            thisImage.rectTransform.sizeDelta = new Vector2(thisImage.rectTransform.sizeDelta.x, 3500);
+            thisImage.rectTransform.localPosition = new Vector3(thisImage.rectTransform.localPosition.x, -555, thisImage.rectTransform.localPosition.z);
+        }
+        else
+        {
+            thisImage.rectTransform.sizeDelta = imageDefaultSize;
+            thisImage.rectTransform.localPosition = imageDefaultPos;
+        }
     }
 
     private void animParameter()

@@ -6,69 +6,117 @@ using UnityEngine.SceneManagement;
 
 public class BackToMainMenu : MonoBehaviour
 {
-    public KeyCode backMenu;
-    public string exitMenu;
-    public GameObject EscMenu;
-    public GameObject OptMenu;
-    public Button ResumeButton;
-    public Button OptionButton;
-    public Button MainButton;
-    public Button ExitButton;
-    public Button SoundButton;
-    public Button BackButton;
+    public Image rulesImage;
+    private int pageNum = 0;
+    public Text pageNumberText;
+    private bool rulesOpen = false;
+    public Sprite[] rulesSprites;
+    public Scrollbar vertBar;
 
+    public GameObject menuPanel, optionsPanel, rulesPanel, mainUI, colliders;
 
-
-
+    private bool menuOpen = false;
 
     void Start()
     {
-        EscMenu.gameObject.SetActive(false);
-        OptMenu.gameObject.SetActive(false);
-      
+        menuPanel.SetActive(false);
+        optionsPanel.SetActive(false);
+        rulesPanel.SetActive(false);
+        mainUI.SetActive(true);
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(backMenu))
+        if (rulesOpen == true)
         {
-            EscMenu.gameObject.SetActive(true);
-            ResumeButton.onClick.AddListener(ResumeOnClick);
-            OptionButton.onClick.AddListener(OptionOnClick);
-            MainButton.onClick.AddListener(MainOnClick);
-            ExitButton.onClick.AddListener(ExitOnClick);
-            //SoundButton.onClick.AddListener();
-            BackButton.onClick.AddListener(BackOnClick);
+            pageNumberText.text = (pageNum + 1) + "/" + rulesSprites.Length;
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (menuOpen == false)
+            {
+                menuOpen = true;
+                menuPanel.SetActive(true);
+                colliders.SetActive(true);
+                mainUI.SetActive(false);
+            }
+            else if (menuOpen == true)
+            {
+                menuOpen = false;
+                menuPanel.SetActive(false);
+                optionsPanel.SetActive(false);
+                rulesPanel.SetActive(false);
+                colliders.SetActive(false);
+                mainUI.SetActive(true);
+            }
+        }
     }
 
-    void ResumeOnClick()
+
+    public void nextPage()
     {
-        EscMenu.gameObject.SetActive(false);
+        pageNum++;
+        if (pageNum > rulesSprites.Length - 1)
+        {
+            pageNum = 0;
+        }
+        rulesImage.GetComponent<Image>().sprite = rulesSprites[pageNum];
+        vertBar.value = 1;
     }
 
-    void OptionOnClick()
+    public void prevPage()
     {
-        EscMenu.gameObject.SetActive(false);
-        OptMenu.gameObject.SetActive(true);
-    }
-    
-    void MainOnClick()
-    {
-        SceneManager.LoadScene(exitMenu);
-    }
-
-    void ExitOnClick()
-    {
-        Application.Quit();
-        Debug.Log("Exit");
+        pageNum--;
+        if (pageNum < 0)
+        {
+            pageNum = rulesSprites.Length - 1;
+        }
+        rulesImage.GetComponent<Image>().sprite = rulesSprites[pageNum];
+        vertBar.value = 1;
     }
 
-    void BackOnClick()
+    public void resumeGame()
     {
-        EscMenu.gameObject.SetActive(true);
-        OptMenu.gameObject.SetActive(false);
+        menuPanel.SetActive(false);
+        optionsPanel.SetActive(false);
+        rulesPanel.SetActive(false);
+        menuOpen = false;
+        mainUI.SetActive(true);
+        colliders.SetActive(false);
     }
 
+    public void returnToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void openOptions()
+    {
+        menuPanel.SetActive(false);
+        optionsPanel.SetActive(true);
+        rulesPanel.SetActive(false);
+
+        rulesOpen = false;
+    }
+
+    public void openRules()
+    {
+        menuPanel.SetActive(false);
+        optionsPanel.SetActive(false);
+        rulesPanel.SetActive(true);
+        pageNum = 0;
+        rulesImage.GetComponent<Image>().sprite = rulesSprites[pageNum];
+        vertBar.value = 1;
+        rulesOpen = true;
+    }
+
+    public void back()
+    {
+        menuPanel.SetActive(true);
+        optionsPanel.SetActive(false);
+        rulesPanel.SetActive(false);
+
+        rulesOpen = false;
+    }
 }
