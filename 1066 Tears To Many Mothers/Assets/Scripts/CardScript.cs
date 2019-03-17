@@ -177,7 +177,7 @@ public class CardScript : MonoBehaviour
                 functScript.target = saxonCard;
             }
         }
-        else if (!functScript.targeting && placed && !tired)
+        else if (!functScript.targeting && !functScript.agileTargeting && placed && !tired)
         {
             if (gameObject.tag == "Norman")
             {
@@ -285,7 +285,7 @@ public class CardScript : MonoBehaviour
                         thisCollider.center = boxPos;//move the collider by boxPos vector.
                         thisCollider.size = boxScale;//scale the collider by boxscale vector.
                     }
-                    else if (normanCard.cost <= controller.normanResources && !placed)
+                    else if (saxonCard.cost <= controller.saxonResources && !placed)
                     {
                         dropCard("Saxon", controller.saxonDropPointsZ, controller.saxonlane, 1);
                     }
@@ -463,6 +463,17 @@ public class CardScript : MonoBehaviour
         {
             gameObject.layer = 1;
             FindPosition();
+            if (controller.USERESOURCES)
+            {
+                if (str == "Norman")
+                {
+                    controller.normanResources -= normanCard.cost;
+                }
+                else if (str == "Saxon")
+                {
+                    controller.saxonResources -= saxonCard.cost;
+                }
+            }
         }
 
         if(gameObject.tag == "Norman" && placed && !onPlayUsed)

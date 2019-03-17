@@ -41,6 +41,9 @@ public class GameController : MonoBehaviour
 
     public bool USERESOURCES = false;
 
+    private bool canDraw = true;
+    private bool checkHand = true;
+
     // Use this for initialization
     void Start()
     {
@@ -55,9 +58,32 @@ public class GameController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-
-        if (NLeaderPlaced && !FirstDrawN && numberOfTurns > 2)
+    {       
+        if (turn == 0)
+        {
+            if (checkHand == true)
+            {
+                DownTo6("norman");
+            }
+            if (NLeaderPlaced && numberOfTurns > 3 && canDraw == true)
+            {
+                NDS.drawFunc(2);
+                canDraw = false;
+            }
+        }
+        else if (turn == 1)
+        {
+            if (checkHand == true)
+            {
+                DownTo6("saxon");
+            }
+            if (SLeaderPlaced && numberOfTurns > 3 && canDraw == true)
+            {
+                SDS.drawFunc(2);
+                canDraw = false;
+            }
+        }
+        if (NLeaderPlaced && !FirstDrawN && numberOfTurns > 2 )
         {
             StartCoroutine(NormanStartDraw());
             FirstDrawN = true;
@@ -75,15 +101,6 @@ public class GameController : MonoBehaviour
             NormanResourcesText.text = "Norman Resources : " + normanResources;
             wedgeWon();
             showGameOverUI();
-        }
-
-        if (turn == 0)
-        {
-            DownTo6("norman");
-        }
-        else if (turn == 1)
-        {
-            DownTo6("saxon");
         }
     }
 
@@ -112,56 +129,63 @@ public class GameController : MonoBehaviour
         switch (i)
         {
         case "norman":
+            GameObject normanHand = GameObject.Find("normanHand");
+            CardScript[] normanCards = normanHand.GetComponentsInChildren<CardScript>();
+            List<NormanCard> normanCardsInHand = new List<NormanCard>();
+
+            foreach (CardScript card in normanCards)
             {
-                GameObject normanHand = GameObject.Find("normanHand");
-                CardScript[] normanCards = normanHand.GetComponentsInChildren<CardScript>();
-                List<NormanCard> normanCardsInHand = new List<NormanCard>();
+                normanCardsInHand.Add(card.normanCard);
+            }
 
-                foreach (CardScript card in normanCards)
+            if (normanCardsInHand.Count > 6)
+            {
+                numToDiscard = normanCardsInHand.Count - 6;        
+            }
+
+            if (numToDiscard > 0)
+            {
+                if (!FunctScript.DiscardLimitSet)
                 {
-                    normanCardsInHand.Add(card.normanCard);
+                    FunctScript.DiscardLimit = numToDiscard;
+                    FunctScript.DiscardLimitSet = true;
                 }
-
-                if (normanCardsInHand.Count > 6)
-                    numToDiscard = normanCardsInHand.Count - 6;
-
-                if (numToDiscard > 0)
-                {
-                    if (!FunctScript.DiscardLimitSet)
-                    {
-                        FunctScript.DiscardLimit = numToDiscard;
-                        FunctScript.DiscardLimitSet = true;
-                    }
-
-                        UI.ShowGraveyard(normanCardsInHand);
-                }
-               
+                UI.ShowGraveyard(normanCardsInHand);
+            }
+            if (numToDiscard == 0)
+            {
+                checkHand = false;
+                canDraw = true;
             }
             break;
         case "saxon":
+            GameObject saxonHand = GameObject.Find("saxonHand");
+            CardScript[] saxonCards = saxonHand.GetComponentsInChildren<CardScript>();
+            List<NormanCard> saxonCardsInHand = new List<NormanCard>();
+
+            foreach (CardScript card in saxonCards)
             {
-                GameObject saxonHand = GameObject.Find("saxonHand");
-                CardScript[] saxonCards = saxonHand.GetComponentsInChildren<CardScript>();
-                List<NormanCard> saxonCardsInHand = new List<NormanCard>();
+                saxonCardsInHand.Add(card.saxonCard);
+            }
 
-                foreach (CardScript card in saxonCards)
+            if (saxonCardsInHand.Count > 6)
+            {
+                numToDiscard = saxonCardsInHand.Count - 6;
+            }
+
+            if (numToDiscard > 0)
+            {
+                if (!FunctScript.DiscardLimitSet)
                 {
-                    saxonCardsInHand.Add(card.saxonCard);
+                    FunctScript.DiscardLimit = numToDiscard;
+                    FunctScript.DiscardLimitSet = true;
                 }
-
-                if (saxonCardsInHand.Count > 6)
-                    numToDiscard = saxonCardsInHand.Count - 6;
-
-                if (numToDiscard > 0)
-                {
-                    if (!FunctScript.DiscardLimitSet)
-                    {
-                        FunctScript.DiscardLimit = numToDiscard;
-                        FunctScript.DiscardLimitSet = true;
-                    }
-
-                        UI.ShowGraveyard(saxonCardsInHand);
-                } 
+                UI.ShowGraveyard(saxonCardsInHand);                
+            }
+            if (numToDiscard == 0)
+            {
+                checkHand = false;
+                canDraw = true;
             }
             break;
         }
@@ -171,6 +195,7 @@ public class GameController : MonoBehaviour
     {
         numberOfTurns++;
         turn++;
+        checkHand = true;
 
         foreach (WedgeScript wedge in wedges)
         {
@@ -194,9 +219,7 @@ public class GameController : MonoBehaviour
             
             normanResources = 0;
             //set normans to ready
-            if(SLeaderPlaced && numberOfTurns > 3)
-                SDS.drawFunc(2);
-            
+          
         }
         else if (turn == 0)
         {
@@ -209,9 +232,7 @@ public class GameController : MonoBehaviour
                 SaxonObj.activate = true;
             }
             saxonResources = 0;
-            //set saxons to ready
-            if (NLeaderPlaced && numberOfTurns > 3)
-                NDS.drawFunc(2);
+            //set saxons to ready            
         }
         Debug.Log("turn : " + numberOfTurns);
         camControl.changeImage(turn);

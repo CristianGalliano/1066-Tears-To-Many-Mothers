@@ -130,14 +130,14 @@ public class CardFucntionScript : MonoBehaviour
     {
         targetIsValid = false;
 
-        if (attackerScript.gameObject.tag == "Norman")
-        {
-            Spy("saxon",1);
-        }
-        else
-        {
-            Spy("norman",1);
-        }
+        //if (attackerScript.gameObject.tag == "Norman")
+        //{
+        //    Spy("saxon",1);
+        //}
+        //else
+        //{
+        //    Spy("norman",1);
+        //}
         
         switch (attacker.cardNumber)
         {
@@ -172,15 +172,6 @@ public class CardFucntionScript : MonoBehaviour
                 {
                     Heal(target, 1);
                 }
-                break;
-            case 104:
-                if (target.zeal <= 1)
-                {
-                    Destroy(target);
-                }
-                break;
-            case 105:
-                //buff all saxons by 1 might
                 break;
             case 130:
                 Damage(attacker, target, 1, 5);
@@ -329,7 +320,7 @@ public class CardFucntionScript : MonoBehaviour
 
     public void Destroy(NormanCard card)
     {
-        if (card.cardNumber < 76)
+        if (card.cardNumber <=77)
         {
             normanGrave.sendToGrave(card);
         }
@@ -412,6 +403,7 @@ public class CardFucntionScript : MonoBehaviour
                 target.lane = targetWedge;
                 target.laneNum = 3;
                 Game.normanLane[targetWedge]++;
+                targetIsValid = true;
             }
         }
 
@@ -424,6 +416,7 @@ public class CardFucntionScript : MonoBehaviour
                 target.lane = targetWedge;
                 target.laneNum = 3;
                 Game.saxonlane[targetWedge]++;
+                targetIsValid = true;
             }
         }
     }
@@ -500,7 +493,33 @@ public class CardFucntionScript : MonoBehaviour
 
     public void useEventCard()
     {
-        Spy("norman", 2);
+        switch (eventAttacker.cardNumber)
+        {
+            case 104:
+                if (target.zeal <= 1)
+                {
+                    Destroy(target);
+                }
+                break;
+            case 105:
+                //buff all saxons by 1 might
+                GameObject[] saxons = GameObject.FindGameObjectsWithTag("Saxon");
+                foreach (GameObject saxon in saxons)
+                {
+                    if (saxon.GetComponent<CardScript>())
+                    {
+                        if (saxon.GetComponent<CardScript>().placed && saxon.GetComponent<CardScript>().saxonCard && saxon.GetComponent<CardScript>().saxonCard.type == "Unit")
+                        {
+                            if (saxon.GetComponent<CardScript>().saxonCard.traits[0] == "Saxon" || saxon.GetComponent<CardScript>().saxonCard.traits[1] == "Saxon" || saxon.GetComponent<CardScript>().saxonCard.traits[2] == "Saxon")
+                            {
+                                saxon.GetComponent<CardScript>().saxonCard.might++;
+                            }
+                        }
+                    }
+                }
+                break;
+        }
+
 
         if (targetIsValid && !usedEvent)
         {
@@ -513,6 +532,8 @@ public class CardFucntionScript : MonoBehaviour
 
             usedEvent = true;
         }
+
+        Reset();
     }
 
     public void useAttachment()

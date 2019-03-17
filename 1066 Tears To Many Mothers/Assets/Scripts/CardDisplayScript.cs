@@ -228,81 +228,78 @@ public class CardDisplayScript : MonoBehaviour {
 
             foreach (NormanCard card in newCards)
             {
-                if (card)
+                GameObject currentCard = Instantiate(UICard, new Vector3(0, 0, 0), Quaternion.identity, GraveContent.transform);
+                currentCard.transform.localPosition = new Vector3(500 + cardPos, 0, 0);
+                Debug.Log(currentCard.transform.localPosition.x);
+                Debug.Log(currentCard.transform.localPosition.y);
+
+                cardPos += 1100;
+
+                currentCard.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
+
+
+                Text[] texts = currentCard.GetComponentsInChildren<Text>();
+
+
+
+                if (card.type == "Leader" || card.type == "Character" || card.type == "Unit")
                 {
-                    GameObject currentCard = Instantiate(UICard, new Vector3(0, 0, 0), Quaternion.identity, GraveContent.transform);
-                    currentCard.transform.localPosition = new Vector3(500 + cardPos, 0, 0);
-                    Debug.Log(currentCard.transform.localPosition.x);
-                    Debug.Log(currentCard.transform.localPosition.y);
+                    texts[0].text = card.cost.ToString();
+                    texts[1].text = card.startZeal.ToString();
+                    texts[2].text = card.startMight.ToString();
+                    texts[3].text = card.startHealth.ToString();
 
-                    cardPos += 1100;
-
-                    currentCard.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
-
-
-                    Text[] texts = currentCard.GetComponentsInChildren<Text>();
-
-
-
-                    if (card.type == "Leader" || card.type == "Character" || card.type == "Unit")
+                    if (card.resources == 0)
                     {
-                        texts[0].text = card.cost.ToString();
-                        texts[1].text = card.startZeal.ToString();
-                        texts[2].text = card.startMight.ToString();
-                        texts[3].text = card.startHealth.ToString();
-
-                        if (card.resources == 0)
-                        {
-                            texts[4].text = "";
-
-                        }
-                        else
-                        {
-                            texts[4].text = card.resources.ToString();
-                        }
+                        texts[4].text = "";
 
                     }
                     else
                     {
-                        if (card.zeal == 0)
-                        {
-                            texts[1].text = "";
+                        texts[4].text = card.resources.ToString();
+                    }
 
-                        }
-                        else
-                        {
-                            texts[1].text = card.startZeal.ToString();
-                        }
+                }
+                else
+                {
+                    if (card.zeal == 0)
+                    {
+                        texts[1].text = "";
 
-                        if (card.might == 0)
-                        {
-                            texts[2].text = "";
+                    }
+                    else
+                    {
+                        texts[1].text = card.startZeal.ToString();
+                    }
 
-                        }
-                        else
-                        {
-                            texts[2].text = card.might.ToString();
-                        }
+                    if (card.might == 0)
+                    {
+                        texts[2].text = "";
 
-                        if (card.health == 0)
-                        {
-                            texts[3].text = "";
+                    }
+                    else
+                    {
+                        texts[2].text = card.might.ToString();
+                    }
 
-                        }
-                        else
-                        {
-                            texts[3].text = card.health.ToString();
-                        }
+                    if (card.health == 0)
+                    {
+                        texts[3].text = "";
 
-                        if (card.resources == 0)
-                        {
-                            texts[4].text = "";
+                    }
+                    else
+                    {
+                        texts[3].text = card.health.ToString();
+                    }
 
-                        }
-                        else
-                        {
-                            texts[4].text = card.resources.ToString();
-                        }
+                    if (card.resources == 0)
+                    {
+                        texts[4].text = "";
+
+                    }
+                    else
+                    {
+                        texts[4].text = card.resources.ToString();
                     }
                 }
             }
@@ -312,9 +309,7 @@ public class CardDisplayScript : MonoBehaviour {
         if (functScript.DiscardCount == functScript.DiscardLimit)
             Close.gameObject.SetActive(true);
         else
-            Close.gameObject.SetActive(false);
-            
-        
+            Close.gameObject.SetActive(false);                   
     }
 
     public void ShowWedge(WedgeScript wedge)
