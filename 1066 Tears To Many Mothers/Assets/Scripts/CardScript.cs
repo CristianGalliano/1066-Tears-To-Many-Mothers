@@ -45,6 +45,8 @@ public class CardScript : MonoBehaviour
 
     public bool InLane = true;
 
+    private bool targetable = true;
+
 
     // Use this for initialization
     void Start()
@@ -164,72 +166,75 @@ public class CardScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (functScript.targeting && placed)
+        if (targetable)
         {
-            if (gameObject.tag == "Norman")
+            if (functScript.targeting && placed)
             {
-                functScript.targetScript = this;
-                functScript.target = normanCard;
+                if (gameObject.tag == "Norman")
+                {
+                    functScript.targetScript = this;
+                    functScript.target = normanCard;
+                }
+                else if (gameObject.tag == "Saxon")
+                {
+                    functScript.targetScript = this;
+                    functScript.target = saxonCard;
+                }
             }
-            else if (gameObject.tag == "Saxon")
+            else if (!functScript.targeting && !functScript.agileTargeting && placed && !tired)
             {
-                functScript.targetScript = this;
-                functScript.target = saxonCard;
+                if (gameObject.tag == "Norman")
+                {
+                    functScript.attackerScript = this;
+                    functScript.attacker = normanCard;
+                }
+                else if (gameObject.tag == "Saxon")
+                {
+                    functScript.attackerScript = this;
+                    functScript.attacker = saxonCard;
+                }
             }
-        }
-        else if (!functScript.targeting && !functScript.agileTargeting && placed && !tired)
-        {
-            if (gameObject.tag == "Norman")
-            {
-                functScript.attackerScript = this;
-                functScript.attacker = normanCard;
-            }
-            else if (gameObject.tag == "Saxon")
-            {
-                functScript.attackerScript = this;
-                functScript.attacker = saxonCard;
-            }
-        }
 
-        if (functScript.targeting && functScript.eventAttacker != null && placed)
-        {
-            if (gameObject.tag == "Norman")
+            if (functScript.targeting && functScript.eventAttacker != null && placed)
             {
-                functScript.targetScript = this;
-                functScript.eventTarget = normanCard;
+                if (gameObject.tag == "Norman")
+                {
+                    functScript.targetScript = this;
+                    functScript.eventTarget = normanCard;
+                }
+                else if (gameObject.tag == "Saxon")
+                {
+                    functScript.targetScript = this;
+                    functScript.eventTarget = saxonCard;
+                }
             }
-            else if (gameObject.tag == "Saxon")
-            {
-                functScript.targetScript = this;
-                functScript.eventTarget = saxonCard;
-            }
-        }
 
-        if (functScript.targeting && functScript.attachment != null && placed)
-        {
-            if (gameObject.tag == "Norman")
+            if (functScript.targeting && functScript.attachment != null && placed)
             {
-                functScript.targetScript = this;
-                functScript.attachTarget = normanCard;
+                if (gameObject.tag == "Norman")
+                {
+                    functScript.targetScript = this;
+                    functScript.attachTarget = normanCard;
+                }
+                else if (gameObject.tag == "Saxon")
+                {
+                    functScript.targetScript = this;
+                    functScript.attachTarget = saxonCard;
+                }
             }
-            else if (gameObject.tag == "Saxon")
-            {
-                functScript.targetScript = this;
-                functScript.attachTarget = saxonCard;
-            }
-        }
 
-        if(functScript.agileTargeting)
-        {
-            if (gameObject.tag == "Norman")
+            if (functScript.agileTargeting)
             {
-                functScript.targetScript = this;
-                functScript.agileTarget = normanCard;
-            }
-            else if (gameObject.tag == "Saxon")
-            {
-                functScript.targetScript = this;
-                functScript.agileTarget = saxonCard;
+                if (gameObject.tag == "Norman")
+                {
+                    functScript.targetScript = this;
+                    functScript.agileTarget = normanCard;
+                }
+                else if (gameObject.tag == "Saxon")
+                {
+                    functScript.targetScript = this;
+                    functScript.agileTarget = saxonCard;
+                }
             }
         }
 
@@ -304,6 +309,18 @@ public class CardScript : MonoBehaviour
         }
         buttonPressed = false;
         UI.HideDisplay();
+    }
+
+    public void GreyOut()
+    {
+        gameObject.GetComponent<MeshRenderer>().material.color = new Color(0.2f,0.2f,0.2f);
+        targetable = false;
+    }
+
+    public void UnGrey()
+    {
+        gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+        targetable = true;
     }
 
     private void getPointer()

@@ -6491,6 +6491,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: fd62781e9b745854b9ecbb68a5c5fa61, type: 3}
+      propertyPath: m_TagString
+      value: Wedge
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: fd62781e9b745854b9ecbb68a5c5fa61, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -10145,6 +10149,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: fd62781e9b745854b9ecbb68a5c5fa61, type: 3}
+      propertyPath: m_TagString
+      value: Wedge
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: fd62781e9b745854b9ecbb68a5c5fa61, type: 3}
       propertyPath: m_LocalPosition.x
       value: 300
@@ -12331,6 +12339,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: fd62781e9b745854b9ecbb68a5c5fa61, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: fd62781e9b745854b9ecbb68a5c5fa61, type: 3}
+      propertyPath: m_TagString
+      value: Wedge
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: fd62781e9b745854b9ecbb68a5c5fa61, type: 3}
       propertyPath: m_LocalPosition.x

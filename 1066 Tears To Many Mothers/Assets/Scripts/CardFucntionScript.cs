@@ -97,6 +97,44 @@ public class CardFucntionScript : MonoBehaviour
         }
     }
 
+    void TargetValidityCheck(NormanCard attacker)
+    {
+        List<GameObject> cardsToGrey = new List<GameObject>();
+        GameObject[] allNormanCards = GameObject.FindGameObjectsWithTag("Norman");
+        GameObject[] allSaxonCards = GameObject.FindGameObjectsWithTag("Saxon");
+
+        switch(attacker.cardNumber)
+        {
+            case 1:
+                foreach(GameObject card in allNormanCards)
+                {
+                    if(card.GetComponent<CardScript>())
+                    {
+                        CardScript script = card.GetComponent<CardScript>();
+
+                        if (script.placed && script.normanCard.type != "Character" && script.normanCard.type != "Unit")
+                        {
+                            cardsToGrey.Add(card);
+                        }
+                    }
+                }
+
+                foreach(GameObject card in allSaxonCards)
+                {
+                    if (card.GetComponent<CardScript>() && card.GetComponent<CardScript>().placed)
+                        cardsToGrey.Add(card);
+                }
+
+                break;
+        }
+
+        foreach (GameObject card in cardsToGrey)
+        {
+            card.GetComponent<CardScript>().GreyOut();
+        }
+
+    }
+
     public void EnterTargeting()
     {
         if(attacker != null)
@@ -104,7 +142,10 @@ public class CardFucntionScript : MonoBehaviour
             if (attacker.action.Contains("Move"))
             {
                 if (attacker.action.Contains("Commander"))
+                {
                     agileTargeting = true;
+                    TargetValidityCheck(attacker);
+                }
                 else if (attacker.action.Contains("Agile"))
                 {
                     agileTarget = attacker;
@@ -116,6 +157,7 @@ public class CardFucntionScript : MonoBehaviour
             else if (attacker.needTarget == true)
             {
                 targeting = true;
+                TargetValidityCheck(attacker);
             }
             else
             {
@@ -230,14 +272,130 @@ public class CardFucntionScript : MonoBehaviour
     {
         Damage(onPlayAttacker, target, 3, 3);
 
-        /*
         switch (attacker.cardNumber)
         {
-            case 1:
-
+            case 6:
+                if (target.type != "Leader")
+                    Damage(attacker, target, 1);
                 break;
+            case 8:
+                if (target.type != "Leader")
+                    Destroy(target);
+                break;
+            case 14:
+                DrawCard(1);
+                break;
+            case 20:
+                if (target.type != "Leader")
+                    Destroy(target);
+                break;
+            case 24:
+                if (target.type != "Leader")
+                    Damage(attacker, target, 1);
+                break;
+            case 27:
+                DrawCard(1);
+                break;
+            case 71:
+                Spy("saxon", 1);
+                break;
+            case 72:
+                if (target.type != "Leader")
+                    Destroy(target);
+                break;
+            case 86:
+                if (target.type != "Leader")
+                    Destroy(target);
+                break;
+            case 89:
+                DrawCard(1);
+                break;
+            case 94:
+                DrawCard(1);
+                break;
+            case 100:
+                DrawCard(1);
+                break;
+            case 101:
+                if (target.type != "Leader")
+                    Damage(attacker, target, 1);
+                break;
+            case 102:
+                if (target.type != "Leader")
+                    Destroy(target, 10);
+                break;
+            case 136:
+                if (target.type != "Leader")
+                    targetScript.tireCard();
+                break;
+            case 137:
+                if (target.type != "Leader")
+                    Destroy(target);
+                break;
+            case 138:
+                //next card cost -1
+                break;
+            case 139:
+                //next card cost -1
+                break;
+            case 146:
+                if (target.type != "Leader")
+                    Damage(attacker, target, 1);
+                break;
+            case 147:
+                GameObject[] wedges = GameObject.FindGameObjectsWithTag("Wedge");
+                bool damaged = false;
+
+                foreach(GameObject wedge in wedges)
+                {
+                    WedgeScript w = wedge.GetComponent<WedgeScript>();
+
+                    if (w.NormanDamage > 0 || w.SaxonDamage > 0)
+                        damaged = true;
+                }
+
+                if (damaged)
+                    if (target.resources > 0)
+                        targetScript.tired = false;
+                break;
+            case 150:
+                if (target.type != "Leader")
+                    Damage(attacker, target, 1);
+                break;
+            case 151:
+                if (target.type != "Leader")
+                    Damage(attacker, target, 1);
+                break;
+            case 152:
+                //next card cost -1
+                break;
+            case 153:
+                if (target.type != "Leader")
+                    Destroy(target, 10);
+                break;
+            case 156:
+                foreach(string trait in target.traits)
+                {
+                    if (trait == "Cavalry")
+                        Damage(attacker, target, 1, 6);
+                }
+                break;
+            case 157:
+                foreach (string trait in target.traits)
+                {
+                    if (trait == "Cavalry")
+                        Damage(attacker, target, 1, 6);
+                }
+                break;
+            case 158:
+                foreach (string trait in target.traits)
+                {
+                    if (trait == "Cavalry")
+                        Damage(attacker, target, 1, 6);
+                }
+                break;
+
         }
-        */
 
         if (targetIsValid)
         {
@@ -263,6 +421,28 @@ public class CardFucntionScript : MonoBehaviour
                         saxonGrave.sendToGrave(target);
                 }
             }           
+        }
+        else
+        {
+            Reset();
+        }
+
+        //Reset();
+    }
+
+    void Damage(NormanCard Attacker, NormanCard Target, int Amount)
+    {
+        if (attackerScript.tag != targetScript.tag)
+        {
+            targetIsValid = true;
+            Target.health -= Amount;
+            if (Target.health <= 0)
+            {
+                if (targetScript.tag == "Norman")
+                    normanGrave.sendToGrave(target);
+                if (targetScript.tag == "Saxon")
+                    saxonGrave.sendToGrave(target);
+            }
         }
         else
         {
@@ -315,6 +495,25 @@ public class CardFucntionScript : MonoBehaviour
             targetIsValid = true;
         }
 
+        //Reset();
+    }
+
+    public void Destroy(NormanCard card, int range)
+    {
+        if (InRange(attacker, target, range))
+        {
+            if (card.cardNumber <= 77)
+            {
+                normanGrave.sendToGrave(card);
+            }
+            else
+            {
+                saxonGrave.sendToGrave(card);
+            }
+
+            targetIsValid = true;
+            card.health = 0;
+        }
         //Reset();
     }
 
@@ -488,7 +687,32 @@ public class CardFucntionScript : MonoBehaviour
         DiscardCount = 0;
         DiscardLimit = 0;
         DiscardLimitSet = false;
+
+        UnGrey();
+
         Debug.Log("should have reset");
+    }
+
+    private void UnGrey()
+    {
+        GameObject[] allNormanCards = GameObject.FindGameObjectsWithTag("Norman");
+        GameObject[] allSaxonCards = GameObject.FindGameObjectsWithTag("Saxon");
+
+        foreach(GameObject card in allNormanCards)
+        {
+            if(card.GetComponent<CardScript>())
+            {
+                card.GetComponent<CardScript>().UnGrey();
+            }
+        }
+
+        foreach (GameObject card in allSaxonCards)
+        {
+            if (card.GetComponent<CardScript>())
+            {
+                card.GetComponent<CardScript>().UnGrey();
+            }
+        }
     }
 
     public void useEventCard()
