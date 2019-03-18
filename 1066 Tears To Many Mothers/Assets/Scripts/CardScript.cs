@@ -431,12 +431,20 @@ public class CardScript : MonoBehaviour
                                     count[index]++;
 
                                     if (normanCard != null)
-                                        if(normanCard.cardNumber == 1)
+                                    {
+                                        if (normanCard.cardNumber == 1)
+                                        {
                                             controller.NLeaderPlaced = true;
+                                        }
+                                    }
 
                                     if (saxonCard != null)
+                                    {
                                         if (saxonCard.cardNumber == 85)
+                                        {
                                             controller.SLeaderPlaced = true;
+                                        }
+                                    }
                                 }
                             }                      
                         }
