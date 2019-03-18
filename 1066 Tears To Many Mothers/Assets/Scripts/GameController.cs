@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
     public GameObject gameOverPanel, mainPanel;
     public Text winnerText;
     private bool gameOver = false;
-    public bool NLeaderPlaced, SLeaderPlaced, FirstDrawN, FirstDrawS;
+    public bool NLeaderPlaced, SLeaderPlaced, FirstDrawN, FirstDrawS = false;
 
     private CardFucntionScript FunctScript;
     private CardDisplayScript UI;
@@ -43,6 +43,11 @@ public class GameController : MonoBehaviour
 
     private bool canDraw = true;
     private bool checkHand = true;
+
+    public GameObject endturnButton;
+    public GameObject passUI;
+    public GameObject colliders;
+    public Text PassText;
 
     // Use this for initialization
     void Start()
@@ -58,7 +63,28 @@ public class GameController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {       
+    {
+        if (numberOfTurns <= 2)
+        {
+            if (turn == 0 && NLeaderPlaced)
+            {
+                Debug.Log("norman leader placed, conditions met");
+                endturnButton.SetActive(true);
+            }
+            else if (turn == 0 && !NLeaderPlaced)
+            {
+                endturnButton.SetActive(false);              
+            }
+
+            if (turn == 1 && SLeaderPlaced)
+            {
+                endturnButton.SetActive(true);
+            }
+            else if (turn == 1 && !SLeaderPlaced)
+            {
+                endturnButton.SetActive(false);
+            }
+        }
         if (turn == 0)
         {
             if (checkHand == true)
@@ -235,6 +261,8 @@ public class GameController : MonoBehaviour
             //set saxons to ready            
         }
         Debug.Log("turn : " + numberOfTurns);
+        passUI.SetActive(false);
+        colliders.SetActive(false);
         camControl.changeImage(turn);
     }
 
@@ -286,5 +314,19 @@ public class GameController : MonoBehaviour
             winnerText.text += " Saxons Win!";
             gameOver = true;
         }
+    }
+
+    public void PassTurn()
+    {
+        passUI.SetActive(true);
+        if (turn == 0)
+        {
+            PassText.text = "Pass To Saxon Player!";
+        }
+        else if (turn == 1)
+        {
+            PassText.text = "Pass To Norman Player!";
+        }
+        colliders.SetActive(true);
     }
 }
