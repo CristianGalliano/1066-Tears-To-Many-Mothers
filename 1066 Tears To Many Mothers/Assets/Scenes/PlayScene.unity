@@ -6929,6 +6929,7 @@ MonoBehaviour:
   gameOverPanel: {fileID: 1185802280}
   mainPanel: {fileID: 1081813172}
   winnerText: {fileID: 368821483}
+  gameOver: 0
   NLeaderPlaced: 0
   SLeaderPlaced: 0
   FirstDrawN: 0
@@ -6950,6 +6951,7 @@ MonoBehaviour:
   passTurn: 0
   playerHUD: {fileID: 1460783916}
   discardList: []
+  discardTargetHand: 
 --- !u!4 &719131377
 Transform:
   m_ObjectHideFlags: 0
@@ -12299,7 +12301,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 719131376}
-        m_MethodName: RunDiscard
+        m_MethodName: DT6Complete
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
