@@ -60,6 +60,8 @@ public class GameController : MonoBehaviour
 
     public List<Transform> discardList = new List<Transform>();
 
+    public string discardTargetHand = "";
+
 
     // Use this for initialization
     void Start()
@@ -107,10 +109,12 @@ public class GameController : MonoBehaviour
                 Debug.Log("Downto6");
                 if(passedFirst == 0)
                 {
-                    DownTo6("norman");
+                    discardTargetHand = "norman";
+                    DownTo6(discardTargetHand);
                     if (NormanDT6)
                     {
-                        DownTo6("saxon");
+                        discardTargetHand = "saxon";
+                        DownTo6(discardTargetHand);
                         if(!SaxonDT6)
                         {
                             //show pass ui
@@ -126,10 +130,12 @@ public class GameController : MonoBehaviour
 
                 if (passedFirst == 1)
                 {
-                    DownTo6("saxon");
+                    discardTargetHand = "saxon";
+                    DownTo6(discardTargetHand);
                     if (SaxonDT6)
                     {
-                        DownTo6("norman");
+                        discardTargetHand = "norman";
+                        DownTo6(discardTargetHand);
                         if (!NormanDT6)
                         {
                             //show pass ui
@@ -142,7 +148,15 @@ public class GameController : MonoBehaviour
                     }
                 }
 
-                if(NormanDT6 && SaxonDT6)
+                if (!UI.GraveyardPanel.activeInHierarchy)
+                {
+                    if (GameObject.Find("normanHand").GetComponents<CardScript>().Length <= 6)
+                        NormanDT6 = true;
+                    if (GameObject.Find("saxonHand").GetComponents<CardScript>().Length <= 6)
+                        SaxonDT6 = true;
+                }
+
+                if (NormanDT6 && SaxonDT6)
                 {
                     canDraw = true;
                 }
@@ -392,12 +406,14 @@ public class GameController : MonoBehaviour
                 FunctScript.DiscardLimit = numToDiscard;
                 FunctScript.DiscardLimitSet = true;
             }
+
             UI.ShowGraveyard(normanCardsInHand);
         }
         if (numToDiscard == 0)
         {
             checkHand = false;
 
+            /*
             if (s == "norman")
             {
                 NormanDT6 = true;
@@ -406,6 +422,23 @@ public class GameController : MonoBehaviour
             {
                 SaxonDT6 = true;
             }
+            */
+        }
+    }
+
+    public void DT6Complete()
+    {
+        if(phase == 0)
+        {
+            if (discardTargetHand == "norman")
+                NormanDT6 = true;
+            if (discardTargetHand == "saxon")
+                SaxonDT6 = true;
+
+            if (passedFirst == 0 && turn == 1)
+                PassTurn();
+            if (passedFirst == 1 && turn == 0)
+                PassTurn();
         }
     }
 
