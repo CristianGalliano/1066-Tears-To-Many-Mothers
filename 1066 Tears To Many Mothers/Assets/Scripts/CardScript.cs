@@ -119,6 +119,7 @@ public class CardScript : MonoBehaviour
     {
         Destroy();
         GetPosition();
+        LeaderEndGame();
 
         if(placed && InLane)
         {
@@ -166,7 +167,7 @@ public class CardScript : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (targetable)
+        if (targetable && controller.phase == 1)
         {
             if (functScript.targeting && placed)
             {
@@ -322,6 +323,36 @@ public class CardScript : MonoBehaviour
     {
         gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
         targetable = true;
+    }
+
+    private void LeaderEndGame()
+    {
+        if(tag == "Norman")
+        {
+            if(normanCard.type == "Leader")
+            {
+                if(normanCard.health <= 0)
+                {
+                    controller.mainPanel.SetActive(false);
+                    controller.gameOverPanel.SetActive(true);
+                    controller.winnerText.text += " Saxons Win!";
+                    controller.gameOver = true;
+                }
+            }
+        }
+        if (tag == "Saxon")
+        {
+            if (saxonCard.type == "Leader")
+            {
+                if (saxonCard.health <= 0)
+                {
+                    controller.mainPanel.SetActive(false);
+                    controller.gameOverPanel.SetActive(true);
+                    controller.winnerText.text += " Normans Win!";
+                    controller.gameOver = true;
+                }
+            }
+        }
     }
 
     private void getPointer()

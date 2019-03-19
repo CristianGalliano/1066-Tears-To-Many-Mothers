@@ -78,9 +78,9 @@ public class CardFucntionScript : MonoBehaviour
 
         if (attacker != null && attackerScript != null)
         {
-            if(attacker.action != "No Action Ability")
+            if(attacker.action != "No Action Ability" || !attacker.action.Contains("Agile"))
                 UI.InfoButton.gameObject.SetActive(true);
-            else if(attacker.action == "No Action Ability")
+            else if(attacker.action == "No Action Ability" || attacker.action.Contains("Agile"))
                 UI.InfoButton.gameObject.SetActive(false);
         }
         else if (attacker == null && attackerScript == null)
@@ -183,7 +183,9 @@ public class CardFucntionScript : MonoBehaviour
         //{
         //    Spy("norman",1);
         //}
-        
+
+        Damage(attacker, target, 10, 6);
+
         switch (attacker.cardNumber)
         {
             case 22:

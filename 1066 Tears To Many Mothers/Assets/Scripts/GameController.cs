@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
 
     public GameObject gameOverPanel, mainPanel;
     public Text winnerText;
-    private bool gameOver = false;
+    public bool gameOver = false;
     public bool NLeaderPlaced, SLeaderPlaced, FirstDrawN, FirstDrawS = false;
 
     private CardFucntionScript FunctScript;
