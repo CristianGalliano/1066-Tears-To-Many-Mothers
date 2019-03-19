@@ -19,7 +19,6 @@ public class GameController : MonoBehaviour
     public int saxonResources = 0;
     public int normanResources = 0;
     public int turn = 0;
-    public int phase = 0;
     public int numberOfTurns = 1;
     public Text SaxonResourcesText, NormanResourcesText;
     public int camCount = 0;
@@ -49,6 +48,12 @@ public class GameController : MonoBehaviour
     public GameObject colliders;
     public Text PassText;
 
+    public int phase = 1;
+    public bool NormanPass, SaxonPass;
+    public bool WedgeAttacked, ObjAttacked;
+    public bool firstPasser;
+    public int passedFirst;
+
     // Use this for initialization
     void Start()
     {
@@ -64,6 +69,68 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(phase == 0)
+        {
+            normanResources = 0;
+            saxonResources = 0;
+
+            EndButtonHide();
+
+            if(NLeaderPlaced && SLeaderPlaced && !FirstDrawN && !FirstDrawS && turn == 0)
+            {
+                StartCoroutine(NormanStartDraw());
+                StartCoroutine(SaxonStartDraw());
+                FirstDrawN = true;
+                FirstDrawS = true;
+            }
+
+            if (FirstDrawN && FirstDrawS && turn == 0)
+            {
+                Debug.Log("Downto6");
+                DownTo6("norman");
+                DownTo6("saxon");
+            }
+
+            if (NLeaderPlaced && SLeaderPlaced && canDraw == true && turn == 0)
+            {
+                NDS.drawFunc(2);
+                SDS.drawFunc(2);
+                canDraw = false;
+                phase = 1;
+            }
+        }
+
+        if(phase == 2)
+        {
+            if(!WedgeAttacked)
+            {
+                foreach(WedgeScript wedge in wedges)
+                {
+                    wedge.WedgeBattle();
+                }
+
+                WedgeAttacked = true;
+            }
+
+            if (!ObjAttacked)
+            {
+                if (NormanObj.objNum > 0)
+                    NormanObj.AttackObjective();
+                else
+                    NormanObj.activate = true;
+
+
+
+                if (SaxonObj.objNum > 0)
+                    SaxonObj.AttackObjective();
+                else
+                    SaxonObj.activate = true;
+
+                ObjAttacked = true;
+            }
+        }
+
+        /*
         if (numberOfTurns <= 2)
         {
             if (turn == 0 && NLeaderPlaced)
@@ -128,23 +195,60 @@ public class GameController : MonoBehaviour
             wedgeWon();
             showGameOverUI();
         }
+        */
+
+    }
+
+    public void NextRound()
+    {
+        phase = 0;
+        WedgeAttacked = false;
+        ObjAttacked = false;
+        SaxonPass = false;
+        NormanPass = false;
+
+        turn = passedFirst - 1;
+        PassTurn();
+        camControl.switchTopDown();
+    }
+
+    void EndButtonHide()
+    {
+        if (turn == 0 && NLeaderPlaced)
+        {
+            Debug.Log("norman leader placed, conditions met");
+            endturnButton.SetActive(true);
+        }
+        else if (turn == 0 && !NLeaderPlaced)
+        {
+            endturnButton.SetActive(false);
+        }
+
+        if (turn == 1 && SLeaderPlaced)
+        {
+            endturnButton.SetActive(true);
+        }
+        else if (turn == 1 && !SLeaderPlaced)
+        {
+            endturnButton.SetActive(false);
+        }
     }
 
     private IEnumerator NormanStartDraw()
     {
-        yield return new WaitForSeconds(0.25f);
-        NDS.drawFunc(6);
+        yield return null;
+        NDS.drawFunc(4);
     }
 
     private IEnumerator SaxonStartDraw()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return null;
         SDS.drawFunc(4);
     }
 
     private IEnumerator drawLeaders()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return null;
         SDS.drawFunc(1);
         NDS.drawFunc(1);
     }
@@ -154,66 +258,68 @@ public class GameController : MonoBehaviour
         int numToDiscard = 0;
         switch (i)
         {
-        case "norman":
-            GameObject normanHand = GameObject.Find("normanHand");
-            CardScript[] normanCards = normanHand.GetComponentsInChildren<CardScript>();
-            List<NormanCard> normanCardsInHand = new List<NormanCard>();
+            case "norman":
+                GameObject normanHand = GameObject.Find("normanHand");
+                CardScript[] normanCards = normanHand.GetComponentsInChildren<CardScript>();
+                List<NormanCard> normanCardsInHand = new List<NormanCard>();
 
-            foreach (CardScript card in normanCards)
-            {
-                normanCardsInHand.Add(card.normanCard);
-            }
-
-            if (normanCardsInHand.Count > 6)
-            {
-                numToDiscard = normanCardsInHand.Count - 6;        
-            }
-
-            if (numToDiscard > 0)
-            {
-                if (!FunctScript.DiscardLimitSet)
+                foreach (CardScript card in normanCards)
                 {
-                    FunctScript.DiscardLimit = numToDiscard;
-                    FunctScript.DiscardLimitSet = true;
+                    normanCardsInHand.Add(card.normanCard);
                 }
-                UI.ShowGraveyard(normanCardsInHand);
-            }
-            if (numToDiscard == 0)
-            {
-                checkHand = false;
-                canDraw = true;
-            }
-            break;
-        case "saxon":
-            GameObject saxonHand = GameObject.Find("saxonHand");
-            CardScript[] saxonCards = saxonHand.GetComponentsInChildren<CardScript>();
-            List<NormanCard> saxonCardsInHand = new List<NormanCard>();
 
-            foreach (CardScript card in saxonCards)
-            {
-                saxonCardsInHand.Add(card.saxonCard);
-            }
+                Debug.Log(numToDiscard + " " + normanCardsInHand.Count);
 
-            if (saxonCardsInHand.Count > 6)
-            {
-                numToDiscard = saxonCardsInHand.Count - 6;
-            }
-
-            if (numToDiscard > 0)
-            {
-                if (!FunctScript.DiscardLimitSet)
+                if (normanCardsInHand.Count > 6)
                 {
-                    FunctScript.DiscardLimit = numToDiscard;
-                    FunctScript.DiscardLimitSet = true;
+                    numToDiscard = normanCardsInHand.Count - 6;
                 }
-                UI.ShowGraveyard(saxonCardsInHand);                
-            }
-            if (numToDiscard == 0)
-            {
-                checkHand = false;
-                canDraw = true;
-            }
-            break;
+
+                if (numToDiscard > 0)
+                {
+                    if (!FunctScript.DiscardLimitSet)
+                    {
+                        FunctScript.DiscardLimit = numToDiscard;
+                        FunctScript.DiscardLimitSet = true;
+                    }
+                    UI.ShowGraveyard(normanCardsInHand);
+                }
+                if (numToDiscard == 0)
+                {
+                    checkHand = false;
+                    canDraw = true;
+                }
+                break;
+            case "saxon":
+                GameObject saxonHand = GameObject.Find("saxonHand");
+                CardScript[] saxonCards = saxonHand.GetComponentsInChildren<CardScript>();
+                List<NormanCard> saxonCardsInHand = new List<NormanCard>();
+
+                foreach (CardScript card in saxonCards)
+                {
+                    saxonCardsInHand.Add(card.saxonCard);
+                }
+
+                if (saxonCardsInHand.Count > 6)
+                {
+                    numToDiscard = saxonCardsInHand.Count - 6;
+                }
+
+                if (numToDiscard > 0)
+                {
+                    if (!FunctScript.DiscardLimitSet)
+                    {
+                        FunctScript.DiscardLimit = numToDiscard;
+                        FunctScript.DiscardLimitSet = true;
+                    }
+                    UI.ShowGraveyard(saxonCardsInHand);
+                }
+                if (numToDiscard == 0)
+                {
+                    checkHand = false;
+                    canDraw = true;
+                }
+                break;
         }
     }
 
@@ -223,47 +329,43 @@ public class GameController : MonoBehaviour
         turn++;
         checkHand = true;
 
-        foreach (WedgeScript wedge in wedges)
-        {
-            wedge.WedgeBattle();
-        }
-
         if (turn > 1)
         {
             turn = 0;
         }
-        if (turn == 1)
-        {
-            if(NormanObj.objNum  > 0)
-            {
-                NormanObj.AttackObjective();
-            }
-            else
-            {
-                NormanObj.activate = true;
-            }
-            
-            normanResources = 0;
-            //set normans to ready
-          
-        }
-        else if (turn == 0)
-        {
-            if (SaxonObj.objNum > 0)
-            {
-                SaxonObj.AttackObjective();
-            }
-            else
-            {
-                SaxonObj.activate = true;
-            }
-            saxonResources = 0;
-            //set saxons to ready            
-        }
-        Debug.Log("turn : " + numberOfTurns);
+
         passUI.SetActive(false);
         colliders.SetActive(false);
         camControl.changeImage(turn);
+
+        if(NormanPass && SaxonPass)
+        {
+            phase = 2;
+            camControl.switchTopDown();
+        }
+    }
+
+    public void SetPass()
+    {
+        if (turn == 0)
+        {
+            if(!firstPasser)
+            {
+                passedFirst = 0;
+            }
+
+            NormanPass = true;
+        }
+        if (turn == 1)
+        {
+            if (!firstPasser)
+            {
+                passedFirst = 1;
+            }
+
+            SaxonPass = true;
+        }
+
     }
 
     public void damageObjective()

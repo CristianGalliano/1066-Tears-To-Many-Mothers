@@ -333,7 +333,7 @@ public class CardFucntionScript : MonoBehaviour
                     Destroy(target);
                 break;
             case 138:
-                //next card cost -1
+                
                 break;
             case 139:
                 //next card cost -1
