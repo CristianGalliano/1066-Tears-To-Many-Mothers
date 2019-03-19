@@ -56,7 +56,7 @@ public class ObjectivesScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (activate == true && Game.numberOfTurns > minTurn)
+        if (activate == true)
         {
             nextCard();
             usedObj.increaseSize();

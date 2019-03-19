@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UICardScript : MonoBehaviour
 {
     CardFucntionScript functScript;
+    GameController Game;
 
     public GameObject cross;
     private Image image;
@@ -16,6 +17,8 @@ public class UICardScript : MonoBehaviour
     void Start()
     {
         functScript = GameObject.Find("GameController").GetComponent<CardFucntionScript>();
+        Game = GameObject.Find("GameController").GetComponent<GameController>();
+
     }
 
     // Update is called once per frame
@@ -40,10 +43,11 @@ public class UICardScript : MonoBehaviour
             {
                 if (child.gameObject.GetComponent<CardScript>().normanCard.cardNumber == cardNum)
                 {
-                    functScript.Destroy(child.gameObject.GetComponent<CardScript>().normanCard);
+                    //functScript.Destroy(child.gameObject.GetComponent<CardScript>().normanCard);
                     discarded = true;
                     functScript.DiscardCount++;
-                    Destroy(child.gameObject);
+                    //Destroy(child.gameObject);
+                    //Game.discardList.Add(child.gameObject.GetComponent<CardScript>());
                 }
             }
 
@@ -51,10 +55,11 @@ public class UICardScript : MonoBehaviour
             {
                 if (child.gameObject.GetComponent<CardScript>().saxonCard.cardNumber == cardNum)
                 {
-                    functScript.Destroy(child.gameObject.GetComponent<CardScript>().saxonCard);
+                    //functScript.Destroy(child.gameObject.GetComponent<CardScript>().saxonCard);
                     discarded = true;
                     functScript.DiscardCount++;
-                    Destroy(child.gameObject);
+                    //Destroy(child.gameObject);
+                    //Game.discardList.Add(child.gameObject.GetComponent<CardScript>());
                 }
             }
         }
