@@ -508,6 +508,7 @@ public class NormanCard : ScriptableObject
                 traits[0] = "Saxon";
                 break;
             case 126:
+                needTarget = true;
                 traits[0] = "Saxon";
                 break;
             case 127:

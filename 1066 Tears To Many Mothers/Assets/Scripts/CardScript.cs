@@ -185,6 +185,7 @@ public class CardScript : MonoBehaviour
             {
                 if (gameObject.tag == "Norman")
                 {
+                    Debug.Log(normanCard.name);
                     functScript.attackerScript = this;
                     functScript.attacker = normanCard;
                 }

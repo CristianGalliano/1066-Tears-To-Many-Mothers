@@ -78,7 +78,10 @@ public class CardFucntionScript : MonoBehaviour
 
         if (attacker != null && attackerScript != null)
         {
-            UI.InfoButton.gameObject.SetActive(true);
+            if(attacker.action != "No Action Ability")
+                UI.InfoButton.gameObject.SetActive(true);
+            else if(attacker.action == "No Action Ability")
+                UI.InfoButton.gameObject.SetActive(false);
         }
         else if (attacker == null && attackerScript == null)
         {
@@ -271,8 +274,9 @@ public class CardFucntionScript : MonoBehaviour
     void OnPlayAbility()
     {
         //Damage(onPlayAttacker, target, 3, 3);
+        Debug.Log("OnPlay");
 
-        switch (attacker.cardNumber)
+        switch (onPlayAttacker.cardNumber)
         {
             case 6:
                 if (target.type != "Leader")
@@ -764,6 +768,12 @@ public class CardFucntionScript : MonoBehaviour
     {
         if(wedgeTarget != null)
         {
+            switch(attachment.cardNumber)
+            {
+                case 1:
+
+                    break;
+            }
             wedgeTarget.GetComponent<WedgeScript>().NormanZealBuff = 3;
 
             attackerScript.gameObject.transform.parent = wedgeTarget.transform;
@@ -775,7 +785,14 @@ public class CardFucntionScript : MonoBehaviour
 
         if(targetScript != null)
         {
-            Buff(attachTarget, "Zeal", 10);
+            switch (attachment.cardNumber)
+            {
+                case 1:
+
+                    break;
+            }
+
+            Buff(attachTarget, "Zeal", 1);
 
             attackerScript.gameObject.transform.parent = targetScript.gameObject.transform;
             attackerScript.gameObject.transform.localPosition = new Vector3(40, 0, -1);

@@ -68,6 +68,15 @@ public class CardDisplayScript : MonoBehaviour {
 
         if (card.type == "Leader" || card.type == "Character" || card.type == "Unit")
         {
+
+            if (card.cost == card.startCost)
+                CostText.color = Color.black;
+            if (card.zeal == card.startZeal)
+                ZealText.color = Color.black;
+            if (card.might == card.startMight)
+                MightText.color = Color.black;
+
+                HealthText.color = Color.black;
             if (card.cost == card.startCost)
                 CostText.color = Color.black;
             if (card.zeal == card.startZeal)
@@ -98,7 +107,32 @@ public class CardDisplayScript : MonoBehaviour {
             ZealText.text = card.zeal.ToString();
             MightText.text = card.might.ToString();
             HealthText.text = card.health.ToString();
-            ResourcesText.text = card.resources.ToString();
+
+            if (card.resources > 0)
+                ResourcesText.text = card.resources.ToString();
+            else
+                ResourcesText.text = "";
+        }
+        else if(card.type == "Attachment")
+        {
+            CostText.color = Color.black;
+            ZealText.color = Color.black;
+            HealthText.text = "";
+
+            if (card.zeal > 0)
+                ZealText.text = card.zeal.ToString();
+            else
+                ZealText.text = "";
+
+            if (card.might > 0)
+                MightText.text = card.might.ToString();
+            else
+                MightText.text = "";
+
+            if (card.resources > 0)
+                ResourcesText.text = card.resources.ToString();
+            else
+                ResourcesText.text = "";
         }
         else
         {
@@ -131,6 +165,11 @@ public class CardDisplayScript : MonoBehaviour {
             {
                 HealthText.text = card.health.ToString();
             }
+
+            if (card.resources > 0)
+                ResourcesText.text = card.resources.ToString();
+            else
+                ResourcesText.text = "";
         }
 
         image.sprite = Resources.Load<Sprite>("CardImages/" + card.cardNumber);
