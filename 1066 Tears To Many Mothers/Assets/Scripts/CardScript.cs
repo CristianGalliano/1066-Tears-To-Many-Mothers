@@ -209,7 +209,7 @@ public class CardScript : MonoBehaviour
                 }
             }
 
-            if (functScript.targeting && functScript.attachment != null && placed)
+            if (functScript.targeting && functScript.attachment && placed)
             {
                 if (gameObject.tag == "Norman")
                 {
