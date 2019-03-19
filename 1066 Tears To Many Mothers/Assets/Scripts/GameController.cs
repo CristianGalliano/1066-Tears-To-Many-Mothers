@@ -43,7 +43,7 @@ public class GameController : MonoBehaviour
     private bool canDraw = true;
     private bool checkHand = true;
 
-    public GameObject endturnButton;
+    public GameObject endturnButton, passTurnButton, endRoundButton;
     public GameObject passUI;
     public GameObject colliders;
     public Text PassText;
@@ -53,6 +53,7 @@ public class GameController : MonoBehaviour
     public bool WedgeAttacked, ObjAttacked;
     public bool firstPasser;
     public int passedFirst;
+
 
     // Use this for initialization
     void Start()
@@ -71,6 +72,9 @@ public class GameController : MonoBehaviour
     {
         if(phase == 0)
         {
+            passTurnButton.SetActive(false);
+            endRoundButton.SetActive(false);
+
             normanResources = 0;
             saxonResources = 0;
 
@@ -100,9 +104,19 @@ public class GameController : MonoBehaviour
             }
         }
 
+        if (phase == 1)
+        {
+            passTurnButton.SetActive(true);
+            endRoundButton.SetActive(false);
+        }
+
         if(phase == 2)
         {
-            if(!WedgeAttacked)
+            passTurnButton.SetActive(false);
+            endturnButton.SetActive(false);
+            endRoundButton.SetActive(true);
+
+            if (!WedgeAttacked)
             {
                 foreach(WedgeScript wedge in wedges)
                 {
