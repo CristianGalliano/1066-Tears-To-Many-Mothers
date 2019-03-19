@@ -56,6 +56,8 @@ public class GameController : MonoBehaviour
     private bool NormanDT6, SaxonDT6 = false;
     public bool passTurn = false;
 
+    public GameObject playerHUD;
+
     public List<Transform> discardList = new List<Transform>();
 
 
@@ -74,8 +76,16 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(phase == 0)
+        if (gameOver == false)
         {
+            SaxonResourcesText.text = "Saxon Resources : " + saxonResources;
+            NormanResourcesText.text = "Norman Resources : " + normanResources;
+            wedgeWon();
+            showGameOverUI();
+        }
+        if (phase == 0)
+        {
+            playerHUD.SetActive(false);
             passTurnButton.SetActive(false);
             endRoundButton.SetActive(false);
 
@@ -148,6 +158,7 @@ public class GameController : MonoBehaviour
 
         if (phase == 1)
         {
+            playerHUD.SetActive(true);
             passTurnButton.SetActive(true);
             endRoundButton.SetActive(false);
             if (SaxonPass && turn == 0)
@@ -166,6 +177,7 @@ public class GameController : MonoBehaviour
 
         if(phase == 2)
         {
+            playerHUD.SetActive(false);
             passTurnButton.SetActive(false);
             endturnButton.SetActive(false);
             endRoundButton.SetActive(true);

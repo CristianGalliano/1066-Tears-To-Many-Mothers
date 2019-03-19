@@ -270,7 +270,7 @@ public class CardFucntionScript : MonoBehaviour
 
     void OnPlayAbility()
     {
-        Damage(onPlayAttacker, target, 3, 3);
+        //Damage(onPlayAttacker, target, 3, 3);
 
         switch (attacker.cardNumber)
         {
