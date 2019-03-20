@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour
     private bool NormanDT6, SaxonDT6 = false;
     public bool passTurn = false;
 
-    public GameObject playerHUD;
+    public GameObject playerHUD, playerWedgesHUD;
 
     public List<Transform> discardList = new List<Transform>();
 
@@ -88,6 +88,7 @@ public class GameController : MonoBehaviour
         if (phase == 0)
         {
             playerHUD.SetActive(false);
+            playerWedgesHUD.SetActive(false);
             passTurnButton.SetActive(false);
             endRoundButton.SetActive(false);
 
@@ -173,6 +174,7 @@ public class GameController : MonoBehaviour
         if (phase == 1)
         {
             playerHUD.SetActive(true);
+            playerWedgesHUD.SetActive(true);
             passTurnButton.SetActive(true);
             endRoundButton.SetActive(false);
             if (SaxonPass && turn == 0)
@@ -192,6 +194,7 @@ public class GameController : MonoBehaviour
         if(phase == 2)
         {
             playerHUD.SetActive(false);
+            playerWedgesHUD.SetActive(false);
             passTurnButton.SetActive(false);
             endturnButton.SetActive(false);
             endRoundButton.SetActive(true);

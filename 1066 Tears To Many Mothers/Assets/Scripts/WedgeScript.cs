@@ -8,7 +8,7 @@ public class WedgeScript : MonoBehaviour
     public int wedgeNum;
     int pos;
 
-    int NormanMightTBV , SaxonMightTBV, NormanZealTBV, SaxonZealTBV = 0;
+    public int NormanMightTBV , SaxonMightTBV, NormanZealTBV, SaxonZealTBV = 0;
     public int NormanDamage, SaxonDamage;
     public int zeal = 0;
     public int might = 0;
@@ -129,7 +129,7 @@ public class WedgeScript : MonoBehaviour
         }
     }
 
-    void CalculateAllCards()
+    public void CalculateAllCards()
     {
         //Gather Norman Cards
 
@@ -158,8 +158,6 @@ public class WedgeScript : MonoBehaviour
                 }
             }
         }
-
-
         //Calculate Total TBV's
         foreach(CardScript card in normans)
         {
@@ -169,14 +167,13 @@ public class WedgeScript : MonoBehaviour
                 NormanZealTBV += card.normanCard.zeal;
             }
 
-        }
-
+        }      
         foreach (CardScript card in saxons)
         {
             if (!card.tired)
             {
                 SaxonMightTBV += card.saxonCard.might;
-                SaxonZealTBV += card.saxonCard.zeal;
+                SaxonZealTBV+= card.saxonCard.zeal;
             }
         }
     }

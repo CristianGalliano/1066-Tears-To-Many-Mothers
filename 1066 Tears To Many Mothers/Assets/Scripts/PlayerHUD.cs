@@ -10,6 +10,10 @@ public class PlayerHUD : MonoBehaviour
 
     public Text playerResourceNum, playerZealNum, playerMightNum, objectiveHealthNum, objectiveLetter;
 
+    public Text nW1Z, nW1M, sW1Z, sW1M, nW2Z, nW2M, sW2Z, sW2M, nW3Z, nW3M, sW3Z, sW3M;
+
+    public WedgeScript W1, W2, W3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,5 +73,19 @@ public class PlayerHUD : MonoBehaviour
             objectiveHealthNum.text = objectiveHealth.ToString();
             objectiveLetter.text = saxonOBJ.objective.idChar;
         }
+
+        nW1M.text = W1.NormanMightTBV.ToString();
+        nW1Z.text = W1.NormanZealTBV.ToString();
+        nW2M.text = W2.NormanMightTBV.ToString();
+        nW2Z.text = W2.NormanZealTBV.ToString();
+        nW3M.text = W3.NormanMightTBV.ToString();
+        nW3Z.text = W3.NormanZealTBV.ToString();
+
+        sW1M.text = W1.SaxonMightTBV.ToString();
+        sW1Z.text = W1.SaxonZealTBV.ToString();
+        sW2M.text = W2.SaxonMightTBV.ToString();
+        sW2Z.text = W2.SaxonZealTBV.ToString();
+        sW3M.text = W3.SaxonMightTBV.ToString();
+        sW3Z.text = W3.SaxonZealTBV.ToString();
     }
 }
