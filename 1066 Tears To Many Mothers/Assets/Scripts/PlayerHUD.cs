@@ -29,68 +29,7 @@ public class PlayerHUD : MonoBehaviour
     private void UpdatePlayerHud()
     {
         int Nw1Z = 0, Nw1M = 0, Nw2Z = 0, Nw2M = 0, Nw3Z = 0, Nw3M = 0, Sw1Z = 0, Sw1M = 0, Sw2Z = 0, Sw2M = 0, Sw3Z = 0, Sw3M = 0;
-        //if norman turn.
-        if (controller.turn == 0)
-        {
-            int zeal = 0;
-            int might = 0;
-            int objectiveHealth = 0;
 
-            playerResourceNum.text = controller.normanResources.ToString();
-            GameObject[] cards = GameObject.FindGameObjectsWithTag("Norman");
-            foreach (GameObject card in cards)
-            {
-                if (card.GetComponent<CardScript>() && card.GetComponent<CardScript>().placed)
-                {
-                    zeal += card.GetComponent<CardScript>().normanCard.zeal;
-                    might += card.GetComponent<CardScript>().normanCard.might;                    
-                }
-            }
-
-            objectiveHealth = normanOBJ.objective.health;
-            playerZealNum.text = zeal.ToString();
-            playerMightNum.text = might.ToString();
-            objectiveHealthNum.text = objectiveHealth.ToString();
-            objectiveLetter.text = normanOBJ.objective.idChar;
-        }
-
-        
-
-        if (controller.turn == 1)
-        {
-            int zeal = 0;
-            int might = 0;
-            int objectiveHealth = 0;
-
-            playerResourceNum.text = controller.saxonResources.ToString();
-            GameObject[] cards = GameObject.FindGameObjectsWithTag("Saxon");
-            foreach (GameObject card in cards)
-            {
-                if (card.GetComponent<CardScript>() && card.GetComponent<CardScript>().placed)
-                {
-                    zeal += card.GetComponent<CardScript>().saxonCard.zeal;
-                    might += card.GetComponent<CardScript>().saxonCard.might;
-                }
-            }         
-            objectiveHealth = saxonOBJ.objective.health;
-            playerZealNum.text = zeal.ToString();
-            playerMightNum.text = might.ToString();
-            objectiveHealthNum.text = objectiveHealth.ToString();
-            objectiveLetter.text = saxonOBJ.objective.idChar;
-        }
-        //nW1M.text = W1.NormanMightTBV.ToString();
-        //nW1Z.text = W1.NormanZealTBV.ToString();
-        //nW2M.text = W2.NormanMightTBV.ToString();
-        //nW2Z.text = W2.NormanZealTBV.ToString();
-        //nW3M.text = W3.NormanMightTBV.ToString();
-        //nW3Z.text = W3.NormanZealTBV.ToString();
-
-        //sW1M.text = W1.SaxonMightTBV.ToString();
-        //sW1Z.text = W1.SaxonZealTBV.ToString();
-        //sW2M.text = W2.SaxonMightTBV.ToString();
-        //sW2Z.text = W2.SaxonZealTBV.ToString();
-        //sW3M.text = W3.SaxonMightTBV.ToString();
-        //sW3Z.text = W3.SaxonZealTBV.ToString();
         GameObject[] Normancards = GameObject.FindGameObjectsWithTag("Norman");
         foreach (GameObject card in Normancards)
         {
@@ -149,5 +88,55 @@ public class PlayerHUD : MonoBehaviour
         sW2Z.text = Sw2Z.ToString();
         sW3M.text = Sw3M.ToString();
         sW3Z.text = Sw3Z.ToString();
+
+        //if norman turn.
+        if (controller.turn == 0)
+        {
+            int zeal = 0;
+            int might = 0;
+            int objectiveHealth = 0;
+            playerResourceNum.text = controller.normanResources.ToString();
+            zeal = Nw1Z + Nw2Z + Nw3Z;
+            might = Nw1M + Nw2M + Nw3M;
+
+
+            objectiveHealth = normanOBJ.objective.health;
+            playerZealNum.text = zeal.ToString();
+            playerMightNum.text = might.ToString();
+            objectiveHealthNum.text = objectiveHealth.ToString();
+            objectiveLetter.text = normanOBJ.objective.idChar;
+        }
+
+        
+
+        if (controller.turn == 1)
+        {
+            int zeal = 0;
+            int might = 0;
+            int objectiveHealth = 0;
+            playerResourceNum.text = controller.saxonResources.ToString();
+            zeal = Sw1Z + Sw2Z + Sw3Z;
+            might = Sw1M + Sw2M + Sw3M;
+
+            objectiveHealth = saxonOBJ.objective.health;
+            playerZealNum.text = zeal.ToString();
+            playerMightNum.text = might.ToString();
+            objectiveHealthNum.text = objectiveHealth.ToString();
+            objectiveLetter.text = saxonOBJ.objective.idChar;
+        }
+        //nW1M.text = W1.NormanMightTBV.ToString();
+        //nW1Z.text = W1.NormanZealTBV.ToString();
+        //nW2M.text = W2.NormanMightTBV.ToString();
+        //nW2Z.text = W2.NormanZealTBV.ToString();
+        //nW3M.text = W3.NormanMightTBV.ToString();
+        //nW3Z.text = W3.NormanZealTBV.ToString();
+
+        //sW1M.text = W1.SaxonMightTBV.ToString();
+        //sW1Z.text = W1.SaxonZealTBV.ToString();
+        //sW2M.text = W2.SaxonMightTBV.ToString();
+        //sW2Z.text = W2.SaxonZealTBV.ToString();
+        //sW3M.text = W3.SaxonMightTBV.ToString();
+        //sW3Z.text = W3.SaxonZealTBV.ToString();
+        
     }
 }
