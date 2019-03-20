@@ -34,22 +34,7 @@ public class BackToMainMenu : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (menuOpen == false)
-            {
-                menuOpen = true;
-                menuPanel.SetActive(true);
-                colliders.SetActive(true);
-                mainUI.SetActive(false);
-            }
-            else if (menuOpen == true)
-            {
-                menuOpen = false;
-                menuPanel.SetActive(false);
-                optionsPanel.SetActive(false);
-                rulesPanel.SetActive(false);
-                colliders.SetActive(false);
-                mainUI.SetActive(true);
-            }
+            openMenu();
         }
     }
 
@@ -118,5 +103,25 @@ public class BackToMainMenu : MonoBehaviour
         rulesPanel.SetActive(false);
 
         rulesOpen = false;
+    }
+
+    public void openMenu()
+    {
+        if (menuOpen == false)
+        {
+            menuOpen = true;
+            menuPanel.SetActive(true);
+            colliders.SetActive(true);
+            mainUI.SetActive(false);
+        }
+        else if (menuOpen == true)
+        {
+            menuOpen = false;
+            menuPanel.SetActive(false);
+            optionsPanel.SetActive(false);
+            rulesPanel.SetActive(false);
+            colliders.SetActive(false);
+            mainUI.SetActive(true);
+        }
     }
 }
