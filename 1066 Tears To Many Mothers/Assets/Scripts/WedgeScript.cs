@@ -125,7 +125,7 @@ public class WedgeScript : MonoBehaviour
 
         if (SaxonAtBOH && NormanAtBOH)
         {
-            Debug.Log("Wedges can be attacked by both players.");
+            //MightBattle
         }
     }
 

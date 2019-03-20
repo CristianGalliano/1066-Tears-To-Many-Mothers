@@ -87,7 +87,7 @@ public class CardDisplayScript : MonoBehaviour {
                 HealthText.color = Color.black;
 
             if (card.cost < card.startCost)
-                CostText.color = Color.red;
+                CostText.color = Color.green;
             if (card.zeal < card.startZeal)
                 ZealText.color = Color.red;
             if (card.might < card.startMight)
@@ -96,7 +96,7 @@ public class CardDisplayScript : MonoBehaviour {
                 HealthText.color = Color.red;
 
             if (card.cost > card.startCost)
-                CostText.color = Color.green;
+                CostText.color = Color.red;
             if (card.zeal > card.startZeal)
                 ZealText.color = Color.green;
             if (card.might > card.startMight)
@@ -133,6 +133,28 @@ public class CardDisplayScript : MonoBehaviour {
                 ResourcesText.text = card.resources.ToString();
             else
                 ResourcesText.text = "";
+
+
+            if (card.cost == card.startCost)
+                CostText.color = Color.black;
+            if (card.zeal == card.startZeal)
+                ZealText.color = Color.black;
+            if (card.might == card.startMight)
+                MightText.color = Color.black;
+
+            if (card.cost < card.startCost)
+                CostText.color = Color.green;
+            if (card.zeal < card.startZeal)
+                ZealText.color = Color.red;
+            if (card.might < card.startMight)
+                MightText.color = Color.red;
+
+            if (card.cost > card.startCost)
+                CostText.color = Color.red;
+            if (card.zeal > card.startZeal)
+                ZealText.color = Color.green;
+            if (card.might > card.startMight)
+                MightText.color = Color.green;
         }
         else
         {
@@ -269,8 +291,6 @@ public class CardDisplayScript : MonoBehaviour {
             {
                 GameObject currentCard = Instantiate(UICard, new Vector3(0, 0, 0), Quaternion.identity, GraveContent.transform);
                 currentCard.transform.localPosition = new Vector3(500 + cardPos, 0, 0);
-                Debug.Log(currentCard.transform.localPosition.x);
-                Debug.Log(currentCard.transform.localPosition.y);
 
                 cardPos += 1100;
 

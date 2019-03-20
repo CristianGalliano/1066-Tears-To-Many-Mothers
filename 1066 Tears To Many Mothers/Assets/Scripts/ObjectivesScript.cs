@@ -70,14 +70,12 @@ public class ObjectivesScript : MonoBehaviour
     void OnMouseDown()
     {
         buttonPressed = true;
-        Debug.Log("pressed");
     }
 
 
     void OnMouseUp()
     {
         buttonPressed = false;
-        Debug.Log("letgo");
         UI.HideDisplay();
     }
 

@@ -54,7 +54,8 @@ public class GameController : MonoBehaviour
     public bool firstPasser;
     public int passedFirst;
     private bool NormanDT6, SaxonDT6 = false;
-    public bool passTurn = false;
+    public bool NormanUIShown, SaxonUIShown= false;
+    private bool TacticsCalculated = false;
 
     public GameObject playerHUD, playerWedgesHUD;
 
@@ -107,23 +108,41 @@ public class GameController : MonoBehaviour
 
             if (FirstDrawN && FirstDrawS && (!NormanDT6 || !SaxonDT6))
             {
-                Debug.Log("Downto6");
                 if(passedFirst == 0)
                 {
                     discardTargetHand = "norman";
                     DownTo6(discardTargetHand);
+                    if (!UI.GraveyardPanel.activeInHierarchy)
+                    {
+                        if (GameObject.Find("normanHand").GetComponents<CardScript>().Length <= 6)
+                            NormanDT6 = true;
+                    }
                     if (NormanDT6)
                     {
                         discardTargetHand = "saxon";
                         DownTo6(discardTargetHand);
-                        if(!SaxonDT6)
+                        if (!UI.GraveyardPanel.activeInHierarchy)
+                        {
+                            if (GameObject.Find("saxonHand").GetComponents<CardScript>().Length <= 6)
+                                SaxonDT6 = true;
+                        }
+                        else if (UI.GraveyardPanel.activeInHierarchy)
+                        {
+                            if(!SaxonUIShown)
+                            {
+                                turn = 0;
+                                PassTurn();
+                                SaxonUIShown = true;
+                            }
+                        }
+
+                        if (!SaxonDT6)
                         {
                             //show pass ui
-                            if (passTurn == false)
+                            if (SaxonUIShown == false)
                             {
                                 PassTurn();
-                                passTurn = true;
-
+                                SaxonUIShown = true;
                             }
                         }
                     }
@@ -133,28 +152,42 @@ public class GameController : MonoBehaviour
                 {
                     discardTargetHand = "saxon";
                     DownTo6(discardTargetHand);
+
+                    if (!UI.GraveyardPanel.activeInHierarchy)
+                    {
+                        if (GameObject.Find("saxonHand").GetComponents<CardScript>().Length <= 6)
+                            SaxonDT6 = true;
+                    }
                     if (SaxonDT6)
                     {
                         discardTargetHand = "norman";
                         DownTo6(discardTargetHand);
+
+                        if (!UI.GraveyardPanel.activeInHierarchy)
+                        {
+                            if (GameObject.Find("normanHand").GetComponents<CardScript>().Length <= 6)
+                                NormanDT6 = true;
+                        }
+                        else if (UI.GraveyardPanel.activeInHierarchy)
+                        {
+                            if (!NormanUIShown)
+                            {
+                                turn = 1;
+                                PassTurn();
+                                NormanUIShown = true;
+                            }
+                        }
+
                         if (!NormanDT6)
                         {
                             //show pass ui
-                            if (passTurn == false)
+                            if (NormanUIShown == false)
                             {
                                 PassTurn();
-                                passTurn = true;
+                                NormanUIShown = true;
                             }
                         }
                     }
-                }
-
-                if (!UI.GraveyardPanel.activeInHierarchy)
-                {
-                    if (GameObject.Find("normanHand").GetComponents<CardScript>().Length <= 6)
-                        NormanDT6 = true;
-                    if (GameObject.Find("saxonHand").GetComponents<CardScript>().Length <= 6)
-                        SaxonDT6 = true;
                 }
 
                 if (NormanDT6 && SaxonDT6)
@@ -177,6 +210,9 @@ public class GameController : MonoBehaviour
             playerWedgesHUD.SetActive(true);
             passTurnButton.SetActive(true);
             endRoundButton.SetActive(false);
+
+            TacticCalc();
+
             if (SaxonPass && turn == 0)
             {
                 endturnButton.SetActive(false);
@@ -231,8 +267,6 @@ public class GameController : MonoBehaviour
 
                 ObjAttacked = true;
             }
-            Debug.Log("Saxon Objective Num: " + SaxonObj.objNum);
-            Debug.Log("Norman Objective Num: " + NormanObj.objNum);
         }
 
         /*
@@ -312,10 +346,13 @@ public class GameController : MonoBehaviour
         SaxonPass = false;
         NormanPass = false;
         firstPasser = false;
-        passTurn = false;
+        NormanUIShown = false;
+        SaxonUIShown = false;
 
         SaxonDT6 = false;
         NormanDT6 = false;
+
+        TacticsCalculated = false;
 
         if (passedFirst == 0)
         { 
@@ -334,7 +371,6 @@ public class GameController : MonoBehaviour
     {
         if (turn == 0 && NLeaderPlaced)
         {
-            Debug.Log("norman leader placed, conditions met");
             endturnButton.SetActive(true);
         }
         else if (turn == 0 && !NLeaderPlaced)
@@ -349,6 +385,24 @@ public class GameController : MonoBehaviour
         else if (turn == 1 && !SLeaderPlaced)
         {
             endturnButton.SetActive(false);
+        }
+    }
+
+    void TacticCalc()
+    {
+        if(!TacticsCalculated)
+        {
+            foreach (CardScript tactic in GameObject.Find("NormanTacticsArea").GetComponentsInChildren<CardScript>())
+            {
+                normanResources += tactic.normanCard.resources;
+            }
+
+            foreach (CardScript tactic in GameObject.Find("SaxonTacticsArea").GetComponentsInChildren<CardScript>())
+            {
+                saxonResources += tactic.saxonCard.resources;
+            }
+
+            TacticsCalculated = true;
         }
     }
 
@@ -394,8 +448,6 @@ public class GameController : MonoBehaviour
                 normanCardsInHand.Add(card.saxonCard);
             }
         }
-
-        Debug.Log(numToDiscard + " " + normanCardsInHand.Count);
 
         if (normanCardsInHand.Count > 6)
         {
@@ -562,6 +614,7 @@ public class GameController : MonoBehaviour
         {
             passUI.SetActive(true);
         }
+
         if (turn == 0)
         {
             PassText.text = "Pass To Saxon Player!";

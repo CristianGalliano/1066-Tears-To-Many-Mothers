@@ -30,7 +30,6 @@ public class UsedObjectivesScript : MonoBehaviour
     public void increaseSize()
     {
         scale = new Vector3(transform.localScale.x, transform.localScale.y, objective.decreaseHeight * (objective.objNum + 1));
-        Debug.Log(scale);
         mPosition = new Vector3(oPosition.x, (scale.z / 60), oPosition.z);
         transform.localPosition = mPosition;
         transform.localScale = scale;

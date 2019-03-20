@@ -47,6 +47,8 @@ public class CardScript : MonoBehaviour
 
     private bool targetable = true;
 
+    public bool tempBuffed;
+
 
     // Use this for initialization
     void Start()
@@ -77,7 +79,6 @@ public class CardScript : MonoBehaviour
         {
             normanCard = deck.DrawNormanCard(1);
             deck.NormanLeaderDrawn = true;
-            Debug.Log("Leader Drawn : " + normanCard.name);
             normanCard.StartingValues();
         }
 
@@ -85,7 +86,6 @@ public class CardScript : MonoBehaviour
         {
             saxonCard = deck.DrawSaxonCard(85);
             deck.SaxonLeaderDrawn = true;
-            Debug.Log("Leader Drawn : " + saxonCard.name);
             saxonCard.StartingValues();
         }
         functScript = controller.GetComponent<CardFucntionScript>();
@@ -93,24 +93,20 @@ public class CardScript : MonoBehaviour
         if (gameObject.tag == "Saxon")
         {
             SaxonGrave = GameObject.Find("SaxonDiscardPile");
-            Debug.Log(SaxonGrave.gameObject.name);
         }
         if (gameObject.tag == "Norman")
         {
             normanGrave = GameObject.Find("NormanDiscardPile");
-            Debug.Log(normanGrave.gameObject.name);
         }
         if (gameObject.tag == "Saxon" && saxonCard.type == "Tactic")
         {
             saxonTactics = GameObject.Find("SaxonTacticsArea");
             InLane = false;
-            Debug.Log(saxonTactics.name);
         }
         else if (gameObject.tag == "Norman" && normanCard.type == "Tactic")
         {
             normanTactics = GameObject.Find("NormanTacticsArea");
             InLane = false;
-            Debug.Log(normanTactics.name);
         }
     }
 
@@ -192,6 +188,7 @@ public class CardScript : MonoBehaviour
                 }
                 else if (gameObject.tag == "Saxon")
                 {
+                    Debug.Log(saxonCard.name);
                     functScript.attackerScript = this;
                     functScript.attacker = saxonCard;
                 }
@@ -303,9 +300,6 @@ public class CardScript : MonoBehaviour
                 dropCard("Norman", controller.normanDropPointsZ, controller.normanLane, 0);
                 dropCard("Saxon", controller.saxonDropPointsZ, controller.saxonlane, 1);
             }
-
-
- 
             
             disablePlacholders();
         }
@@ -392,25 +386,10 @@ public class CardScript : MonoBehaviour
     {
         if (gameObject.tag == str)
         {
-            if (str == "Norman")
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    Debug.Log(normanCard.traits[i]);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    Debug.Log(saxonCard.traits[i]);
-                }
-            }
             if (controller.turn == turnnum)
             {
                 if (str == "Norman" && normanCard.type == "Tactic" && !placed && positionOfMouse.x < normanTactics.transform.position.x + 150 && positionOfMouse.x > normanTactics.transform.position.x - 150 && positionOfMouse.z < normanTactics.transform.position.z + 100 && positionOfMouse.z > normanTactics.transform.position.z - 100)
                 {
-                    Debug.Log("Placing Tactic");
                     gameObject.transform.parent = normanTactics.transform;
                     Vector3 targetPos = normanTactics.transform.position;
                     targetPos.y += 2 + (controller.normanTactics * 2);
@@ -419,10 +398,11 @@ public class CardScript : MonoBehaviour
                     placed = true;
                     transform.localRotation = Quaternion.Euler(-90, 0, 0);
                     controller.normanTactics++;
+
+                    controller.normanResources += normanCard.resources;
                 }
                 else if (str == "Saxon" && saxonCard.type == "Tactic" && !placed && positionOfMouse.x < saxonTactics.transform.position.x + 150 && positionOfMouse.x > saxonTactics.transform.position.x - 150 && positionOfMouse.z < saxonTactics.transform.position.z + 100 && positionOfMouse.z > saxonTactics.transform.position.z - 100)
                 {
-                    Debug.Log("Placing Tactic");
                     gameObject.transform.parent = saxonTactics.transform;
                     Vector3 targetPos = saxonTactics.transform.position;
                     targetPos.y += 2 + (controller.saxonTactics * 2);
@@ -431,6 +411,8 @@ public class CardScript : MonoBehaviour
                     placed = true;
                     transform.localRotation = Quaternion.Euler(-90, 0, 0);
                     controller.saxonTactics++;
+
+                    controller.saxonResources += saxonCard.resources;
                 }
                 else if (str == "Norman" && normanCard.type != "Tactic" || str == "Saxon" && saxonCard.type != "Tactic")
                 {
@@ -525,10 +507,20 @@ public class CardScript : MonoBehaviour
                 if (str == "Norman")
                 {
                     controller.normanResources -= normanCard.cost;
+                    if (tempBuffed)
+                    {
+                        normanCard.cost = normanCard.startCost;
+                        functScript.UnBuff("norman");
+                    }
                 }
                 else if (str == "Saxon")
                 {
                     controller.saxonResources -= saxonCard.cost;
+                    if (tempBuffed)
+                    {
+                        saxonCard.cost = saxonCard.startCost;
+                        functScript.UnBuff("saxon");
+                    }
                 }
             }
         }
@@ -797,7 +789,7 @@ public class CardScript : MonoBehaviour
                 HealthMesh.color = Color.black;
 
             if (normanCard.cost < normanCard.startCost)
-                CostMesh.color = Color.red;
+                CostMesh.color = Color.green;
             if (normanCard.zeal < normanCard.startZeal)
                 ZealMesh.color = Color.red;
             if (normanCard.might < normanCard.startMight)
@@ -806,7 +798,7 @@ public class CardScript : MonoBehaviour
                 HealthMesh.color = Color.red;
 
             if (normanCard.cost > normanCard.startCost)
-                CostMesh.color = Color.green;
+                CostMesh.color = Color.red;
             if (normanCard.zeal > normanCard.startZeal)
                 ZealMesh.color = Color.green;
             if (normanCard.might > normanCard.startMight)
@@ -875,7 +867,7 @@ public class CardScript : MonoBehaviour
                 HealthMesh.color = Color.black;
 
             if (saxonCard.cost < saxonCard.startCost)
-                CostMesh.color = Color.red;
+                CostMesh.color = Color.green;
             if (saxonCard.zeal < saxonCard.startZeal)
                 ZealMesh.color = Color.red;
             if (saxonCard.might < saxonCard.startMight)
@@ -884,7 +876,7 @@ public class CardScript : MonoBehaviour
                 HealthMesh.color = Color.red;
 
             if (saxonCard.cost > saxonCard.startCost)
-                CostMesh.color = Color.green;
+                CostMesh.color = Color.red;
             if (saxonCard.zeal > saxonCard.startZeal)
                 ZealMesh.color = Color.green;
             if (saxonCard.might > saxonCard.startMight)
@@ -1126,7 +1118,6 @@ public class CardScript : MonoBehaviour
         {
             if (saxonCard.health <= 0 && saxonCard.type == "Unit" || saxonCard.health <= 0 && saxonCard.type == "Character" || saxonCard.health <= 0 && saxonCard.type == "Leader")
             {
-                Debug.Log("should be dead!");
                 controller.saxonlane[lane] -= 1;
                 Destroy(gameObject);
             }

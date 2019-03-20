@@ -78,9 +78,10 @@ public class CardFucntionScript : MonoBehaviour
 
         if (attacker != null && attackerScript != null)
         {
-            if(attacker.action != "No Action Ability" || !attacker.action.Contains("Agile"))
+            if(attacker.action != "No Action Ability" || attacker.action.Contains("Move"))
                 UI.InfoButton.gameObject.SetActive(true);
-            else if(attacker.action == "No Action Ability" || attacker.action.Contains("Agile"))
+
+            if (attacker.action == "No Action Ability" || !attacker.action.Contains("Move"))
                 UI.InfoButton.gameObject.SetActive(false);
         }
         else if (attacker == null && attackerScript == null)
@@ -140,7 +141,7 @@ public class CardFucntionScript : MonoBehaviour
 
     public void EnterTargeting()
     {
-        if(attacker != null)
+        if(attacker)
         {
             if (attacker.action.Contains("Move"))
             {
@@ -169,22 +170,24 @@ public class CardFucntionScript : MonoBehaviour
             }
         }
 
+        if(onPlayAttacker)
+        {
+            if(onPlayAttacker.needTarget)
+            {
+                targeting = true;
+                TargetValidityCheck(onPlayAttacker);
+            }
+            else
+            {
+                target = onPlayAttacker;
+                targetScript = attackerScript;
+            }
+        }
     }
 
     void UseAbility()
     {
         targetIsValid = false;
-
-        //if (attackerScript.gameObject.tag == "Norman")
-        //{
-        //    Spy("saxon",1);
-        //}
-        //else
-        //{
-        //    Spy("norman",1);
-        //}
-
-        Damage(attacker, target, 10, 6);
 
         switch (attacker.cardNumber)
         {
@@ -275,14 +278,13 @@ public class CardFucntionScript : MonoBehaviour
 
     void OnPlayAbility()
     {
-        //Damage(onPlayAttacker, target, 3, 3);
-        Debug.Log("OnPlay");
+        CardScript[] hand;
 
         switch (onPlayAttacker.cardNumber)
         {
             case 6:
                 if (target.type != "Leader")
-                    Damage(attacker, target, 1);
+                    Damage(onPlayAttacker, target, 1);
                 break;
             case 8:
                 if (target.type != "Leader")
@@ -297,7 +299,7 @@ public class CardFucntionScript : MonoBehaviour
                 break;
             case 24:
                 if (target.type != "Leader")
-                    Damage(attacker, target, 1);
+                    Damage(onPlayAttacker, target, 1);
                 break;
             case 27:
                 DrawCard(1);
@@ -324,11 +326,11 @@ public class CardFucntionScript : MonoBehaviour
                 break;
             case 101:
                 if (target.type != "Leader")
-                    Damage(attacker, target, 1);
+                    Damage(onPlayAttacker, target, 1);
                 break;
             case 102:
                 if (target.type != "Leader")
-                    Destroy(target, 10);
+                    Destroy(onPlayAttacker, target, 10);
                 break;
             case 136:
                 if (target.type != "Leader")
@@ -339,14 +341,24 @@ public class CardFucntionScript : MonoBehaviour
                     Destroy(target);
                 break;
             case 138:
-                
+                foreach(CardScript card in GameObject.Find("saxonHand").GetComponents<CardScript>())
+                {
+                    Discount(card.saxonCard, 1);
+                    card.tempBuffed = true;
+                }
                 break;
             case 139:
-                //next card cost -1
+                hand = GameObject.Find("saxonHand").GetComponentsInChildren<CardScript>();
+
+                foreach (CardScript card in hand)
+                {
+                    Discount(card.saxonCard, 1);
+                    card.tempBuffed = true;
+                }
                 break;
             case 146:
                 if (target.type != "Leader")
-                    Damage(attacker, target, 1);
+                    Damage(onPlayAttacker, target, 1);
                 break;
             case 147:
                 GameObject[] wedges = GameObject.FindGameObjectsWithTag("Wedge");
@@ -366,14 +378,20 @@ public class CardFucntionScript : MonoBehaviour
                 break;
             case 150:
                 if (target.type != "Leader")
-                    Damage(attacker, target, 1);
+                    Damage(onPlayAttacker, target, 1);
                 break;
             case 151:
                 if (target.type != "Leader")
-                    Damage(attacker, target, 1);
+                    Damage(onPlayAttacker, target, 1);
                 break;
             case 152:
-                //next card cost -1
+                hand = GameObject.Find("saxonHand").GetComponentsInChildren<CardScript>();
+
+                foreach (CardScript card in hand)
+                {
+                    Discount(card.saxonCard, 1);
+                    card.tempBuffed = true;
+                }
                 break;
             case 153:
                 if (target.type != "Leader")
@@ -383,32 +401,28 @@ public class CardFucntionScript : MonoBehaviour
                 foreach(string trait in target.traits)
                 {
                     if (trait == "Cavalry")
-                        Damage(attacker, target, 1, 6);
+                        Damage(onPlayAttacker, target, 1, 6);
                 }
                 break;
             case 157:
                 foreach (string trait in target.traits)
                 {
                     if (trait == "Cavalry")
-                        Damage(attacker, target, 1, 6);
+                        Damage(onPlayAttacker, target, 1, 6);
                 }
                 break;
             case 158:
                 foreach (string trait in target.traits)
                 {
                     if (trait == "Cavalry")
-                        Damage(attacker, target, 1, 6);
+                        Damage(onPlayAttacker, target, 1, 6);
                 }
                 break;
-
-        }
-
-        if (targetIsValid)
-        {
-            attackerScript.tireCard();
         }
 
         targetIsValid = false;
+
+        Reset();
     }
 
     void Damage(NormanCard Attacker, NormanCard Target, int Amount, int Range)
@@ -432,8 +446,6 @@ public class CardFucntionScript : MonoBehaviour
         {
             Reset();
         }
-
-        //Reset();
     }
 
     void Damage(NormanCard Attacker, NormanCard Target, int Amount)
@@ -454,8 +466,6 @@ public class CardFucntionScript : MonoBehaviour
         {
             Reset();
         }
-
-        //Reset();
     }
 
     void Heal(NormanCard Target, int value)
@@ -465,8 +475,6 @@ public class CardFucntionScript : MonoBehaviour
                 Target.health += value;
                 targetIsValid = true;
         }
-
-        //Reset();
     }
 
     void DrawCard(int value)
@@ -479,9 +487,6 @@ public class CardFucntionScript : MonoBehaviour
         {
             Game.SDS.drawFunc(value);
         }
-
-        //targetIsValid = true;
-        //Reset();
     }
 
     void Buff(NormanCard target, string stat, int value)
@@ -500,27 +505,24 @@ public class CardFucntionScript : MonoBehaviour
 
             targetIsValid = true;
         }
-
-        //Reset();
     }
 
-    public void Destroy(NormanCard card, int range)
+    public void Destroy(NormanCard attacker,NormanCard target, int range)
     {
         if (InRange(attacker, target, range))
         {
-            if (card.cardNumber <= 77)
+            if (target.cardNumber <= 77)
             {
-                normanGrave.sendToGrave(card);
+                normanGrave.sendToGrave(target);
             }
             else
             {
-                saxonGrave.sendToGrave(card);
+                saxonGrave.sendToGrave(target);
             }
 
             targetIsValid = true;
-            card.health = 0;
+            target.health = 0;
         }
-        //Reset();
     }
 
     public void Destroy(NormanCard card)
@@ -535,8 +537,6 @@ public class CardFucntionScript : MonoBehaviour
         }
         targetIsValid = true;
         card.health = 0;
-
-        //Reset();
     }
 
     void Spy(string target, int num)
@@ -563,44 +563,20 @@ public class CardFucntionScript : MonoBehaviour
 
     void Discount(NormanCard target, int value)
     {
-        int i = 0;
-        if (gameObject.tag == "Norman")
+        if (target.cost - value > 0)
         {
-            foreach (GameObject child in HandN.transform)
-            {
-                i++;
-            }
-            if (i != 0)
-            {
-                target.cost -= value;
-            }
+            target.cost -= value;
         }
-        else if (gameObject.tag == "Saxon")
+        else if (target.cost - value <= 0)
         {
-            foreach (GameObject child in HandS.transform)
-            {
-                i++;
-            }
-            if (1 != 0)
-            {
-                target.cost -= value;
-            }
+            target.cost = 0;
         }
-
-        //Reset();
     }
 
     void Agile(ref CardScript target, int targetWedge)
     {
-        if (target.gameObject.tag == null)
-            Debug.Log("Empty Card");
-        else
-            Debug.Log(target.gameObject.tag + "REEEEEEEEE");
-
         if(target.gameObject.tag == "Norman")
         {
-            Debug.Log("Trying...");
-
             if (Game.normanLane[targetWedge] != 3)
             {
                 Game.normanLane[target.lane]--;
@@ -695,8 +671,34 @@ public class CardFucntionScript : MonoBehaviour
         DiscardLimitSet = false;
 
         UnGrey();
+    }
 
-        Debug.Log("should have reset");
+    public void UnBuff(string targetHand)
+    {
+
+        if (targetHand == "norman")
+        {
+            foreach (CardScript card in GameObject.Find(targetHand + "Hand").GetComponentsInChildren<CardScript>())
+            {
+                if (card.tempBuffed)
+                {
+                    card.normanCard.cost = card.normanCard.startCost;
+                    card.tempBuffed = false;
+                }
+            }
+        }
+
+        if (targetHand == "saxon")
+        {
+            foreach (CardScript card in GameObject.Find(targetHand + "Hand").GetComponentsInChildren<CardScript>())
+            {
+                if (card.tempBuffed)
+                {
+                    card.saxonCard.cost = card.saxonCard.startCost;
+                    card.tempBuffed = false;
+                }
+            }
+        }
     }
 
     private void UnGrey()
@@ -732,7 +734,6 @@ public class CardFucntionScript : MonoBehaviour
                 }
                 break;
             case 105:
-                //buff all saxons by 1 might
                 GameObject[] saxons = GameObject.FindGameObjectsWithTag("Saxon");
                 foreach (GameObject saxon in saxons)
                 {
@@ -772,29 +773,67 @@ public class CardFucntionScript : MonoBehaviour
         {
             switch(attachment.cardNumber)
             {
-                case 1:
-
+                case 55:
+                    wedgeTarget.GetComponent<WedgeScript>().NormanMightBuff += 2;
+                    break;
+                case 56:
+                    wedgeTarget.GetComponent<WedgeScript>().NormanZealBuff += 2;
+                    break;
+                case 58:
+                    wedgeTarget.GetComponent<WedgeScript>().NormanMightBuff += 1;
+                    break;
+                case 125:
+                    wedgeTarget.GetComponent<WedgeScript>().SaxonMightBuff += 2;
+                    break;
+                case 128:
+                    wedgeTarget.GetComponent<WedgeScript>().SaxonMightBuff += 1;
                     break;
             }
-            wedgeTarget.GetComponent<WedgeScript>().NormanZealBuff = 3;
 
             attackerScript.gameObject.transform.parent = wedgeTarget.transform;
             attackerScript.gameObject.transform.localPosition = new Vector3(40, 0, -1);
             attackerScript.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
             attackerScript.InLane = false;
             attackerScript.placed = true;
+
+            if(attackerScript.tag == "Norman")
+            {
+                attackerScript.normanCard.cost = attackerScript.normanCard.startCost;
+                UnBuff("norman");
+            }
+
+            if (attackerScript.tag == "Saxon")
+            {
+                attackerScript.saxonCard.cost = attackerScript.saxonCard.startCost;
+                UnBuff("saxon");
+            }
         }
 
         if(targetScript != null)
         {
             switch (attachment.cardNumber)
             {
-                case 1:
-
+                case 57:
+                    if (target.type == "Unit")
+                        target.zeal += 1;
+                    break;
+                case 59:
+                    if (target.cardNumber == 85)
+                        target.zeal -= 1;
+                    break;
+                case 125:
+                    if (target.cardNumber == 85)
+                        target.zeal += 1;
+                    break;
+                case 126:
+                    if (target.cardNumber == 85)
+                        target.zeal += 1;
+                    break;
+                case 127:
+                    if (target.type == "Unit")
+                        target.zeal += 2;
                     break;
             }
-
-            Buff(attachTarget, "Zeal", 1);
 
             attackerScript.gameObject.transform.parent = targetScript.gameObject.transform;
             attackerScript.gameObject.transform.localPosition = new Vector3(40, 0, -1);
